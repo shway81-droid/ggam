@@ -3,6 +3,8 @@
 **전자칠판으로 즐기는 자투리 시간 초등 미니게임 46개.**
 설치·로그인 없이 브라우저에서 바로 시작하고, 오프라인에서도 동작합니다.
 
+▶️ **바로 하기: https://shway81-droid.github.io/ggam/**
+
 [짬짬이 교실](https://shway81-droid.github.io/jjamjjami-gyosil/)을 기반으로 5가지를 개선한 후속 프로젝트입니다.
 
 ## 개선점
