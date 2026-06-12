@@ -54,4 +54,22 @@ mirror-draw, rhythm-echo, turn-count, countdown-tap, flash-shape, clue-find, col
 - word-chain (끝말잇기 협동)
 - lights-out (불 끄기 — 십자 토글 라이츠아웃)
 
-→ 현재 46개. 분포: speed 7 / brain 9 / math 8 / knowledge 9 / coop 6 / puzzle 7
+→ 46개 시점 분포: speed 7 / brain 9 / math 8 / knowledge 9 / coop 6 / puzzle 7
+
+## ✅ 사용자 요청 복원 (2026-06-12)
+
+사용자가 원작(jjamjjami-gyosil)에서 14개 게임 재추가를 직접 지시 —
+위 "삭제된 16개" 표의 분석 사유보다 사용자 결정이 우선:
+
+- speed: arrow-tap(방향 화살표)
+- brain: missing-piece(빠진 조각), mirror-match(거울 대칭)
+- math: skip-count(뛰어 세기), more-or-less(많다 적다), number-bond(수 가르기), coin-count(동전 세기)
+- knowledge: job-tool(직업과 도구), unit-noun(단위 세기), synonym-quiz(비슷한 말), capital-quiz(수도 맞히기)
+- coop: direction-relay(방향 따라하기), color-mix(색 섞기)
+- puzzle: arrow-rotate(화살표 돌리기)
+
+skip-count·job-tool은 선별 당시 원작에 없던 신규 게임. 나머지 12개는 중복 클러스터
+정리분의 복원. "🚫 재추가 금지" 목록(balance-scale·secret-code·word-chain·lights-out)
+과는 겹치지 않음.
+
+→ 현재 60개. 분포: speed 8 / brain 11 / math 12 / knowledge 13 / coop 8 / puzzle 8

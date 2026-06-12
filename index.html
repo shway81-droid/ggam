@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="description" content="교실 전자칠판에서 바로 시작하는 초등 미니게임 46개. 룰렛 버튼 하나로 게임을 골라줍니다. 설치·로그인 없음, 오프라인 동작.">
+  <meta name="description" content="교실 전자칠판에서 바로 시작하는 초등 미니게임 60개. 룰렛 버튼 하나로 게임을 골라줍니다. 설치·로그인 없음, 오프라인 동작.">
   <meta name="keywords" content="짬짬이 교실, 초등학교, 미니게임, 전자칠판 게임, 자투리 시간, 보드게임, 무료 게임">
   <meta name="author" content="짬짬이 교실">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="짬짬이 교실 — 자투리 시간 미니게임 테이블">
-  <meta property="og:description" content="룰렛 버튼 하나면 게임이 정해집니다. 전자칠판 최적화 초등 미니게임 46개.">
+  <meta property="og:description" content="룰렛 버튼 하나면 게임이 정해집니다. 전자칠판 최적화 초등 미니게임 60개.">
   <title>짬짬이 교실 — 자투리 시간 미니게임</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <script src="shared/engine.js?v=6"></script>
+  <script src="shared/engine.js?v=7"></script>
   <script>
     // ═══ 게임 메타데이터 (registry 로드 실패 시 폴백) ═══
     var CATEGORY_MAP = {
@@ -285,12 +285,19 @@
       'quick-math':'math','size-compare':'math','color-count':'math','number-tap':'math','clock-reading':'math','math-sign':'math','area-compare':'math','dice-sum':'math',
       'ox-quiz':'knowledge','initial-quiz':'knowledge','flag-quiz':'knowledge','proverb-quiz':'knowledge','english-word':'knowledge','animal-sort':'knowledge','hangul-jamo':'knowledge','opposite-word':'knowledge',
       'sum-relay':'coop','jamo-merge':'coop','memory-relay':'coop',
-      'slide-puzzle':'puzzle','maze-run':'puzzle','pipe-connect':'puzzle','dot-connect':'puzzle','fold-guess':'puzzle','hanoi':'puzzle'
+      'slide-puzzle':'puzzle','maze-run':'puzzle','pipe-connect':'puzzle','dot-connect':'puzzle','fold-guess':'puzzle','hanoi':'puzzle',
+      'arrow-tap':'speed',
+      'missing-piece':'brain','mirror-match':'brain',
+      'skip-count':'math','more-or-less':'math','number-bond':'math','coin-count':'math',
+      'job-tool':'knowledge','unit-noun':'knowledge','synonym-quiz':'knowledge','capital-quiz':'knowledge',
+      'direction-relay':'coop','color-mix':'coop',
+      'arrow-rotate':'puzzle'
     };
 
     var PLAYER_COUNTS = {
       'nim-game':'2명','sum-relay':'2명','jamo-merge':'2명',
       'half-match':'2명','telepathy':'2명','emoji-clue':'2명','sokoban':'2명',
+      'direction-relay':'2명','color-mix':'2명',
       // 나머지는 자동으로 '2-4명'
     };
 
@@ -302,12 +309,22 @@
       { folder:'odd-color', name:'다른 색 찾기', description:'색이 다른 동그라미를 가장 먼저!', icon:'🎨', color:'#FF7043', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'simon-says', name:'가라사대', description:'"가라사대"가 붙을 때만 터치!', icon:'👑', color:'#FF8F00', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'stop-bar', name:'타이밍 스톱', description:'움직이는 바를 한가운데에 멈춰라!', icon:'⏱️', color:'#00ACC1', grades:[1,2,3,4,5,6], playTime:'1분' },
+      { folder:'arrow-tap', name:'방향 화살표', description:'화살표를 보고 같은 방향을 빠르게 터치!', icon:'🧭', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'find-diff', name:'다른 곳 찾기', description:'두 그림을 비교해 다른 칸을 먼저!', icon:'🔍', color:'#5C6BC0', grades:[1,2,3,4,5,6], playTime:'1분' },
+      { folder:'missing-piece', name:'빠진 조각', description:'패턴을 보고 빠진 조각을 찾으세요!', icon:'🧩', color:'#7E57C2', grades:[1,2,3,4,5,6], playTime:'1분' },
+      { folder:'mirror-match', name:'거울 대칭', description:'거울에 비친 모습을 찾으세요!', icon:'🪞', color:'#26C6DA', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'spelling-quiz', name:'맞춤법 퀴즈', description:'되 vs 돼! 옳은 표기를 가장 먼저!', icon:'✏️', color:'#00897B', grades:[2,3,4,5,6], playTime:'1분' },
+      { folder:'job-tool', name:'직업과 도구', description:'도구를 보고 알맞은 직업을 4지선다에서 가장 먼저 골라요! 직업 탐색·어휘', icon:'🧰', color:'#5C6BC0', grades:[1,2,3,4], playTime:'1분' },
+      { folder:'unit-noun', name:'단위 세기', description:'물건을 세는 알맞은 단위(세는 말)를 4지선다에서 가장 먼저 골라요! 국어 단위명사', icon:'🔢', color:'#26A69A', grades:[1,2,3,4], playTime:'1분' },
+      { folder:'synonym-quiz', name:'비슷한 말', description:'주어진 단어와 비슷한 말(유의어)을 4지선다에서 가장 먼저 골라요! 국어 어휘', icon:'💬', color:'#5C6BC0', grades:[2,3,4,5,6], playTime:'1분' },
+      { folder:'capital-quiz', name:'수도 맞히기', description:'나라의 수도를 맞혀보세요!', icon:'🌍', color:'#26A69A', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'half-match', name:'반쪽 맞추기', description:'P1의 설명을 듣고 맞는 반쪽 찾기!', icon:'🧩', color:'#43A047', grades:[1,2,3,4,5,6], playTime:'1~2분' },
       { folder:'telepathy', name:'텔레파시', description:'둘이 몰래 같은 것을 고르면 성공!', icon:'💫', color:'#7B1FA2', grades:[1,2,3,4,5,6], playTime:'1~2분' },
       { folder:'emoji-clue', name:'이모지 힌트', description:'이모지 3개로만 단어를 설명해요!', icon:'💡', color:'#F9A825', grades:[2,3,4,5,6], playTime:'1~2분' },
+      { folder:'direction-relay', name:'방향 따라하기', description:'P1이 본 화살표 순서를 P2에게 말로 알려주세요! 협력 방향 게임', icon:'🧭', color:'#26A69A', grades:[1,2,3,4,5,6], playTime:'1~2분' },
+      { folder:'color-mix', name:'색 섞기', description:'P1·P2가 색을 하나씩 골라 목표 색을 만들어요! 협력 색 합성 게임', icon:'🎨', color:'#FF7043', grades:[1,2,3,4,5,6], playTime:'1~2분' },
       { folder:'sokoban', name:'상자 밀기', description:'상자를 밀어 별 위에 먼저 올려라!', icon:'📦', color:'#8D6E63', grades:[2,3,4,5,6], playTime:'1~2분' },
+      { folder:'arrow-rotate', name:'화살표 돌리기', description:'3×3 화살표를 톡톡! 모두 ↑ 위로 정렬하면 승리하는 회전 퍼즐', icon:'🧭', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1~2분' },
       { folder:'color-touch', name:'색깔 터치', description:'글자의 뜻에 맞는 색을 터치!', icon:'🟡', color:'#9C27B0', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'shadow-match', name:'그림자 맞히기', description:'그림자를 보고 원래 그림을 찾으세요!', icon:'🌑', color:'#546E7A', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'dots-and-boxes', name:'도트 앤 박스', description:'선을 그어 사각형을 완성하세요!', icon:'🔲', color:'#78909C', grades:[2,3,4,5,6], playTime:'2~3분' },
@@ -324,6 +341,10 @@
       { folder:'math-sign', name:'부호 맞히기', description:'빈칸에 들어갈 + − × ÷ 찾기!', icon:'➕', color:'#FB8C00', grades:[2,3,4,5,6], playTime:'1분' },
       { folder:'area-compare', name:'넓이 비교', description:'네모가 가장 많은 도형을 골라요!', icon:'📐', color:'#26A69A', grades:[2,3,4,5,6], playTime:'1분' },
       { folder:'dice-sum', name:'주사위 합', description:'주사위 두 개의 합을 가장 먼저!', icon:'🎲', color:'#F9A825', grades:[1,2,3,4], playTime:'1분' },
+      { folder:'skip-count', name:'뛰어 세기', description:'2씩·5씩 뛰어 센 수열의 빈칸에 들어갈 수를 가장 먼저 골라요! 1-3학년 규칙·수 세기', icon:'🔢', color:'#00897B', grades:[1,2,3], playTime:'1분' },
+      { folder:'more-or-less', name:'많다 적다', description:'어느 쪽이 더 많은지 빠르게 판단!', icon:'⚖️', color:'#8D6E63', grades:[1,2,3,4,5,6], playTime:'1분' },
+      { folder:'number-bond', name:'수 가르기', description:'빈칸에 들어갈 수를 찾아 식을 완성해요! 가르기와 모으기', icon:'➕', color:'#00897B', grades:[1,2,3], playTime:'1분' },
+      { folder:'coin-count', name:'동전 세기', description:'동전을 모두 더하면 얼마인지 4지선다에서 가장 먼저 골라요! 1-4학년 화폐·덧셈', icon:'🪙', color:'#F9A825', grades:[1,2,3,4], playTime:'1분' },
       { folder:'ox-quiz', name:'OX 퀴즈', description:'O일까 X일까? 빠르게 맞혀보세요!', icon:'❓', color:'#EC407A', grades:[1,2,3,4,5,6], playTime:'1~2분' },
       { folder:'initial-quiz', name:'초성 퀴즈', description:'초성을 보고 맞는 그림을 터치!', icon:'🔤', color:'#8D6E63', grades:[1,2,3,4,5,6], playTime:'1분' },
       { folder:'flag-quiz', name:'국기 맞히기', description:'국기를 보고 나라를 맞혀보세요!', icon:'🏁', color:'#1565C0', grades:[1,2,3,4,5,6], playTime:'1분' },

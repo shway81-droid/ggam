@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>색 섞기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="game-title">색 섞기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <!-- 일러스트: 두 색 + 등호 + 목표 색 -->
+      <div class="intro-preview" aria-hidden="true">
+        <svg viewBox="0 0 240 110" width="240" height="110">
+          <!-- P1 색 카드 (빨강) -->
+          <rect x="6" y="22" width="56" height="74" rx="10" fill="#B3E5FC" stroke="#2C2C2C" stroke-width="3"/>
+          <rect x="6" y="22" width="56" height="74" rx="10" fill="none" stroke="#2C2C2C" stroke-width="3" transform="translate(4,4)"/>
+          <circle cx="34" cy="60" r="20" fill="#E53935" stroke="#2C2C2C" stroke-width="2.5"/>
+          <text x="34" y="16" text-anchor="middle" font-size="9" font-weight="800" fill="#1565C0">P1</text>
+
+          <!-- + 부호 -->
+          <text x="84" y="70" text-anchor="middle" font-size="32" font-weight="900" fill="#FF7043">+</text>
+
+          <!-- P2 색 카드 (노랑) -->
+          <rect x="104" y="22" width="56" height="74" rx="10" fill="#FFCDD2" stroke="#2C2C2C" stroke-width="3"/>
+          <rect x="104" y="22" width="56" height="74" rx="10" fill="none" stroke="#2C2C2C" stroke-width="3" transform="translate(4,4)"/>
+          <circle cx="132" cy="60" r="20" fill="#FDD835" stroke="#2C2C2C" stroke-width="2.5"/>
+          <text x="132" y="16" text-anchor="middle" font-size="9" font-weight="800" fill="#C62828">P2</text>
+
+          <!-- = 부호 -->
+          <text x="182" y="70" text-anchor="middle" font-size="28" font-weight="900" fill="#2C2C2C">=</text>
+
+          <!-- 목표 (주황) -->
+          <circle cx="216" cy="60" r="22" fill="#FB8C00" stroke="#2C2C2C" stroke-width="3"/>
+          <circle cx="216" cy="60" r="22" fill="none" stroke="#2C2C2C" stroke-width="3" transform="translate(3,3)"/>
+        </svg>
+      </div>
+
+      <p class="intro-text">두 색을 섞어 목표 색을 만들어요!</p>
+      <div class="badge-2p">👥 2인 협력</div>
+
+      <div class="intro-rules">
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FF7043" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>P1과 P2가 각자 색 1개씩 선택</span>
+        </div>
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFA726" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="9" cy="12" r="6"/>
+            <circle cx="15" cy="12" r="6"/>
+          </svg>
+          <span>두 색을 섞었을 때 목표 색과 같으면 성공!</span>
+        </div>
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF5350" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          <span>5라운드 · 함께 협력해서 점수를 모아요</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="closeBtn" aria-label="홈으로">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="round-banner">
+        <span class="round-label">라운드</span>
+        <span class="round-num" id="roundNum">1/5</span>
+        <span class="round-score" id="roundScore">★ 0</span>
+      </div>
+
+      <button class="sound-toggle" id="soundToggleGame" aria-label="사운드 토글">
+        <svg id="soundIconGame" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- 목표 + 진행 표시 -->
+    <div class="target-area">
+      <div class="target-row">
+        <div class="target-pick p1">
+          <span class="target-pick-label">P1</span>
+          <span class="target-pick-swatch" id="p1Pick"></span>
+        </div>
+        <span class="target-plus">+</span>
+        <div class="target-pick p2">
+          <span class="target-pick-label">P2</span>
+          <span class="target-pick-swatch" id="p2Pick"></span>
+        </div>
+        <span class="target-equals">=</span>
+        <div class="target-goal">
+          <span class="target-goal-label">목표</span>
+          <span class="target-goal-swatch" id="targetSwatch"></span>
+          <span class="target-goal-name" id="targetName">주황</span>
+        </div>
+      </div>
+      <div class="banner" id="banner"></div>
+    </div>
+
+    <!-- 양쪽 보드 -->
+    <div class="boards">
+      <div class="board p1">
+        <div class="board-label">🧒 P1 색</div>
+        <div class="card-grid" id="p1Cards"></div>
+      </div>
+      <div class="board p2">
+        <div class="board-label">🧑 P2 색</div>
+        <div class="card-grid" id="p2Cards"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="game-header result-header">
+      <div></div>
+      <h2 class="result-header-title">협력 종료!</h2>
+      <div></div>
+    </header>
+
+    <div class="result-body">
+      <div class="result-icon-wrap" id="resultIconWrap">
+        <svg viewBox="0 0 80 80" width="80" height="80" id="resultIcon">
+          <rect x="28" y="62" width="24" height="6" rx="3" fill="#FFA726"/>
+          <rect x="22" y="68" width="36" height="6" rx="3" fill="#FFA726"/>
+          <path d="M15 18 Q15 50 40 54 Q65 50 65 18 Z" fill="#FFD54F" stroke="#FFA726" stroke-width="2"/>
+          <path d="M15 18 Q8 18 8 28 Q8 40 20 42 Q15 35 15 26 Z" fill="#FFA726"/>
+          <path d="M65 18 Q72 18 72 28 Q72 40 60 42 Q65 35 65 26 Z" fill="#FFA726"/>
+          <ellipse cx="40" cy="20" rx="22" ry="6" fill="#FFE082"/>
+          <text x="40" y="42" text-anchor="middle" font-size="16" font-weight="900" fill="#E65100">WIN</text>
+        </svg>
+      </div>
+      <h2 class="result-title" id="resultTitle">5/5</h2>
+      <p class="result-sub" id="resultSub">완벽한 협력이에요!</p>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=7"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>

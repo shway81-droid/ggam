@@ -702,6 +702,12 @@ const _GAME_CATEGORY_MAP = {
   'slide-puzzle': 'puzzle', 'maze-run': 'puzzle', 'pipe-connect': 'puzzle',
   'dot-connect': 'puzzle',
   'fold-guess': 'puzzle', 'hanoi': 'puzzle',
+  'arrow-tap': 'speed',
+  'missing-piece': 'brain', 'mirror-match': 'brain',
+  'skip-count': 'math', 'more-or-less': 'math', 'number-bond': 'math', 'coin-count': 'math',
+  'job-tool': 'knowledge', 'unit-noun': 'knowledge', 'synonym-quiz': 'knowledge', 'capital-quiz': 'knowledge',
+  'direction-relay': 'coop', 'color-mix': 'coop',
+  'arrow-rotate': 'puzzle',
 };
 
 function _detectGameCategory() {

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>방향 따라하기</title>
+<link rel="stylesheet" href="../../shared/style.css?v=5">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="screen screen-intro active" id="introScreen">
+  <header class="game-header">
+    <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+    <h1 class="game-title">방향 따라하기</h1>
+    <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+  </header>
+
+  <div class="intro-body">
+    <div class="intro-demo" aria-hidden="true">
+      <!-- Left: P1 sees arrow sequence -->
+      <svg viewBox="0 0 80 80" width="78" height="78">
+        <rect x="6" y="6" width="68" height="68" rx="10" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+        <rect x="14" y="14" width="52" height="14" rx="4" fill="#B3E5FC" stroke="#2C2C2C" stroke-width="1.5"/>
+        <text x="40" y="25" text-anchor="middle" font-size="11" font-weight="900" fill="#2C2C2C">↑</text>
+        <rect x="14" y="33" width="52" height="14" rx="4" fill="#FFCDD2" stroke="#2C2C2C" stroke-width="1.5"/>
+        <text x="40" y="44" text-anchor="middle" font-size="11" font-weight="900" fill="#2C2C2C">→</text>
+        <rect x="14" y="52" width="52" height="14" rx="4" fill="#C8E6C9" stroke="#2C2C2C" stroke-width="1.5"/>
+        <text x="40" y="63" text-anchor="middle" font-size="11" font-weight="900" fill="#2C2C2C">↓</text>
+      </svg>
+      <!-- Speech bubble / arrow -->
+      <svg viewBox="0 0 50 40" width="40" height="32">
+        <path d="M6 20 L38 20 M32 14 L38 20 L32 26" stroke="#2C2C2C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="25" y="13" text-anchor="middle" font-size="10" font-weight="800" fill="#FF7043">🗣</text>
+      </svg>
+      <!-- Right: P2 taps direction grid -->
+      <svg viewBox="0 0 80 80" width="78" height="78">
+        <rect x="6" y="6" width="68" height="68" rx="10" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+        <rect x="14" y="14" width="24" height="24" rx="5" fill="#B3E5FC" stroke="#2C2C2C" stroke-width="2"/>
+        <text x="26" y="32" text-anchor="middle" font-size="14" font-weight="900" fill="#2C2C2C">↑</text>
+        <rect x="42" y="14" width="24" height="24" rx="5" fill="#FFCDD2" stroke="#2C2C2C" stroke-width="2"/>
+        <text x="54" y="32" text-anchor="middle" font-size="14" font-weight="900" fill="#2C2C2C">→</text>
+        <rect x="14" y="42" width="24" height="24" rx="5" fill="#C8E6C9" stroke="#2C2C2C" stroke-width="2"/>
+        <text x="26" y="60" text-anchor="middle" font-size="14" font-weight="900" fill="#2C2C2C">↓</text>
+        <rect x="42" y="42" width="24" height="24" rx="5" fill="#FFE0B2" stroke="#2C2C2C" stroke-width="2"/>
+        <text x="54" y="60" text-anchor="middle" font-size="14" font-weight="900" fill="#2C2C2C">←</text>
+      </svg>
+    </div>
+
+    <p class="intro-text">화살표 순서를 보고 말로 전달!</p>
+    <div class="badge-2p">👥 2인 전용</div>
+    <p class="intro-subtext">P1이 본 화살표 순서를 P2에게<br><b>말로</b> 알려주세요!</p>
+
+    <ul class="intro-rules">
+      <li>왼쪽(P1): 화살표가 순서대로 나타남</li>
+      <li>오른쪽(P2): P1 말을 듣고 방향 버튼 탭</li>
+      <li>순서 틀리면 실패!</li>
+      <li>5라운드, 3점 이상 성공!</li>
+    </ul>
+  </div>
+  <button class="btn btn-play" id="playBtn">🧭 PLAY</button>
+</section>
+
+<section class="screen screen-countdown" id="countdownScreen">
+  <div class="countdown-number" id="countdownNumber">3</div>
+</section>
+
+<section class="screen screen-game" id="gameScreen">
+  <div class="game-hud">
+    <button class="hud-close" id="closeBtn" aria-label="홈으로">✕</button>
+    <span class="hud-round" id="hudRound">1/5</span>
+    <div class="hud-timer-track"><div class="hud-timer-fill" id="hudTimerFill" style="width:100%"></div></div>
+    <span class="hud-score" id="hudScore">0점</span>
+    <button class="hud-sound" id="soundToggleGame" aria-label="사운드 토글">🔇</button>
+  </div>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="boards">
+    <div class="board p1">
+      <div class="board-label">👁 P1 화살표</div>
+      <div class="board-sub">P2에게 말해주세요!</div>
+      <div class="seq-slots" id="seqSlots"></div>
+    </div>
+    <div class="board p2">
+      <div class="board-label">🎮 P2 입력</div>
+      <div class="board-sub">방향 버튼을 탭!</div>
+      <div class="input-row" id="inputRow"></div>
+      <div class="dir-grid" id="dirGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section class="screen screen-result" id="resultScreen">
+  <div class="result-emoji-big" id="resultEmoji">🎉</div>
+  <h2 class="result-headline" id="resultHeadline">성공!</h2>
+  <p class="result-sub" id="resultSub">방향 해독 성공!</p>
+  <div class="result-stats">
+    <div class="stat-row"><span class="stat-label">점수</span><span class="stat-val" id="statScore">0/5</span></div>
+    <div class="stat-row"><span class="stat-label">완벽 해독</span><span class="stat-val" id="statPerfect">0회</span></div>
+  </div>
+  <div class="result-actions">
+    <button class="btn btn-retry" id="retryBtn">다시하기</button>
+    <button class="btn btn-home-res" id="homeBtn">홈으로</button>
+  </div>
+</section>
+
+<script src="../../shared/engine.js?v=7"></script>
+<script src="game.js"></script>
+</body>
+</html>

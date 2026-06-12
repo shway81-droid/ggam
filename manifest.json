@@ -1,7 +1,7 @@
 {
   "name": "짬짬이 교실",
   "short_name": "짬짬이 교실",
-  "description": "전자칠판으로 즐기는 자투리 시간 초등 미니게임 46개",
+  "description": "전자칠판으로 즐기는 자투리 시간 초등 미니게임 60개",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

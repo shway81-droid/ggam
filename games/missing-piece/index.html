@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>빠진 조각</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">빠진 조각</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <!-- Demo: mini 3x3 grid with one ? cell -->
+      <div class="intro-demo" aria-hidden="true">
+        <div class="demo-grid-wrap">
+          <div class="demo-mini-grid">
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><circle cx="25" cy="25" r="18" fill="#E53935"/></svg></div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><rect x="7" y="7" width="36" height="36" rx="4" fill="#E53935"/></svg></div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><polygon points="25,7 43,43 7,43" fill="#E53935"/></svg></div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><circle cx="25" cy="25" r="18" fill="#1E88E5"/></svg></div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><rect x="7" y="7" width="36" height="36" rx="4" fill="#1E88E5"/></svg></div>
+            <div class="demo-cell demo-cell-empty">?</div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><circle cx="25" cy="25" r="18" fill="#F9A825"/></svg></div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><rect x="7" y="7" width="36" height="36" rx="4" fill="#F9A825"/></svg></div>
+            <div class="demo-cell"><svg viewBox="0 0 50 50" width="34" height="34"><polygon points="25,7 43,43 7,43" fill="#F9A825"/></svg></div>
+          </div>
+          <div class="demo-arrow">→</div>
+          <div class="demo-answers">
+            <div class="demo-ans demo-ans-wrong"><svg viewBox="0 0 50 50" width="32" height="32"><circle cx="25" cy="25" r="18" fill="#1E88E5"/></svg></div>
+            <div class="demo-ans demo-ans-correct"><svg viewBox="0 0 50 50" width="32" height="32"><polygon points="25,7 43,43 7,43" fill="#1E88E5"/></svg></div>
+            <div class="demo-ans demo-ans-wrong"><svg viewBox="0 0 50 50" width="32" height="32"><rect x="7" y="7" width="36" height="36" rx="4" fill="#E53935"/></svg></div>
+            <div class="demo-ans demo-ans-wrong"><svg viewBox="0 0 50 50" width="32" height="32"><polygon points="25,7 43,43 7,43" fill="#F9A825"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="intro-text">패턴을 보고 빠진 조각을 찾으세요!</p>
+      <p class="intro-subtext">10라운드 · 먼저 정답을 터치하면 +1점 · 오답은 실격 · 오답 시 -1점 감점!</p>
+
+      <div class="player-select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <!-- 플레이어 구역 (JS로 동적 렌더링) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- 중앙 패턴 패널 -->
+    <div class="center-panel" id="centerPanel">
+      <div class="round-badge" id="roundBadge">1 / 10</div>
+      <div class="pattern-wrap" id="patternWrap">
+        <div class="pattern-grid" id="patternGrid">
+          <!-- JS로 채움 -->
+        </div>
+        <div class="pattern-hint" id="patternHint"></div>
+      </div>
+      <div class="round-status" id="roundStatus"></div>
+    </div>
+
+    <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+    <div class="result-scores-wrap" id="resultScoresWrap"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=7"></script>
+  <script src="game.js"></script>
+</body>
+</html>
