@@ -73,3 +73,16 @@ skip-count·job-tool은 선별 당시 원작에 없던 신규 게임. 나머지 
 과는 겹치지 않음.
 
 → 현재 60개. 분포: speed 8 / brain 11 / math 12 / knowledge 13 / coop 8 / puzzle 8
+
+## 🚫 사용자 삭제 2차 (2026-06-12, 재추가 금지)
+
+신규 45종 추가 직후 사용자가 24종 직접 삭제 지시 — 폴더명이든 다른 이름이든 같은 메커니즘 재추가 금지:
+
+- speed: tap-all(모두 잡아라 — 조건 수집 레이스), flag-updown(청기백기 — 깃발 상태 추적)
+- brain: gear-spin(톱니바퀴 방향), line-up(줄서기 추리), cup-shuffle(컵 셔플 추적), rule-find(요술 상자 — 입출력 규칙 추론), block-view(위에서 본 모양)
+- math: count-blocks(숨은 블록 세기)
+- knowledge: animal-baby(아기 동물 이름), sign-quiz(표지판 뜻)
+- coop: split-count(나눠 세기), updown-number(업다운 수 맞히기), coord-pass(좌표 전달), sync-tap(동시 터치 협응), fair-share(무게 균등 분배), word-relay(음절 분담 릴레이), sort-together(공동 정렬)
+- puzzle: car-escape(러시아워 차 빼기), river-cross(강 건너기), word-search(낱말 찾기), mini-sudoku(미니 스도쿠), frog-swap(개구리 자리 교환), logic-grid(노노그램), code-break(마스터마인드)
+
+→ 현재 81개. 분포: speed 15 / brain 13 / math 17 / knowledge 16 / coop 10 / puzzle 10
