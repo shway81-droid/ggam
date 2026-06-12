@@ -1,0 +1,1 @@
+{ "name": "시계 맞추기", "description": "P1이 불러주는 시각을 P2가 시계로 맞춰요!", "icon": "⏰", "color": "#FB8C00", "grades": [2,3,4], "playTime": "1~2분" }

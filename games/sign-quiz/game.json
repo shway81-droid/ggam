@@ -1,0 +1,1 @@
+{ "name": "표지판 읽기", "description": "이 표지판은 무슨 뜻일까요?", "icon": "🚸", "color": "#C62828", "grades": [1,2,3,4,5,6], "playTime": "1분" }
