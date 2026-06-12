@@ -1,0 +1,1 @@
+{ "name": "공평하게 나누기", "description": "상자를 나눠 두 트럭 무게를 똑같이!", "icon": "⚖️", "color": "#6D4C41", "grades": [2,3,4,5,6], "playTime": "1~2분" }

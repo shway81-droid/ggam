@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>나눠 세기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="game-title">나눠 세기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-illust" aria-hidden="true">
+        <svg viewBox="0 0 260 110" width="260" height="110">
+          <!-- 왼쪽 구역 (P1) -->
+          <rect x="8" y="15" width="108" height="80" rx="10" fill="#BBDEFB" stroke="#1565C0" stroke-width="3"/>
+          <text x="62" y="35" text-anchor="middle" font-size="9" font-weight="900" fill="#1565C0">P1 구역</text>
+          <text x="30" y="60" font-size="20">🍎</text>
+          <text x="60" y="60" font-size="20">🍎</text>
+          <text x="45" y="87" font-size="20">🍎</text>
+          <!-- 플러스 -->
+          <text x="125" y="62" text-anchor="middle" font-size="22" font-weight="900" fill="#555">+</text>
+          <!-- 오른쪽 구역 (P2) -->
+          <rect x="144" y="15" width="108" height="80" rx="10" fill="#FFCDD2" stroke="#C62828" stroke-width="3"/>
+          <text x="198" y="35" text-anchor="middle" font-size="9" font-weight="900" fill="#C62828">P2 구역</text>
+          <text x="160" y="60" font-size="20">🍎</text>
+          <text x="195" y="60" font-size="20">🍎</text>
+        </svg>
+      </div>
+
+      <p class="intro-text">🧮 각자 자기 구역의 개수를 세요!</p>
+      <div class="badge-2p">👥 2인 협력</div>
+
+      <div class="intro-rules">
+        <div class="rule-item">
+          <span class="rule-num p1n">P1</span>
+          <span>파란 구역 이모지를 세고 입력해요</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num p2n">P2</span>
+          <span>빨간 구역 이모지를 세고 입력해요</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num ok">✓</span>
+          <span>둘 다 정확하면 성공! 8라운드 도전!</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 2: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 3: 게임 -->
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar">
+      <div class="top-bar-meta">
+        <span class="question-counter" id="roundNum">1/8</span>
+        <div class="target-badge" id="targetBadge"></div>
+      </div>
+      <div class="score-badge">
+        <span class="score-label">팀 점수</span>
+        <span class="score-val" id="teamScore">0</span>
+      </div>
+      <button class="icon-btn close-btn" id="closeBtn">✕</button>
+    </div>
+
+    <!-- 문제 패널: 이모지 격자 -->
+    <div class="problem-panel" id="problemPanel">
+      <div class="emoji-zone zone-left" id="zoneLeft">
+        <div class="zone-label-top z1l">P1 구역</div>
+        <div class="emoji-grid" id="gridLeft"></div>
+      </div>
+      <div class="zone-divider"></div>
+      <div class="emoji-zone zone-right" id="zoneRight">
+        <div class="zone-label-top z2l">P2 구역</div>
+        <div class="emoji-grid" id="gridRight"></div>
+      </div>
+    </div>
+
+    <!-- 결과 배너 -->
+    <div class="banner" id="banner"></div>
+
+    <!-- 입력 영역 -->
+    <div class="input-zones" id="zonesWrap">
+      <!-- P1 입력 존 -->
+      <div class="input-zone iz-p1" data-player="1">
+        <div class="iz-header">
+          <span class="iz-label z1">P1</span>
+          <span class="iz-hint">내 구역 개수</span>
+        </div>
+        <div class="iz-display" id="p1Display">?</div>
+        <div class="numpad" id="p1Numpad"></div>
+      </div>
+
+      <!-- P2 입력 존 -->
+      <div class="input-zone iz-p2" data-player="2">
+        <div class="iz-header">
+          <span class="iz-label z2">P2</span>
+          <span class="iz-hint">내 구역 개수</span>
+        </div>
+        <div class="iz-display" id="p2Display">?</div>
+        <div class="numpad" id="p2Numpad"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 화면 4: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="game-header">
+      <div></div>
+      <h2 class="result-title-h">나눠 세기 결과!</h2>
+      <div></div>
+    </header>
+    <div class="result-body">
+      <div class="result-icon-wrap" id="resultIconWrap">
+        <svg viewBox="0 0 80 80" width="80" height="80">
+          <circle cx="40" cy="40" r="32" fill="#C5CAE9" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="40" y="52" text-anchor="middle" font-size="32">🧮</text>
+        </svg>
+      </div>
+      <h2 class="result-title" id="resultTitle">0/8 성공</h2>
+      <p class="result-sub" id="resultSub">다시 도전!</p>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

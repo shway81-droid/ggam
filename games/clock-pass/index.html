@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>시계 맞추기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="game-title">시계 맞추기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-illust" aria-hidden="true">
+        <svg viewBox="0 0 260 110" width="260" height="110">
+          <!-- P1 디지털 시각 -->
+          <rect x="8" y="20" width="100" height="70" rx="12" fill="#FFF3E0" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="58" y="42" text-anchor="middle" font-size="9" font-weight="900" fill="#E65100">P1 시각</text>
+          <text x="58" y="75" text-anchor="middle" font-size="24" font-weight="900" fill="#E65100">7:30</text>
+          <!-- 전달 화살표 -->
+          <path d="M114 55 L145 55" stroke="#FB8C00" stroke-width="3" stroke-dasharray="4,3"/>
+          <polygon points="145,49 157,55 145,61" fill="#FB8C00"/>
+          <text x="135" y="47" text-anchor="middle" font-size="9" fill="#FB8C00" font-weight="800">읽어줘!</text>
+          <!-- P2 아날로그 시계 -->
+          <circle cx="200" cy="55" r="42" fill="#FFF3E0" stroke="#2C2C2C" stroke-width="3"/>
+          <circle cx="200" cy="55" r="3" fill="#2C2C2C"/>
+          <!-- 시침 7:30 — 시침은 7.5 위치 -->
+          <line x1="200" y1="55" x2="185" y2="36" stroke="#2C2C2C" stroke-width="4" stroke-linecap="round"/>
+          <!-- 분침 30분 — 6시 방향 -->
+          <line x1="200" y1="55" x2="200" y2="90" stroke="#E53935" stroke-width="3" stroke-linecap="round"/>
+          <!-- 눈금 -->
+          <line x1="200" y1="15" x2="200" y2="20" stroke="#555" stroke-width="2"/>
+          <line x1="200" y1="90" x2="200" y2="95" stroke="#555" stroke-width="2"/>
+          <line x1="160" y1="55" x2="165" y2="55" stroke="#555" stroke-width="2"/>
+          <line x1="235" y1="55" x2="240" y2="55" stroke="#555" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <p class="intro-text">⏰ P1이 시각을 읽어주면 P2가 맞춰요!</p>
+      <div class="badge-2p">👥 2인 협력</div>
+
+      <div class="intro-rules">
+        <div class="rule-item">
+          <span class="rule-num p1n">P1</span>
+          <span>화면의 디지털 시각을 소리 내어 읽어요</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num p2n">P2</span>
+          <span>버튼으로 시침·분침을 맞추고 확인!</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num ok">⇄</span>
+          <span>라운드마다 P1↔P2 역할이 바뀌어요</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 2: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 3: 게임 -->
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar">
+      <div class="top-bar-meta">
+        <span class="question-counter" id="roundNum">1/8</span>
+        <span class="problem-timer" id="timerEl">25</span>
+      </div>
+      <div class="score-wrap">
+        <span class="score-label">팀 점수</span>
+        <span class="score-val" id="teamScore">0</span>
+      </div>
+      <button class="icon-btn close-btn" id="closeBtn">✕</button>
+    </div>
+
+    <!-- 역할 배지 -->
+    <div class="role-bar" id="roleBar">
+      <span class="role-badge r1" id="roleBadge1">P1: 읽어주기</span>
+      <span class="role-sep">↔</span>
+      <span class="role-badge r2" id="roleBadge2">P2: 맞추기</span>
+    </div>
+
+    <!-- 게임 존 -->
+    <div class="zones-wrap p2" id="zonesWrap">
+      <!-- 읽어주기 존 -->
+      <div class="zone zone-reader" id="readerZone">
+        <div class="zone-header">
+          <span class="zone-label zr" id="readerLabel">P1</span>
+          <span class="zone-hint">이 시각을 읽어줘요!</span>
+        </div>
+        <div class="digital-time" id="digitalTime">7:30</div>
+        <div class="reader-guide">소리 내어 읽어주세요 📢</div>
+      </div>
+
+      <!-- 맞추기 존 -->
+      <div class="zone zone-setter" id="setterZone">
+        <div class="zone-header">
+          <span class="zone-label zs" id="setterLabel">P2</span>
+          <span class="zone-hint">시계를 맞춰요!</span>
+        </div>
+
+        <!-- 아날로그 시계 SVG -->
+        <div class="clock-wrap">
+          <svg class="clock-svg" id="clockSvg" viewBox="0 0 200 200">
+            <!-- 시계 배경 -->
+            <circle cx="100" cy="100" r="92" fill="#FFF9C4" stroke="#2C2C2C" stroke-width="4"/>
+            <!-- 시 눈금 (12개) -->
+            <g id="hourTicks"></g>
+            <!-- 숫자 -->
+            <g id="hourNums"></g>
+            <!-- 시침 -->
+            <line id="hourHand" x1="100" y1="100" x2="100" y2="45" stroke="#2C2C2C" stroke-width="7" stroke-linecap="round"/>
+            <!-- 분침 -->
+            <line id="minHand" x1="100" y1="100" x2="100" y2="28" stroke="#E53935" stroke-width="4" stroke-linecap="round"/>
+            <!-- 중심점 -->
+            <circle cx="100" cy="100" r="6" fill="#2C2C2C"/>
+          </svg>
+        </div>
+
+        <!-- 조절 버튼 -->
+        <div class="ctrl-grid">
+          <button class="ctrl-btn" id="hourUp" type="button">시 +1</button>
+          <button class="ctrl-btn" id="minUp" type="button">분 +15</button>
+          <button class="ctrl-btn" id="hourDown" type="button">시 -1</button>
+          <button class="ctrl-btn" id="minDown" type="button">분 -15</button>
+        </div>
+
+        <div class="current-time-display" id="currentTimeDisplay">12:00</div>
+
+        <button class="btn btn-primary confirm-btn" id="confirmBtn" type="button">확인!</button>
+      </div>
+    </div>
+
+    <!-- 결과 배너 -->
+    <div class="banner" id="banner"></div>
+  </section>
+
+  <!-- 화면 4: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="game-header">
+      <div></div>
+      <h2 class="result-title-h">시계 맞추기 결과!</h2>
+      <div></div>
+    </header>
+    <div class="result-body">
+      <div class="result-icon-wrap" id="resultIconWrap">
+        <svg viewBox="0 0 80 80" width="80" height="80">
+          <circle cx="40" cy="40" r="32" fill="#FFE0B2" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="40" y="52" text-anchor="middle" font-size="32">⏰</text>
+        </svg>
+      </div>
+      <h2 class="result-title" id="resultTitle">0/8 성공</h2>
+      <p class="result-sub" id="resultSub">다시 도전!</p>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

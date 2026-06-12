@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>동시에 터치</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="game-title">동시에 터치</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-preview" aria-hidden="true">
+        <svg viewBox="0 0 240 120" width="240" height="120">
+          <!-- 펄스 원 -->
+          <circle cx="120" cy="55" r="32" fill="#F8BBD9" stroke="#2C2C2C" stroke-width="3"/>
+          <circle cx="120" cy="55" r="22" fill="#F48FB1" stroke="#2C2C2C" stroke-width="2"/>
+          <circle cx="120" cy="55" r="12" fill="#E91E63" stroke="#2C2C2C" stroke-width="2"/>
+          <text x="120" y="60" text-anchor="middle" font-size="10" font-weight="900" fill="#fff">SYNC</text>
+          <!-- P1 터치 -->
+          <rect x="20" y="30" width="60" height="50" rx="12" fill="#B3E5FC" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="50" y="60" text-anchor="middle" font-size="22">👆</text>
+          <text x="50" y="90" text-anchor="middle" font-size="8" font-weight="800" fill="#0288D1">P1</text>
+          <!-- P2 터치 -->
+          <rect x="160" y="30" width="60" height="50" rx="12" fill="#FFCDD2" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="190" y="60" text-anchor="middle" font-size="22">👆</text>
+          <text x="190" y="90" text-anchor="middle" font-size="8" font-weight="800" fill="#E53935">P2</text>
+          <!-- 시간차 표시 -->
+          <text x="120" y="108" text-anchor="middle" font-size="10" font-weight="900" fill="#D81B60">12ms 차이!</text>
+        </svg>
+      </div>
+
+      <p class="intro-text">마음을 맞춰 동시에 터치!</p>
+      <div class="badge-2p">👥 2명 전용</div>
+
+      <div class="intro-rules">
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D81B60" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>원 펄스에 맞춰 동시에 터치!</span>
+        </div>
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFA726" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M5 12a7 7 0 0 1 14 0"/>
+            <path d="M2 12a10 10 0 0 1 20 0"/>
+          </svg>
+          <span>시간차가 작을수록 높은 점수!</span>
+        </div>
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF5350" stroke-width="2.5" stroke-linecap="round">
+            <polygon points="12 2 15 9 22 9.3 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.3 9 9"/>
+          </svg>
+          <span>10라운드! 오차 기준이 점점 좁아져요!</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 2: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 3: 게임 -->
+  <section class="screen screen-game" id="gameScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="closeBtn" aria-label="홈으로">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="round-banner">
+        <span class="round-label">라운드</span>
+        <span class="round-num" id="roundNum">1/10</span>
+        <span class="round-score" id="roundScore">🏆 0점</span>
+      </div>
+      <button class="sound-toggle" id="soundToggleGame" aria-label="사운드 토글">
+        <svg id="soundIconGame" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- 펄스 패널 (중앙) -->
+    <div class="pulse-panel" id="pulsePanel">
+      <div class="pulse-ring outer" id="pulseOuter"></div>
+      <div class="pulse-ring inner" id="pulseInner"></div>
+      <div class="pulse-core" id="pulseCore"></div>
+      <div class="tolerance-label" id="toleranceLabel">허용 오차: 300ms</div>
+      <div class="diff-display" id="diffDisplay"></div>
+    </div>
+
+    <!-- 두 존 -->
+    <div class="zones-wrap p2" id="zonesWrap">
+      <!-- P1 존 -->
+      <div class="st-zone p1-zone" id="p1Zone">
+        <div class="zone-header">
+          <span class="zone-label p1-label">P1</span>
+          <span class="zone-score" id="p1ScoreEl">0점</span>
+        </div>
+        <div class="tap-pad p1-pad" id="p1Pad">
+          <div class="tap-icon">👆</div>
+          <div class="tap-hint">터치!</div>
+        </div>
+        <div class="tap-status" id="p1Status">대기 중...</div>
+      </div>
+
+      <!-- P2 존 -->
+      <div class="st-zone p2-zone" id="p2Zone">
+        <div class="zone-header">
+          <span class="zone-label p2-label">P2</span>
+          <span class="zone-score" id="p2ScoreEl">0점</span>
+        </div>
+        <div class="tap-pad p2-pad" id="p2Pad">
+          <div class="tap-icon">👆</div>
+          <div class="tap-hint">터치!</div>
+        </div>
+        <div class="tap-status" id="p2Status">대기 중...</div>
+      </div>
+    </div>
+
+    <!-- 결과 배너 -->
+    <div class="banner" id="banner"></div>
+  </section>
+
+  <!-- 화면 4: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="game-header result-header">
+      <div></div>
+      <h2 class="result-header-title">동시에 터치 결과!</h2>
+      <div></div>
+    </header>
+    <div class="result-body">
+      <div class="result-icon-wrap">
+        <svg viewBox="0 0 80 80" width="80" height="80">
+          <circle cx="40" cy="40" r="32" fill="#F8BBD9" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="40" y="52" text-anchor="middle" font-size="32">🤜</text>
+        </svg>
+      </div>
+      <h2 class="result-title" id="resultTitle">0점</h2>
+      <p class="result-sub" id="resultSub">마음이 통했어요!</p>
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>라운드</th>
+            <th>시간차</th>
+            <th>평가</th>
+            <th>점수</th>
+          </tr>
+        </thead>
+        <tbody id="resultTbody"></tbody>
+      </table>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

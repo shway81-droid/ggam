@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>자물쇠 풀기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">자물쇠 풀기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <rect x="4" y="4" width="112" height="112" rx="10" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <!-- 자물쇠 -->
+          <rect x="34" y="60" width="52" height="40" rx="8" fill="#5E35B1" stroke="#2C2C2C" stroke-width="3"/>
+          <path d="M46 60 V44 a14 14 0 0 1 28 0 V60" fill="none" stroke="#2C2C2C" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="60" cy="82" r="7" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="2"/>
+          <!-- 색 슬롯 -->
+          <rect x="18" y="20" width="20" height="20" rx="4" fill="#E53935" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="50" y="20" width="20" height="20" rx="4" fill="#1E88E5" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="82" y="20" width="20" height="20" rx="4" fill="#43A047" stroke="#2C2C2C" stroke-width="2"/>
+          <text x="60" y="52" font-size="9" font-weight="900" text-anchor="middle" fill="#2C2C2C">비밀 암호 추리!</text>
+        </svg>
+      </div>
+      <p class="intro-text">힌트를 보고 비밀 색 암호를<br>추리해요!</p>
+      <p class="intro-subtext">⚫ = 색+위치 맞음 · ⚪ = 색만 맞음 · 7번 안에 해독 · 먼저 성공하면 승리 · 3라운드</p>
+      <div class="player-select-row">
+        <button class="cb-player-btn" data-players="2">2명</button>
+        <button class="cb-player-btn" data-players="3">3명</button>
+        <button class="cb-player-btn" data-players="4">4명</button>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 3</div>
+        <div class="problem-timer" id="problemTimer">90</div>
+      </div>
+      <div class="problem-status" id="problemStatus">비밀 암호를 추리해요!</div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+    <div class="zones-wrap p2" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+    <div class="total-row" id="totalRow"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

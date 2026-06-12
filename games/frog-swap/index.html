@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>개구리 자리 바꾸기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">개구리 자리 바꾸기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 160 90" width="160" height="90">
+          <rect x="2" y="2" width="156" height="86" rx="10" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="18" y="52" font-size="22" text-anchor="middle">🐸</text>
+          <text x="44" y="52" font-size="22" text-anchor="middle">🐸</text>
+          <rect x="64" y="34" width="32" height="32" rx="6" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="2"/>
+          <text x="80" y="56" font-size="11" text-anchor="middle" font-weight="bold">빈 잎</text>
+          <text x="116" y="52" font-size="22" text-anchor="middle" style="filter:hue-rotate(60deg)">🐸</text>
+          <text x="142" y="52" font-size="22" text-anchor="middle" style="filter:hue-rotate(60deg)">🐸</text>
+          <path d="M30 66 L130 66" stroke="#43A047" stroke-width="2" stroke-dasharray="4,3"/>
+          <text x="80" y="80" font-size="11" text-anchor="middle" fill="#2C2C2C" font-weight="bold">↔ 완전히 자리 바꾸기!</text>
+        </svg>
+      </div>
+      <p class="intro-text">초록🐸과 노란🐸 개구리가<br>자리를 완전히 바꿔요!</p>
+      <p class="intro-subtext">앞칸 비면 한 칸 전진, 상대 1마리 너머 비면 점프! 후진 불가!</p>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 3</div>
+        <div class="problem-timer" id="problemTimer">90</div>
+      </div>
+      <div class="problem-status" id="problemStatus">개구리 자리를 완전히 바꿔요!</div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+    <div class="zones-wrap p2" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+    <div class="total-row" id="totalRow"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

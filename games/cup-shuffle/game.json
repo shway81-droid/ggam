@@ -1,0 +1,1 @@
+{ "name": "컵 셔플", "description": "공이 들어간 컵을 끝까지 따라가서 찾아요!", "icon": "🥤", "color": "#FF7043", "grades": [1,2,3,4,5,6], "playTime": "1분" }

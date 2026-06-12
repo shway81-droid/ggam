@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>펭귄 빙판길</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">펭귄 빙판길</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <rect x="4" y="4" width="112" height="112" rx="10" fill="#E0F7FA" stroke="#2C2C2C" stroke-width="3"/>
+          <rect x="16" y="16" width="88" height="88" rx="6" fill="#B2EBF2" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="16" y="70" width="88" height="34" rx="0" fill="#80DEEA" opacity="0.4"/>
+          <text x="36" y="56" font-size="28" text-anchor="middle">🐧</text>
+          <text x="90" y="92" font-size="22" text-anchor="middle">🐟</text>
+          <path d="M52 48 L82 48" stroke="#00ACC1" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+          <text x="60" y="42" font-size="11" fill="#00838F" font-weight="bold">슝~</text>
+          <rect x="82" y="60" width="20" height="40" rx="4" fill="#5D4037" stroke="#2C2C2C" stroke-width="2"/>
+        </svg>
+      </div>
+      <p class="intro-text">펭귄🐧을 밀면 벽/바위에<br>부딪힐 때까지 미끄러져요!</p>
+      <p class="intro-subtext">물고기🐟 위에 정확히 멈추면 성공! · 4라운드</p>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 4</div>
+        <div class="problem-timer" id="problemTimer">60</div>
+      </div>
+      <div class="problem-status" id="problemStatus">펭귄🐧을 물고기🐟 위로!</div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+    <div class="zones-wrap p2" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+    <div class="total-row" id="totalRow"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

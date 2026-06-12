@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>업다운</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="game-title">업다운</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-preview" aria-hidden="true">
+        <svg viewBox="0 0 240 110" width="240" height="110">
+          <!-- P1 패널 -->
+          <rect x="10" y="20" width="80" height="70" rx="10" fill="#E1BEE7" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="50" y="42" text-anchor="middle" font-size="9" font-weight="800" fill="#6A1B9A">P1 비밀 수</text>
+          <text x="50" y="68" text-anchor="middle" font-size="28" font-weight="900" fill="#6A1B9A">42</text>
+          <!-- 화살표 -->
+          <text x="120" y="64" text-anchor="middle" font-size="22">⬆️</text>
+          <!-- P2 패널 -->
+          <rect x="152" y="20" width="80" height="70" rx="10" fill="#FCE4EC" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="192" y="42" text-anchor="middle" font-size="9" font-weight="800" fill="#B71C1C">P2 추측</text>
+          <text x="192" y="68" text-anchor="middle" font-size="28" font-weight="900" fill="#B71C1C">30</text>
+        </svg>
+      </div>
+
+      <p class="intro-text">P1이 비밀 수를 정해요!</p>
+      <div class="badge-2p">👥 2명 전용</div>
+
+      <div class="intro-rules">
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8E24AA" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>P1 존에만 비밀 수가 보여요</span>
+        </div>
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFA726" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M5 12a7 7 0 0 1 14 0"/>
+            <path d="M2 12a10 10 0 0 1 20 0"/>
+          </svg>
+          <span>P2가 수를 추측하면 P1이 ⬆⬇ 힌트!</span>
+        </div>
+        <div class="rule-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#EF5350" stroke-width="2.5" stroke-linecap="round">
+            <polygon points="12 2 15 9 22 9.3 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.3 9 9"/>
+          </svg>
+          <span>적게 추측할수록 고득점! 6라운드 도전!</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 2: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 3: 게임 -->
+  <section class="screen screen-game" id="gameScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="closeBtn" aria-label="홈으로">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="round-banner">
+        <span class="round-label">라운드</span>
+        <span class="round-num" id="roundNum">1/6</span>
+        <span class="round-score" id="roundScore">🏆 0점</span>
+      </div>
+      <button class="sound-toggle" id="soundToggleGame" aria-label="사운드 토글">
+        <svg id="soundIconGame" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- 두 존 영역 -->
+    <div class="zones-wrap p2" id="zonesWrap">
+      <!-- P1 존 -->
+      <div class="ud-zone p1-zone" id="p1Zone">
+        <div class="zone-header">
+          <span class="zone-label p1-label">P1</span>
+          <span class="zone-score" id="p1ScoreEl">0점</span>
+        </div>
+        <div class="secret-display" id="secretDisplay">
+          <div class="secret-label">비밀 수</div>
+          <div class="secret-num" id="secretNum">--</div>
+        </div>
+        <div class="hint-btns" id="hintBtns">
+          <button class="hint-btn btn-up" id="btnUp" disabled>⬆ 더 커</button>
+          <button class="hint-btn btn-exact" id="btnExact" disabled>🎉 정답!</button>
+          <button class="hint-btn btn-down" id="btnDown" disabled>⬇ 더 작아</button>
+        </div>
+        <div class="contradiction-msg" id="contradictionMsg"></div>
+      </div>
+
+      <!-- P2 존 -->
+      <div class="ud-zone p2-zone" id="p2Zone">
+        <div class="zone-header">
+          <span class="zone-label p2-label">P2</span>
+          <span class="zone-score" id="p2ScoreEl">0점</span>
+        </div>
+        <div class="range-bar-wrap">
+          <div class="range-bar-label" id="rangeLabel">범위: 1 ~ 20</div>
+          <div class="range-bar-track">
+            <div class="range-bar-fill" id="rangeBarFill"></div>
+            <div class="range-bar-guess" id="rangeBarGuess"></div>
+          </div>
+        </div>
+        <div class="guess-display" id="guessDisplay">?</div>
+        <div class="guess-count-label" id="guessCountLabel">추측 0회</div>
+        <div class="num-grid" id="numGrid"></div>
+        <button class="confirm-btn" id="confirmBtn" disabled>✔ 확정</button>
+      </div>
+    </div>
+
+    <!-- 결과 배너 -->
+    <div class="banner" id="banner"></div>
+
+    <!-- 차례 안내 오버레이 -->
+    <div class="turn-overlay" id="turnOverlay">
+      <div class="overlay-card">
+        <span class="overlay-emoji" id="overlayEmoji">🎲</span>
+        <h3 class="overlay-title" id="overlayTitle">P1 차례!</h3>
+        <p class="overlay-sub" id="overlaySub">비밀 수가 정해졌어요!</p>
+        <button class="btn btn-primary overlay-btn" id="overlayBtn">시작!</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 화면 4: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="game-header result-header">
+      <div></div>
+      <h2 class="result-header-title">업다운 결과!</h2>
+      <div></div>
+    </header>
+    <div class="result-body">
+      <div class="result-icon-wrap">
+        <svg viewBox="0 0 80 80" width="80" height="80">
+          <circle cx="40" cy="40" r="32" fill="#E1BEE7" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="40" y="52" text-anchor="middle" font-size="32">🎢</text>
+        </svg>
+      </div>
+      <h2 class="result-title" id="resultTitle">0점</h2>
+      <p class="result-sub" id="resultSub">둘이 함께 도전!</p>
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>라운드</th>
+            <th>역할</th>
+            <th>비밀 수</th>
+            <th>추측</th>
+            <th>점수</th>
+          </tr>
+        </thead>
+        <tbody id="resultTbody"></tbody>
+      </table>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>

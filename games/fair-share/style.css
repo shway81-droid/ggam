@@ -1,0 +1,462 @@
+/* games/fair-share/style.css */
+
+/* ── Countdown ──────────────────────────────────────────────── */
+.screen-countdown {
+  justify-content: center;
+  align-items: center;
+  background: #FFF8E1;
+}
+.countdown-number {
+  color: #6D4C41;
+}
+
+body {
+  background: #FFF8E1;
+  overflow: hidden;
+}
+
+/* ── Game header (intro) ──────────────────────────────────────── */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  flex-shrink: 0;
+}
+.game-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ── Intro screen ─────────────────────────────────────────────── */
+.screen-intro {
+  background: #FFF8E1;
+  justify-content: space-between;
+}
+.intro-body {
+  padding: var(--space-md) var(--space-lg);
+  gap: var(--space-sm);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+.intro-illust {
+  filter: drop-shadow(0 6px 0 rgba(0,0,0,0.18));
+}
+.intro-text {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.6;
+}
+.badge-2p {
+  display: inline-block;
+  background: #6D4C41;
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  box-shadow: 3px 3px 0 #2C2C2C;
+}
+.intro-rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 340px;
+  margin-top: var(--space-sm);
+}
+.rule-item {
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 #2C2C2C;
+  padding: 10px var(--space-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+}
+.btn-play {
+  width: 80%;
+  max-width: 300px;
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1.3rem;
+  margin-bottom: var(--space-xl);
+}
+
+/* ── Game screen ─────────────────────────────────────────────── */
+.screen-game {
+  background: #FFF8E1;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top bar ──────────────────────────────────────────────────── */
+.top-bar {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: rgba(109,76,65,0.85);
+  position: relative;
+}
+.top-bar-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.question-counter {
+  background: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.92);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+.problem-timer {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+  transition: color 0.3s;
+}
+.problem-timer.urgent {
+  color: #FF6F00;
+  box-shadow: 0 0 0 3px #FF6F00;
+  animation: pulse-urgent 0.5s ease-in-out infinite alternate;
+}
+@keyframes pulse-urgent {
+  from { transform: scale(1); }
+  to   { transform: scale(1.15); }
+}
+.conveyor-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.08em;
+}
+.close-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 30;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85);
+  box-shadow: none;
+}
+
+/* ── Zones ────────────────────────────────────────────────────── */
+.zones-wrap {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+}
+.zones-wrap.p2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.zone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  padding: 8px 6px;
+  gap: 4px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Zone header with truck + sum ──────────────────────────────── */
+.zone-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 0 2px;
+}
+.zone-label {
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+.truck-sum {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 12px;
+  box-shadow: 2px 2px 0 #2C2C2C;
+  padding: 2px 8px;
+}
+.truck-icon {
+  font-size: 1.1rem;
+}
+.truck-sum-num {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #2C2C2C;
+  min-width: 32px;
+  text-align: center;
+  line-height: 1.1;
+}
+.truck-sum.equal .truck-sum-num {
+  color: #2E7D32;
+}
+
+/* ── Conveyor boxes in the zone ──────────────────────────────── */
+.box-area {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+
+/* ── Box card ──────────────────────────────────────────────────── */
+.box-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 #2C2C2C;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 52px;
+  font-family: var(--font-family);
+}
+.box-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #2C2C2C;
+}
+.box-card.on-p1 {
+  background: #B3E5FC;
+  border-color: #0288D1;
+  box-shadow: 3px 3px 0 #0288D1;
+}
+.box-card.on-p2 {
+  background: #FFCDD2;
+  border-color: #E53935;
+  box-shadow: 3px 3px 0 #E53935;
+}
+.box-card.on-conv {
+  background: #FFF8E1;
+}
+.box-icon {
+  font-size: 1.4rem;
+}
+.box-weight {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #2C2C2C;
+}
+.box-owner {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #555;
+  min-width: 24px;
+  text-align: right;
+}
+
+/* ── Conveyor header label ──────────────────────────────────────── */
+.conv-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.4);
+  text-align: center;
+  margin-bottom: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Flash feedback ──────────────────────────────────────────── */
+.box-card.flash-correct {
+  animation: flashCorrect 0.45s ease-out;
+}
+.box-card.flash-wrong {
+  animation: flashWrong 0.35s ease-out;
+}
+@keyframes flashCorrect {
+  0%   { background: #A5D6A7; }
+  100% { background: inherit; }
+}
+@keyframes flashWrong {
+  0%, 50% { transform: translateX(-6px); }
+  25%, 75% { transform: translateX(6px); }
+  100%     { transform: translateX(0); }
+}
+
+/* ── Equal flash on both zones ──────────────────────────────── */
+.zone.equal-flash {
+  animation: zoneEqual 0.55s ease-out;
+}
+@keyframes zoneEqual {
+  0%   { filter: brightness(1); }
+  30%  { filter: brightness(1.25) saturate(1.5); }
+  100% { filter: brightness(1); }
+}
+
+/* ── Score bar ────────────────────────────────────────────────── */
+.score-bar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: rgba(109,76,65,0.7);
+  pointer-events: none;
+}
+.score-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fff;
+}
+.score-chip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.score-chip-val {
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ── Result screen ────────────────────────────────────────────── */
+.screen-result {
+  background: #FFF8E1;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: var(--space-lg) var(--space-md);
+  gap: var(--space-md);
+}
+.result-header { text-align: center; width: 100%; }
+.result-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+}
+.result-winner {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #6D4C41;
+  text-align: center;
+}
+.result-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: #fff;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 3px solid #2C2C2C;
+}
+.result-table th, .result-table td {
+  padding: 9px 10px;
+  text-align: center;
+  border-bottom: 1px solid #F0F0F0;
+}
+.result-table thead th {
+  font-weight: 800;
+  background: #F5F5F5;
+  color: var(--text-sub);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+.result-table tbody tr:last-child td { border-bottom: none; }
+.cell-win { font-weight: 900; color: #2E7D32; }
+.cell-fail { color: #B71C1C; font-weight: 700; }
+.cell-timeout { color: #E65100; font-size: 0.8rem; font-weight: 700; }
+.total-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding: var(--space-sm) 0;
+}
+.total-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 99px;
+  padding: 8px 18px;
+  box-shadow: 3px 3px 0 #2C2C2C;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+.total-chip .chip-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+.total-chip .chip-score {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+.result-actions {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg) var(--space-xl);
+  flex-shrink: 0;
+  width: 100%;
+  justify-content: center;
+}
+.btn-secondary {
+  background: #EFEBE9;
+  box-shadow: 3px 3px 0 #2C2C2C;
+}
+
+/* ── Icon btn ─────────────────────────────────────────────────── */
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.06);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  transition: background 0.15s;
+}
+.icon-btn:active { background: rgba(0,0,0,0.14); }
