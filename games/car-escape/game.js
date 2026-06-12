@@ -45,7 +45,7 @@ const LEVEL_LIBRARY = [
       { id: 0, row: 2, col: 0, len: 2, horiz: true },
       { id: 1, row: 0, col: 3, len: 3, horiz: false },
       { id: 2, row: 3, col: 0, len: 2, horiz: true },
-      { id: 3, row: 4, col: 3, len: 2, horiz: false },
+      { id: 3, row: 3, col: 4, len: 2, horiz: false },
     ],
     redRow: 2,
   },

@@ -37,44 +37,44 @@ const ICE_LEVEL_LIBRARY = [
   {
     penguin: { row: 1, col: 1 },
     fish: { row: 4, col: 4 },
-    rocks: [{ row: 4, col: 1 }, { row: 1, col: 4 }],
+    rocks: [{ row: 4, col: 1 }, { row: 1, col: 4 }, { row: 3, col: 4 }, { row: 5, col: 5 }],
   },
   {
     penguin: { row: 1, col: 5 },
     fish: { row: 4, col: 2 },
-    rocks: [{ row: 1, col: 2 }, { row: 4, col: 5 }],
+    rocks: [{ row: 1, col: 2 }, { row: 4, col: 5 }, { row: 3, col: 1 }, { row: 5, col: 2 }],
   },
   // 라운드 3용 — 바위 3~4개
   {
     penguin: { row: 1, col: 1 },
     fish: { row: 3, col: 5 },
-    rocks: [{ row: 1, col: 5 }, { row: 5, col: 3 }, { row: 3, col: 1 }],
+    rocks: [{ row: 1, col: 5 }, { row: 5, col: 3 }, { row: 3, col: 1 }, { row: 1, col: 2 }, { row: 4, col: 5 }],
   },
   {
     penguin: { row: 5, col: 5 },
     fish: { row: 2, col: 2 },
-    rocks: [{ row: 2, col: 5 }, { row: 5, col: 2 }, { row: 2, col: 3 }],
+    rocks: [{ row: 2, col: 5 }, { row: 5, col: 2 }, { row: 2, col: 3 }, { row: 1, col: 1 }, { row: 1, col: 2 }],
   },
   {
     penguin: { row: 1, col: 3 },
     fish: { row: 4, col: 1 },
-    rocks: [{ row: 3, col: 3 }, { row: 1, col: 1 }, { row: 4, col: 3 }],
+    rocks: [{ row: 3, col: 3 }, { row: 1, col: 1 }, { row: 4, col: 3 }, { row: 1, col: 2 }, { row: 3, col: 1 }],
   },
   // 라운드 4용 — 바위 4~5개 (복잡)
   {
     penguin: { row: 1, col: 1 },
     fish: { row: 3, col: 4 },
-    rocks: [{ row: 3, col: 1 }, { row: 1, col: 4 }, { row: 5, col: 4 }, { row: 3, col: 2 }],
+    rocks: [{ row: 3, col: 1 }, { row: 1, col: 4 }, { row: 5, col: 4 }, { row: 3, col: 2 }, { row: 3, col: 3 }, { row: 4, col: 5 }],
   },
   {
     penguin: { row: 5, col: 1 },
     fish: { row: 2, col: 4 },
-    rocks: [{ row: 2, col: 1 }, { row: 5, col: 4 }, { row: 2, col: 2 }, { row: 4, col: 4 }],
+    rocks: [{ row: 2, col: 1 }, { row: 5, col: 4 }, { row: 2, col: 2 }, { row: 4, col: 4 }, { row: 1, col: 5 }, { row: 2, col: 3 }],
   },
   {
     penguin: { row: 1, col: 5 },
     fish: { row: 4, col: 2 },
-    rocks: [{ row: 4, col: 5 }, { row: 1, col: 2 }, { row: 4, col: 4 }, { row: 2, col: 2 }, { row: 3, col: 5 }],
+    rocks: [{ row: 4, col: 5 }, { row: 1, col: 2 }, { row: 4, col: 4 }, { row: 2, col: 2 }, { row: 3, col: 5 }, { row: 3, col: 2 }, { row: 5, col: 1 }],
   },
 ];
 
