@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>낱말 찾기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">낱말 찾기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <rect x="4" y="4" width="112" height="112" rx="10" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <rect x="16" y="16" width="20" height="20" rx="3" fill="#C8E6C9" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="40" y="16" width="20" height="20" rx="3" fill="#C8E6C9" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="64" y="16" width="20" height="20" rx="3" fill="#C8E6C9" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="88" y="16" width="20" height="20" rx="3" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="16" y="40" width="20" height="20" rx="3" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="40" y="40" width="20" height="20" rx="3" fill="#C8E6C9" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="64" y="40" width="20" height="20" rx="3" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="2"/>
+          <rect x="88" y="40" width="20" height="20" rx="3" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="2"/>
+          <text x="26" y="31" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">사</text>
+          <text x="50" y="31" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">과</text>
+          <text x="74" y="31" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">일</text>
+          <text x="98" y="31" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">나</text>
+          <text x="26" y="55" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">나</text>
+          <text x="50" y="55" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">무</text>
+          <text x="74" y="55" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">비</text>
+          <text x="98" y="55" font-size="11" font-weight="900" text-anchor="middle" fill="#2C2C2C">무</text>
+          <rect x="16" y="80" width="88" height="28" rx="6" fill="#7CB342" stroke="#2C2C2C" stroke-width="2"/>
+          <text x="60" y="99" font-size="12" font-weight="900" text-anchor="middle" fill="#fff">낱말 찾기! 🔠</text>
+        </svg>
+      </div>
+      <p class="intro-text">숨어 있는 낱말 세 개를<br>격자에서 찾아요!</p>
+      <p class="intro-subtext">첫 글자 터치 → 끝 글자 터치 · 먼저 3개 찾으면 승리 · 3라운드</p>
+      <div class="player-select-row">
+        <button class="player-btn" data-players="2">2명</button>
+        <button class="player-btn" data-players="3">3명</button>
+        <button class="player-btn" data-players="4">4명</button>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 3</div>
+        <div class="problem-timer" id="problemTimer">90</div>
+      </div>
+      <div class="problem-status" id="problemStatus">낱말 3개를 찾아요!</div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+    <div class="zones-wrap p2" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+    <div class="total-row" id="totalRow"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=8"></script>
+  <script src="game.js"></script>
+</body>
+</html>
