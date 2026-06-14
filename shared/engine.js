@@ -790,7 +790,6 @@ const _GAME_CATEGORY_MAP = {
   'even-odd': 'speed',
   'pitch-compare': 'speed',
   'beep-count': 'speed',
-  'emoji-zoom': 'speed',
   'running-sum': 'speed',
   'word-scramble': 'brain',
   'closest-number': 'math',
