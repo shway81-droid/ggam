@@ -21,6 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Bump service worker cache version
+        # sw.js의 CACHE_NAME을 이번 배포 커밋 SHA로 치환해 캐시를 자동 무효화한다.
+        # → 게임/공통 파일을 수정해도 기존 방문자에게 다음 접속 시 반영됨 (수동 +1 불필요).
+        run: |
+          sed -i "s|const CACHE_NAME = '[^']*';|const CACHE_NAME = 'gyosil-noriplan-${GITHUB_SHA::7}';|" sw.js
+          echo "캐시 버전 → $(grep 'const CACHE_NAME' sw.js)"
       - name: Publish to gh-pages branch
         run: |
           git config user.name "github-actions[bot]"

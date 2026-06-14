@@ -6,9 +6,12 @@
 //   (NETWORK_TIMEOUT_MS 내 응답 없거나 실패 시 캐시 폴백)
 //   → 새 게임 추가 시 사용자에게 즉시 표시됨
 // - 그 외 게임 파일들 (game.js, style.css 등) → 캐시 우선 (빠른 로딩 + 오프라인 지원)
-//   → 이미 배포된 games/*·shared/* 파일을 수정하면 CACHE_NAME을 +1 해야 기존 방문자에게 반영됨
-//     (docs/AUTO_MODE.md "캐시 버전 범프 규칙" 참고)
+//   → 이미 배포된 games/*·shared/* 파일을 수정해도, 배포 시 CACHE_NAME이 커밋 SHA로
+//     자동 치환되므로 기존 방문자에게 다음 접속 시 반영됨 (수동 버전 범프 불필요).
 
+// 배포 시 .github/workflows/pages.yml이 이 값을 커밋 SHA로 자동 치환한다.
+// (게임/공통 파일 수정이 기존 방문자에게 확실히 반영되도록 — 수동 +1 불필요)
+// 로컬 개발에서는 아래 기본값이 그대로 쓰인다.
 const CACHE_NAME = 'gyosil-noriplan-v14';
 
 // 느린 회선에서 network-first가 첫 화면을 오래 막지 않도록 캐시로 폴백하는 대기 시간
