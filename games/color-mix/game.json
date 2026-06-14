@@ -1,1 +1,10 @@
-{ "name": "색 섞기", "description": "P1·P2가 색을 하나씩 골라 목표 색을 만들어요! 협력 색 합성 게임", "icon": "🎨", "color": "#FF7043", "grades": [1,2,3,4,5,6], "playTime": "1~2분" }
+{
+  "name": "색 섞기",
+  "description": "P1·P2가 색을 하나씩 골라 목표 색을 만들어요! 협력 색 합성 게임",
+  "icon": "🎨",
+  "color": "#FF7043",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1~2분",
+  "category": "coop",
+  "players": "2명"
+}

@@ -1,1 +1,10 @@
-{ "name": "직업과 도구", "description": "도구를 보고 알맞은 직업을 맞혀보세요!", "icon": "🧰", "color": "#5C6BC0", "grades": [1,2,3,4], "playTime": "1분" }
+{
+  "name": "직업과 도구",
+  "description": "도구를 보고 알맞은 직업을 맞혀보세요!",
+  "icon": "🧰",
+  "color": "#5C6BC0",
+  "grades": [1, 2, 3, 4],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

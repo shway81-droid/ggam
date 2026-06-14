@@ -1,1 +1,10 @@
-{ "name": "속담 완성", "description": "속담의 뒷부분을 맞혀보세요!", "icon": "📜", "color": "#795548", "grades": [2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "속담 완성",
+  "description": "속담의 뒷부분을 맞혀보세요!",
+  "icon": "📜",
+  "color": "#795548",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

@@ -24,8 +24,23 @@ shared/engine.js    # 타이머·점수판·Web Audio 효과음·onTap
 games/<폴더>/        # 게임별 game.json + index.html + style.css + game.js
 games/registry.json # 게임 목록
 sw.js               # 오프라인 서비스 워커
-scripts/verify-game.js  # 정적 검증 (node scripts/verify-game.js <폴더>)
+scripts/verify-game.js  # 게임 1개 정적 검증 (node scripts/verify-game.js <폴더>)
+scripts/verify-all.js   # 전 게임 일괄 검증 + registry 정합성 (npm test)
+scripts/gen-metadata.js # game.json → 파생 메타 생성 (npm run gen)
 ```
+
+### 메타데이터 단일 소스
+
+게임의 `category`(필터·BGM 분류)와 `players`(인원 배지)는 **`game.json`에만** 둔다.
+런처의 `FALLBACK_GAMES`와 `engine.js`의 `_GAME_CATEGORY_MAP`은 `game.json`에서
+`scripts/gen-metadata.js`가 자동 생성한다(`@generated:` 마커 사이). 게임을 추가·수정하면:
+
+```
+npm run gen   # 파생 메타 재생성 (engine.js / index.html)
+npm test      # 동기화 확인(gen --check) + 전 게임 정적 검증
+```
+
+CI(`.github/workflows/ci.yml`)가 PR마다 `npm test`로 동기화·검증을 강제한다.
 
 ## 카테고리 분포 (78)
 

@@ -1,1 +1,10 @@
-{ "name": "가위바위보 반사", "description": "상대 손을 보고 이기는 손을 가장 먼저 골라요! 순발력 게임", "icon": "✊", "color": "#7B1FA2", "grades": [1,2,3,4,5,6], "playTime": "1~2분" }
+{
+  "name": "가위바위보 반사",
+  "description": "상대 손을 보고 이기는 손을 가장 먼저 골라요! 순발력 게임",
+  "icon": "✊",
+  "color": "#7B1FA2",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1~2분",
+  "category": "speed",
+  "players": "2-4명"
+}

@@ -1,1 +1,10 @@
-{ "name": "계절 찾기", "description": "그림을 보고 어울리는 계절을 골라요!", "icon": "🍂", "color": "#7CB342", "grades": [1,2,3], "playTime": "1분" }
+{
+  "name": "계절 찾기",
+  "description": "그림을 보고 어울리는 계절을 골라요!",
+  "icon": "🍂",
+  "color": "#7CB342",
+  "grades": [1, 2, 3],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

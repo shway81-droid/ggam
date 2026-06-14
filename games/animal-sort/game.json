@@ -1,1 +1,10 @@
-{ "name": "동물 분류", "description": "동물을 보고 어느 무리에 속하는지 맞혀보세요! 포유류·조류·어류·곤충", "icon": "🦁", "color": "#8D6E63", "grades": [1,2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "동물 분류",
+  "description": "동물을 보고 어느 무리에 속하는지 맞혀보세요! 포유류·조류·어류·곤충",
+  "icon": "🦁",
+  "color": "#8D6E63",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

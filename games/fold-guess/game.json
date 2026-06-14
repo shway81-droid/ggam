@@ -1,1 +1,10 @@
-{ "name": "종이접기", "description": "접은 종이를 펼치면 어떤 모양일까요?", "icon": "📄", "color": "#7C4DFF", "grades": [2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "종이접기",
+  "description": "접은 종이를 펼치면 어떤 모양일까요?",
+  "icon": "📄",
+  "color": "#7C4DFF",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "puzzle",
+  "players": "2-4명"
+}

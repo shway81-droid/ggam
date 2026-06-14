@@ -286,145 +286,89 @@
 
   <script src="shared/engine.js?v=10"></script>
   <script>
-    // ═══ 게임 메타데이터 (registry 로드 실패 시 폴백) ═══
-    var CATEGORY_MAP = {
-      'reaction-race':'speed','balloon-pop':'speed','rps-react':'speed','chase-tap':'speed','odd-color':'speed','simon-says':'speed','stop-bar':'speed',
-      'find-diff':'brain','spelling-quiz':'knowledge',
-      'half-match':'coop','telepathy':'coop','emoji-clue':'coop',
-      'sokoban':'puzzle',
-      'color-touch':'brain','shadow-match':'brain','dots-and-boxes':'brain','memory-match':'brain','nim-game':'brain','odd-one-out':'brain','pattern-next':'brain','relation-match':'brain',
-      'quick-math':'math','size-compare':'math','color-count':'math','number-tap':'math','clock-reading':'math','math-sign':'math','area-compare':'math','dice-sum':'math',
-      'ox-quiz':'knowledge','initial-quiz':'knowledge','flag-quiz':'knowledge','proverb-quiz':'knowledge','english-word':'knowledge','animal-sort':'knowledge','hangul-jamo':'knowledge','opposite-word':'knowledge',
-      'sum-relay':'coop','jamo-merge':'coop','memory-relay':'coop',
-      'slide-puzzle':'puzzle','maze-run':'puzzle','pipe-connect':'puzzle','dot-connect':'puzzle','fold-guess':'puzzle','hanoi':'puzzle',
-      'arrow-tap':'speed',
-      'missing-piece':'brain','mirror-match':'brain',
-      'skip-count':'math','more-or-less':'math','number-bond':'math','coin-count':'math',
-      'job-tool':'knowledge','unit-noun':'knowledge','synonym-quiz':'knowledge','capital-quiz':'knowledge',
-      'direction-relay':'coop','color-mix':'coop',
-      'arrow-rotate':'puzzle',
-      'high-low':'speed',
-      'feature-hunt':'speed',
-      'even-odd':'speed',
-      'pitch-compare':'speed',
-      'beep-count':'speed',
-
-      'running-sum':'speed',
-      
-      
-      'word-scramble':'brain',
-      
-      'closest-number':'math',
-      'fraction-match':'math',
-      'number-line':'math',
-      'make-ten':'math',
-      'hundred-chart':'math',
-      'word-reveal':'knowledge',
-      'season-match':'knowledge',
-      'trash-sort':'knowledge',
-      'chain-calc':'coop',
-      
-      
-      
-      
-      
-      
-      'ice-slide':'puzzle',
-      
-      
-      
-      'magic-square':'puzzle',
-      
-    };
-
-    var PLAYER_COUNTS = {
-      'nim-game':'2명','sum-relay':'2명','jamo-merge':'2명',
-      'half-match':'2명','telepathy':'2명','emoji-clue':'2명','sokoban':'2명',
-      'direction-relay':'2명','color-mix':'2명',
-      'chain-calc':'2명',
-      // 나머지는 자동으로 '2-4명'
-    };
-
+    // ═══ 게임 메타데이터 — category·players·폴백 모두 game.json 단일 소스에서 파생 ═══
+    /* @generated:fallback — scripts/gen-metadata.js가 game.json에서 생성. registry fetch 실패 시 오프라인 폴백. 직접 수정 금지 (npm run gen) */
     var FALLBACK_GAMES = [
-      { folder:'reaction-race', name:'신호 반응', description:'초록색이 되면 재빨리 터치!', icon:'🚦', color:'#66BB6A', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'balloon-pop', name:'풍선 터트리기', description:'떠오르는 풍선을 빠르게 터치!', icon:'🎈', color:'#E91E63', grades:[1,2,3,4,5,6], playTime:'30초' },
-      { folder:'rps-react', name:'가위바위보 반사', description:'상대 손을 보고 이기는 손을 가장 먼저!', icon:'✊', color:'#7B1FA2', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'chase-tap', name:'점프하는 표적', description:'점프하는 표적을 따라가서 터치!', icon:'🎯', color:'#00ACC1', grades:[1,2,3,4,5,6], playTime:'30초' },
-      { folder:'odd-color', name:'다른 색 찾기', description:'색이 다른 동그라미를 가장 먼저!', icon:'🎨', color:'#FF7043', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'simon-says', name:'가라사대', description:'"가라사대"가 붙을 때만 터치!', icon:'👑', color:'#FF8F00', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'stop-bar', name:'타이밍 스톱', description:'움직이는 바를 한가운데에 멈춰라!', icon:'⏱️', color:'#00ACC1', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'arrow-tap', name:'방향 화살표', description:'화살표를 보고 같은 방향을 빠르게 터치!', icon:'🧭', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'high-low', name:'오르락내리락', description:'새로 나온 수가 앞의 수보다 크면 ⬆ 작으면 ⬇! 빠른 비교 판단', icon:'📈', color:'#43A047', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'feature-hunt', name:'특징 찾기', description:'색과 모양 조건에 맞는 것을 가장 먼저 찾아 터치!', icon:'🔎', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'even-odd', name:'홀짝 판단', description:'숫자가 홀수면 홀! 짝수면 짝! 빠르게 판단해요', icon:'🔢', color:'#00ACC1', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'pitch-compare', name:'높은 음 찾기', description:'두 음을 듣고 어느 쪽이 높은 음인지 맞혀요!', icon:'🎵', color:'#EC407A', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'beep-count', name:'소리 세기', description:'삑 소리가 몇 번 울렸는지 세서 맞혀요!', icon:'👂', color:'#F4511E', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'running-sum', name:'달리는 덧셈', description:'기차가 싣고 가는 수를 계속 더해요! 지금까지 합은?', icon:'🚂', color:'#6D4C41', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'find-diff', name:'다른 곳 찾기', description:'두 그림을 비교해 다른 칸을 먼저!', icon:'🔍', color:'#5C6BC0', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'missing-piece', name:'빠진 조각', description:'패턴을 보고 빠진 조각을 찾으세요!', icon:'🧩', color:'#7E57C2', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'mirror-match', name:'거울 대칭', description:'거울에 비친 모습을 찾으세요!', icon:'🪞', color:'#26C6DA', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'word-scramble', name:'섞인 글자', description:'뒤죽박죽 글자를 바른 순서로 터치해 단어를 만들어요!', icon:'🔀', color:'#D81B60', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'spelling-quiz', name:'맞춤법 퀴즈', description:'되 vs 돼! 옳은 표기를 가장 먼저!', icon:'✏️', color:'#00897B', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'job-tool', name:'직업과 도구', description:'도구를 보고 알맞은 직업을 4지선다에서 가장 먼저 골라요! 직업 탐색·어휘', icon:'🧰', color:'#5C6BC0', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'unit-noun', name:'단위 세기', description:'물건을 세는 알맞은 단위(세는 말)를 4지선다에서 가장 먼저 골라요! 국어 단위명사', icon:'🔢', color:'#26A69A', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'synonym-quiz', name:'비슷한 말', description:'주어진 단어와 비슷한 말(유의어)을 4지선다에서 가장 먼저 골라요! 국어 어휘', icon:'💬', color:'#5C6BC0', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'capital-quiz', name:'수도 맞히기', description:'나라의 수도를 맞혀보세요!', icon:'🌍', color:'#26A69A', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'word-reveal', name:'한 글자씩', description:'글자가 하나씩 나타나요! 먼저 알아채고 정답을 골라요!', icon:'💡', color:'#FB8C00', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'season-match', name:'계절 찾기', description:'그림을 보고 어울리는 계절을 골라요!', icon:'🍂', color:'#7CB342', grades:[1,2,3], playTime:'1분' },
-      { folder:'trash-sort', name:'분리수거', description:'쓰레기를 알맞은 분리수거함에 넣어요!', icon:'♻️', color:'#2E7D32', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'half-match', name:'반쪽 맞추기', description:'P1의 설명을 듣고 맞는 반쪽 찾기!', icon:'🧩', color:'#43A047', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'telepathy', name:'텔레파시', description:'둘이 몰래 같은 것을 고르면 성공!', icon:'💫', color:'#7B1FA2', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'emoji-clue', name:'이모지 힌트', description:'이모지 3개로만 단어를 설명해요!', icon:'💡', color:'#F9A825', grades:[2,3,4,5,6], playTime:'1~2분' },
-      { folder:'direction-relay', name:'방향 따라하기', description:'P1이 본 화살표 순서를 P2에게 말로 알려주세요! 협력 방향 게임', icon:'🧭', color:'#26A69A', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'color-mix', name:'색 섞기', description:'P1·P2가 색을 하나씩 골라 목표 색을 만들어요! 협력 색 합성 게임', icon:'🎨', color:'#FF7043', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'chain-calc', name:'이어 계산', description:'P1의 답이 P2 문제로 이어져요! 둘이 함께 계산 완성!', icon:'🔗', color:'#00897B', grades:[2,3,4,5,6], playTime:'1~2분' },
-      { folder:'sokoban', name:'상자 밀기', description:'상자를 밀어 별 위에 먼저 올려라!', icon:'📦', color:'#8D6E63', grades:[2,3,4,5,6], playTime:'1~2분' },
-      { folder:'arrow-rotate', name:'화살표 돌리기', description:'3×3 화살표를 톡톡! 모두 ↑ 위로 정렬하면 승리하는 회전 퍼즐', icon:'🧭', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'ice-slide', name:'펭귄 빙판길', description:'펭귄은 벽에 부딪힐 때까지 미끄러져요! 물고기 위에 정확히 멈추기!', icon:'🐧', color:'#00ACC1', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'magic-square', name:'마방진', description:'가로·세로·대각선 합이 모두 같게 수를 채워요!', icon:'✨', color:'#F9A825', grades:[3,4,5,6], playTime:'1~2분' },
-      { folder:'color-touch', name:'색깔 터치', description:'글자의 뜻에 맞는 색을 터치!', icon:'🟡', color:'#9C27B0', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'shadow-match', name:'그림자 맞히기', description:'그림자를 보고 원래 그림을 찾으세요!', icon:'🌑', color:'#546E7A', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'dots-and-boxes', name:'도트 앤 박스', description:'선을 그어 사각형을 완성하세요!', icon:'🔲', color:'#78909C', grades:[2,3,4,5,6], playTime:'2~3분' },
-      { folder:'memory-match', name:'카드 뒤집기', description:'같은 그림 카드 짝을 찾으세요!', icon:'🃏', color:'#AB47BC', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'nim-game', name:'돌 가져가기', description:'마지막 돌을 가져가면 지는 전략 게임!', icon:'🪨', color:'#607D8B', grades:[1,2,3,4,5,6], playTime:'2~3분' },
-      { folder:'odd-one-out', name:'다른 낱말 찾기', description:'어울리지 않는 낱말 하나를 찾아요!', icon:'🔍', color:'#7E57C2', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'pattern-next', name:'다음 무늬', description:'반복 무늬 보고 다음 무늬 맞히기!', icon:'🔷', color:'#7E57C2', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'relation-match', name:'짝 찾기', description:'바늘-실처럼 어울리는 짝을 골라요!', icon:'🧩', color:'#7E57C2', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'quick-math', name:'빠른 계산', description:'정답을 가장 먼저 터치하세요!', icon:'🧮', color:'#26A69A', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'size-compare', name:'크기 비교', description:'더 큰 숫자를 먼저 터치!', icon:'📐', color:'#FF9800', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'color-count', name:'색 세기', description:'같은 색 원이 몇 개인지 세어보세요!', icon:'🔵', color:'#42A5F5', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'number-tap', name:'숫자 순서대로', description:'1부터 순서대로 빠르게 터치!', icon:'🔢', color:'#FFA726', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'clock-reading', name:'시계 읽기', description:'시계를 보고 맞는 시간을 터치!', icon:'🕐', color:'#78909C', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'math-sign', name:'부호 맞히기', description:'빈칸에 들어갈 + − × ÷ 찾기!', icon:'➕', color:'#FB8C00', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'area-compare', name:'넓이 비교', description:'네모가 가장 많은 도형을 골라요!', icon:'📐', color:'#26A69A', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'dice-sum', name:'주사위 합', description:'주사위 두 개의 합을 가장 먼저!', icon:'🎲', color:'#F9A825', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'skip-count', name:'뛰어 세기', description:'2씩·5씩 뛰어 센 수열의 빈칸에 들어갈 수를 가장 먼저 골라요! 1-3학년 규칙·수 세기', icon:'🔢', color:'#00897B', grades:[1,2,3], playTime:'1분' },
-      { folder:'more-or-less', name:'많다 적다', description:'어느 쪽이 더 많은지 빠르게 판단!', icon:'⚖️', color:'#8D6E63', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'number-bond', name:'수 가르기', description:'빈칸에 들어갈 수를 찾아 식을 완성해요! 가르기와 모으기', icon:'➕', color:'#00897B', grades:[1,2,3], playTime:'1분' },
-      { folder:'coin-count', name:'동전 세기', description:'동전을 모두 더하면 얼마인지 4지선다에서 가장 먼저 골라요! 1-4학년 화폐·덧셈', icon:'🪙', color:'#F9A825', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'closest-number', name:'가까운 수', description:'목표 수에 가장 가까운 수를 골라요!', icon:'🎯', color:'#1E88E5', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'fraction-match', name:'분수 맞히기', description:'그림이 나타내는 분수를 찾아요!', icon:'🍕', color:'#E53935', grades:[3,4,5,6], playTime:'1분' },
-      { folder:'number-line', name:'수직선', description:'수직선 위 화살표가 가리키는 수는?', icon:'📏', color:'#00ACC1', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'make-ten', name:'10 만들기', description:'더해서 10이 되는 두 수를 찾아 터치!', icon:'🔟', color:'#43A047', grades:[1,2,3,4], playTime:'1분' },
-      { folder:'hundred-chart', name:'백판 빈칸', description:'수 배열표의 빈칸에 들어갈 수를 맞혀요!', icon:'💯', color:'#5C6BC0', grades:[1,2,3], playTime:'1분' },
-      { folder:'ox-quiz', name:'OX 퀴즈', description:'O일까 X일까? 빠르게 맞혀보세요!', icon:'❓', color:'#EC407A', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'initial-quiz', name:'초성 퀴즈', description:'초성을 보고 맞는 그림을 터치!', icon:'🔤', color:'#8D6E63', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'flag-quiz', name:'국기 맞히기', description:'국기를 보고 나라를 맞혀보세요!', icon:'🏁', color:'#1565C0', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'proverb-quiz', name:'속담 완성', description:'속담의 뒷부분을 맞혀보세요!', icon:'📜', color:'#795548', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'english-word', name:'영어 단어', description:'영어 단어의 한국어 뜻 맞히기!', icon:'🔤', color:'#4CAF50', grades:[3,4,5,6], playTime:'1분' },
-      { folder:'animal-sort', name:'동물 분류', description:'어느 무리에 속하는 동물일까?', icon:'🦁', color:'#8D6E63', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'hangul-jamo', name:'한글 자모', description:'자음과 모음의 이름을 맞혀요!', icon:'🔠', color:'#5E35B1', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'opposite-word', name:'반대말 맞히기', description:'단어의 반대말을 가장 먼저!', icon:'↔️', color:'#F06292', grades:[1,2,3,4,5,6], playTime:'1분' },
-      { folder:'sum-relay', name:'숫자 합 만들기', description:'둘이 카드를 골라 목표 합 만들기!', icon:'➕', color:'#43A047', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'jamo-merge', name:'자음+모음 합치기', description:'자음과 모음으로 목표 글자 만들기!', icon:'🔤', color:'#43A047', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'memory-relay', name:'기억 이어가기', description:'색 순서를 함께 외워 이어가는 협력!', icon:'🧠', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'2~3분' },
-      { folder:'slide-puzzle', name:'슬라이딩 퍼즐', description:'조각을 밀어 먼저 완성하면 승리!', icon:'🧩', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'maze-run', name:'미로 찾기', description:'먼저 길을 찾아 도착하면 승리!', icon:'🌀', color:'#7C4DFF', grades:[1,2,3,4,5,6], playTime:'1~2분' },
-      { folder:'pipe-connect', name:'파이프 잇기', description:'파이프를 돌려 먼저 연결하면 승리!', icon:'🔧', color:'#7C4DFF', grades:[2,3,4,5,6], playTime:'1~2분' },
-      { folder:'dot-connect', name:'점 잇기', description:'같은 색 점을 길로 모두 연결!', icon:'🔵', color:'#7C4DFF', grades:[3,4,5,6], playTime:'1~2분' },
-      { folder:'fold-guess', name:'종이접기', description:'펼치면 나올 대칭 모양 맞히기!', icon:'📄', color:'#7C4DFF', grades:[2,3,4,5,6], playTime:'1분' },
-      { folder:'hanoi', name:'하노이탑', description:'원반을 옮겨 먼저 탑을 완성!', icon:'🗼', color:'#7C4DFF', grades:[2,3,4,5,6], playTime:'1~2분' }
+      {"folder":"reaction-race","name":"신호 반응","description":"초록색이 되면 재빨리 터치!","icon":"🚦","color":"#66BB6A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"balloon-pop","name":"풍선 터트리기","description":"떠오르는 풍선을 빠르게 터치!","icon":"🎈","color":"#E91E63","grades":[1,2,3,4,5,6],"playTime":"30초","category":"speed","players":"2-4명"},
+      {"folder":"rps-react","name":"가위바위보 반사","description":"상대 손을 보고 이기는 손을 가장 먼저 골라요! 순발력 게임","icon":"✊","color":"#7B1FA2","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"speed","players":"2-4명"},
+      {"folder":"chase-tap","name":"점프하는 표적","description":"이리저리 점프하는 표적을 빠르게 따라가서 터치하세요!","icon":"🎯","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"30초","category":"speed","players":"2-4명"},
+      {"folder":"odd-color","name":"다른 색 찾기","description":"보기 중 색이 다른 동그라미를 빠르게 찾아요!","icon":"🎨","color":"#FF7043","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"simon-says","name":"가라사대","description":"\"가라사대\"가 붙을 때만 재빨리 동작 버튼을 눌러요!","icon":"👑","color":"#FF8F00","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"stop-bar","name":"타이밍 스톱","description":"마커가 골드 존에 올 때 멈춰!","icon":"⏱️","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"arrow-tap","name":"방향 화살표","description":"화살표를 보고 같은 방향을 빠르게 터치!","icon":"🧭","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"high-low","name":"오르락내리락","description":"새로 나온 수가 앞의 수보다 크면 ⬆ 작으면 ⬇! 빠른 비교 판단","icon":"📈","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"feature-hunt","name":"특징 찾기","description":"색과 모양 조건에 맞는 것을 가장 먼저 찾아 터치!","icon":"🔎","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"even-odd","name":"홀짝 판단","description":"숫자가 홀수면 홀! 짝수면 짝! 빠르게 판단해요","icon":"🔢","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"pitch-compare","name":"높은 음 찾기","description":"두 음을 듣고 어느 쪽이 높은 음인지 맞혀요!","icon":"🎵","color":"#EC407A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"beep-count","name":"소리 세기","description":"삑 소리가 몇 번 울렸는지 세서 맞혀요!","icon":"👂","color":"#F4511E","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"running-sum","name":"달리는 덧셈","description":"기차가 싣고 가는 수를 계속 더해요! 지금까지 합은?","icon":"🚂","color":"#6D4C41","grades":[2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"color-touch","name":"색깔 터치","description":"글자의 뜻에 맞는 색을 터치!","icon":"🟡","color":"#9C27B0","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"shadow-match","name":"그림자 맞히기","description":"그림자를 보고 원래 그림을 찾으세요!","icon":"🌑","color":"#546E7A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"dots-and-boxes","name":"도트 앤 박스","description":"선을 그어 사각형을 완성하세요!","icon":"🔲","color":"#78909C","grades":[2,3,4,5,6],"playTime":"2~3분","category":"brain","players":"2-4명"},
+      {"folder":"memory-match","name":"카드 뒤집기","description":"같은 그림 카드 짝을 찾으세요!","icon":"🃏","color":"#AB47BC","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"brain","players":"2-4명"},
+      {"folder":"nim-game","name":"돌 가져가기","description":"마지막 돌을 가져가면 지는 전략 게임!","icon":"🪨","color":"#607D8B","grades":[1,2,3,4,5,6],"playTime":"2~3분","category":"brain","players":"2명"},
+      {"folder":"odd-one-out","name":"다른 낱말 찾기","description":"끼리끼리 모인 낱말 중 어울리지 않는 하나를 찾아요!","icon":"🔍","color":"#7E57C2","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"pattern-next","name":"다음 무늬","description":"반복되는 무늬를 보고 다음에 올 무늬를 찾으세요!","icon":"🔷","color":"#7E57C2","grades":[1,2,3,4],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"relation-match","name":"짝 찾기","description":"서로 어울리는 짝을 찾아보세요!","icon":"🧩","color":"#7E57C2","grades":[1,2,3,4],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"find-diff","name":"다른 곳 찾기","description":"두 그림을 비교해서 다른 한 칸을 가장 먼저 찾아요!","icon":"🔍","color":"#5C6BC0","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"missing-piece","name":"빠진 조각","description":"패턴을 보고 빠진 조각을 찾으세요!","icon":"🧩","color":"#7E57C2","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"mirror-match","name":"거울 대칭","description":"거울에 비친 모습을 찾으세요!","icon":"🪞","color":"#26C6DA","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"word-scramble","name":"섞인 글자","description":"뒤죽박죽 글자를 바른 순서로 터치해 단어를 만들어요!","icon":"🔀","color":"#D81B60","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"quick-math","name":"빠른 계산","description":"정답을 가장 먼저 터치하세요!","icon":"🧮","color":"#26A69A","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"math","players":"2-4명"},
+      {"folder":"size-compare","name":"크기 비교","description":"더 큰 숫자를 먼저 터치!","icon":"📐","color":"#FF9800","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"color-count","name":"색 세기","description":"같은 색 원이 몇 개인지 세어보세요!","icon":"🔵","color":"#42A5F5","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"number-tap","name":"숫자 순서대로","description":"1부터 순서대로 빠르게 터치하세요!","icon":"🔢","color":"#FFA726","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"math","players":"2-4명"},
+      {"folder":"clock-reading","name":"시계 읽기","description":"시계를 보고 맞는 시간을 터치!","icon":"🕐","color":"#78909C","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"math-sign","name":"부호 맞히기","description":"빈칸에 들어갈 사칙연산 부호(+-×÷)를 찾으세요!","icon":"➕","color":"#FB8C00","grades":[2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"area-compare","name":"넓이 비교","description":"네 도형 중 네모가 가장 많은(또는 적은) 것을 골라보세요!","icon":"📐","color":"#26A69A","grades":[2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"dice-sum","name":"주사위 합","description":"주사위 두 개의 눈을 더하면?","icon":"🎲","color":"#F9A825","grades":[1,2,3,4],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"skip-count","name":"뛰어 세기","description":"빈칸에 들어갈 수를 빠르게 찾아보세요!","icon":"🔢","color":"#00897B","grades":[1,2,3],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"more-or-less","name":"많다 적다","description":"어느 쪽이 더 많은지 빠르게 판단!","icon":"⚖️","color":"#8D6E63","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"number-bond","name":"수 가르기","description":"빈칸에 들어갈 수를 찾아 식을 완성해요! 가르기와 모으기","icon":"➕","color":"#00897B","grades":[1,2,3],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"coin-count","name":"동전 세기","description":"동전을 모두 더하면 얼마일까요?","icon":"🪙","color":"#F9A825","grades":[1,2,3,4],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"closest-number","name":"가까운 수","description":"목표 수에 가장 가까운 수를 골라요!","icon":"🎯","color":"#1E88E5","grades":[2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"fraction-match","name":"분수 맞히기","description":"그림이 나타내는 분수를 찾아요!","icon":"🍕","color":"#E53935","grades":[3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"number-line","name":"수직선","description":"수직선 위 화살표가 가리키는 수는?","icon":"📏","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"make-ten","name":"10 만들기","description":"더해서 10이 되는 두 수를 찾아 터치!","icon":"🔟","color":"#43A047","grades":[1,2,3,4],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"hundred-chart","name":"백판 빈칸","description":"수 배열표의 빈칸에 들어갈 수를 맞혀요!","icon":"💯","color":"#5C6BC0","grades":[1,2,3],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"ox-quiz","name":"OX 퀴즈","description":"O일까 X일까? 빠르게 맞혀보세요!","icon":"❓","color":"#EC407A","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"knowledge","players":"2-4명"},
+      {"folder":"initial-quiz","name":"초성 퀴즈","description":"초성을 보고 맞는 그림을 터치!","icon":"🔤","color":"#8D6E63","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"flag-quiz","name":"국기 맞히기","description":"국기를 보고 나라를 맞혀보세요!","icon":"🏁","color":"#1565C0","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"proverb-quiz","name":"속담 완성","description":"속담의 뒷부분을 맞혀보세요!","icon":"📜","color":"#795548","grades":[2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"english-word","name":"영어 단어","description":"영어 단어를 보고 뜻을 맞혀보세요!","icon":"🔤","color":"#4CAF50","grades":[3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"animal-sort","name":"동물 분류","description":"동물을 보고 어느 무리에 속하는지 맞혀보세요! 포유류·조류·어류·곤충","icon":"🦁","color":"#8D6E63","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"hangul-jamo","name":"한글 자모","description":"한글 자음과 모음을 보고 이름을 맞혀보세요!","icon":"🔠","color":"#5E35B1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"opposite-word","name":"반대말 맞히기","description":"주어진 단어의 반대말을 찾으세요!","icon":"↔️","color":"#F06292","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"spelling-quiz","name":"맞춤법 퀴즈","description":"헷갈리는 맞춤법, 바른 표기를 먼저 찾아요!","icon":"✏️","color":"#00897B","grades":[2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"job-tool","name":"직업과 도구","description":"도구를 보고 알맞은 직업을 맞혀보세요!","icon":"🧰","color":"#5C6BC0","grades":[1,2,3,4],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"unit-noun","name":"단위 세기","description":"물건을 세는 알맞은 단위(세는 말)를 찾으세요!","icon":"🔢","color":"#26A69A","grades":[1,2,3,4],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"synonym-quiz","name":"비슷한 말","description":"주어진 단어와 비슷한 말을 찾으세요!","icon":"💬","color":"#5C6BC0","grades":[2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"capital-quiz","name":"수도 맞히기","description":"나라의 수도를 맞혀보세요!","icon":"🌍","color":"#26A69A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"word-reveal","name":"한 글자씩","description":"글자가 하나씩 나타나요! 먼저 알아채고 정답을 골라요!","icon":"💡","color":"#FB8C00","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"season-match","name":"계절 찾기","description":"그림을 보고 어울리는 계절을 골라요!","icon":"🍂","color":"#7CB342","grades":[1,2,3],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"trash-sort","name":"분리수거","description":"쓰레기를 알맞은 분리수거함에 넣어요!","icon":"♻️","color":"#2E7D32","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"sum-relay","name":"숫자 합 만들기","description":"P1과 P2가 카드 한 장씩 골라 목표 합을 맞춰요! 협력 덧셈 게임","icon":"➕","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"jamo-merge","name":"자음+모음 합치기","description":"P1은 자음, P2는 모음을 골라 목표 글자를 만들어요! 한글 협력 게임","icon":"🔤","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"memory-relay","name":"기억 이어가기","description":"색 순서를 함께 외워 한 칸씩 이어가는 협력 게임!","icon":"🧠","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"2~3분","category":"coop","players":"2-4명"},
+      {"folder":"half-match","name":"반쪽 맞추기","description":"P1이 본 그림 조합을 말로 설명해 P2가 찾아요!","icon":"🧩","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"telepathy","name":"텔레파시","description":"P1과 P2가 몰래 같은 답을 고르면 텔레파시 성공! 협력 마음 맞추기 게임","icon":"💫","color":"#7B1FA2","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"emoji-clue","name":"이모지 힌트","description":"P1이 이모지 3개로 힌트! P2가 단어를 맞혀요!","icon":"💡","color":"#F9A825","grades":[2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"direction-relay","name":"방향 따라하기","description":"P1이 본 화살표 순서를 P2에게 말로 알려주세요!","icon":"🧭","color":"#26A69A","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"color-mix","name":"색 섞기","description":"P1·P2가 색을 하나씩 골라 목표 색을 만들어요! 협력 색 합성 게임","icon":"🎨","color":"#FF7043","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"chain-calc","name":"이어 계산","description":"P1의 답이 P2 문제로 이어져요! 둘이 함께 계산 완성!","icon":"🔗","color":"#00897B","grades":[2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"slide-puzzle","name":"슬라이딩 퍼즐","description":"3×3 조각을 밀어서 그림을 완성! 가장 먼저 맞춘 사람 승리!","icon":"🧩","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"maze-run","name":"미로 찾기","description":"시작에서 끝까지 길을 따라가세요! 먼저 도착한 사람 승리!","icon":"🌀","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"pipe-connect","name":"파이프 잇기","description":"파이프를 회전해서 입구와 출구를 연결! 먼저 잇는 사람 승리!","icon":"🔧","color":"#7C4DFF","grades":[2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"dot-connect","name":"점 잇기","description":"같은 색 점을 길로 연결! 모든 색을 잇고 먼저 끝낸 사람 승리!","icon":"🔵","color":"#7C4DFF","grades":[3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"fold-guess","name":"종이접기","description":"접은 종이를 펼치면 어떤 모양일까요?","icon":"📄","color":"#7C4DFF","grades":[2,3,4,5,6],"playTime":"1분","category":"puzzle","players":"2-4명"},
+      {"folder":"hanoi","name":"하노이탑","description":"원반을 한 개씩 옮겨 오른쪽 기둥으로! 가장 먼저 옮긴 사람 승리!","icon":"🗼","color":"#7C4DFF","grades":[2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"sokoban","name":"상자 밀기","description":"상자를 밀어 별 위에 올려놓으세요! 먼저 완성하면 승리!","icon":"📦","color":"#8D6E63","grades":[2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2명"},
+      {"folder":"arrow-rotate","name":"화살표 돌리기","description":"3×3 화살표를 돌려서 모두 ↑ 위로! 가장 먼저 맞춘 사람 승리!","icon":"🧭","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"ice-slide","name":"펭귄 빙판길","description":"펭귄은 벽에 부딪힐 때까지 미끄러져요! 물고기 위에 정확히 멈추기!","icon":"🐧","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"magic-square","name":"마방진","description":"가로·세로·대각선 합이 모두 같게 수를 채워요!","icon":"✨","color":"#F9A825","grades":[3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
     ];
+    /* @end:fallback */
 
     // ═══ DOM ═══
     var grid = document.getElementById('gameGrid');
@@ -463,8 +407,8 @@
         a.href = 'games/' + game.folder + '/index.html';
         a.setAttribute('aria-label', game.name + ' 게임 시작');
         a.dataset.grades = JSON.stringify(game.grades);
-        a.dataset.cat = CATEGORY_MAP[game.folder] || 'brain';
-        var players = PLAYER_COUNTS[game.folder] || '2-4명';
+        a.dataset.cat = game.category || 'brain';
+        var players = game.players || '2-4명';
         a.innerHTML =
           '<div class="game-card-thumb" style="--thumb-color:' + pastelColor(game.color) + '">' +
             '<span class="player-badge">' + players + '</span>' +
@@ -517,7 +461,7 @@
     // 룰렛 풀: 현재 선택된 카테고리의 게임 (전체면 50개 전부)
     function buildPool() {
       return allGames.filter(function(g) {
-        var cat = CATEGORY_MAP[g.folder] || 'brain';
+        var cat = g.category || 'brain';
         return currentCat === 'all' || cat === currentCat;
       });
     }
@@ -579,7 +523,7 @@
         if (elapsed + interval >= totalMs) g = winner;
         rIcon.textContent = g.icon;
         rName.textContent = g.name;
-        rTime.textContent = '⏱ ' + g.playTime + ' · ' + (PLAYER_COUNTS[g.folder] || '2-4명');
+        rTime.textContent = '⏱ ' + g.playTime + ' · ' + (g.players || '2-4명');
         rouletteSound.play('tick');
 
         elapsed += interval;

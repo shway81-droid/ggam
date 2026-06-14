@@ -1,1 +1,10 @@
-{ "name": "분수 맞히기", "description": "그림이 나타내는 분수를 찾아요!", "icon": "🍕", "color": "#E53935", "grades": [3,4,5,6], "playTime": "1분" }
+{
+  "name": "분수 맞히기",
+  "description": "그림이 나타내는 분수를 찾아요!",
+  "icon": "🍕",
+  "color": "#E53935",
+  "grades": [3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

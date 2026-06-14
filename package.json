@@ -4,8 +4,9 @@
   "description": "전자칠판으로 즐기는 자투리 시간 초등 미니게임",
   "private": true,
   "scripts": {
+    "gen": "node scripts/gen-metadata.js",
     "verify": "node scripts/verify-all.js",
-    "test": "node scripts/verify-all.js"
+    "test": "node scripts/gen-metadata.js --check && node scripts/verify-all.js"
   },
   "license": "MIT"
 }

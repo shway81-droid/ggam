@@ -1,1 +1,10 @@
-{ "name": "방향 따라하기", "description": "P1이 본 화살표 순서를 P2에게 말로 알려주세요!", "icon": "🧭", "color": "#26A69A", "grades": [1,2,3,4,5,6], "playTime": "1~2분" }
+{
+  "name": "방향 따라하기",
+  "description": "P1이 본 화살표 순서를 P2에게 말로 알려주세요!",
+  "icon": "🧭",
+  "color": "#26A69A",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1~2분",
+  "category": "coop",
+  "players": "2명"
+}

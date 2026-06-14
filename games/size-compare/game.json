@@ -1,1 +1,10 @@
-{ "name": "크기 비교", "description": "더 큰 숫자를 먼저 터치!", "icon": "📐", "color": "#FF9800", "grades": [1,2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "크기 비교",
+  "description": "더 큰 숫자를 먼저 터치!",
+  "icon": "📐",
+  "color": "#FF9800",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

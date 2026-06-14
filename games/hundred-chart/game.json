@@ -1,1 +1,10 @@
-{ "name": "백판 빈칸", "description": "수 배열표의 빈칸에 들어갈 수를 맞혀요!", "icon": "💯", "color": "#5C6BC0", "grades": [1,2,3], "playTime": "1분" }
+{
+  "name": "백판 빈칸",
+  "description": "수 배열표의 빈칸에 들어갈 수를 맞혀요!",
+  "icon": "💯",
+  "color": "#5C6BC0",
+  "grades": [1, 2, 3],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

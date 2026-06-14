@@ -1,1 +1,10 @@
-{ "name": "그림자 맞히기", "description": "그림자를 보고 원래 그림을 찾으세요!", "icon": "🌑", "color": "#546E7A", "grades": [1,2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "그림자 맞히기",
+  "description": "그림자를 보고 원래 그림을 찾으세요!",
+  "icon": "🌑",
+  "color": "#546E7A",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "brain",
+  "players": "2-4명"
+}

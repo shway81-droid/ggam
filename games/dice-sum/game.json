@@ -1,1 +1,10 @@
-{ "name": "주사위 합", "description": "주사위 두 개의 눈을 더하면?", "icon": "🎲", "color": "#F9A825", "grades": [1,2,3,4], "playTime": "1분" }
+{
+  "name": "주사위 합",
+  "description": "주사위 두 개의 눈을 더하면?",
+  "icon": "🎲",
+  "color": "#F9A825",
+  "grades": [1, 2, 3, 4],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

@@ -14,8 +14,9 @@
  *   3. index.html 4개 screen 존재
  *   4. shared/style.css, shared/engine.js 링크
  *   5. registry.json 등록
- *   6. launcher CATEGORY_MAP / FALLBACK_GAMES 등록
+ *   6. game.json category 유효 + launcher FALLBACK_GAMES 등록
  *   7. JS 문법 오류 검사
+ *   8. 카테고리 일관성 (game.json ↔ engine.js 파생맵)
  *
  * 종료 코드:
  *   0: 모든 검증 통과
@@ -71,7 +72,7 @@ check('2. game.json 필수 필드', () => {
   const p = path.join(gameDir, 'game.json');
   if (!fs.existsSync(p)) return 'game.json 없음';
   const json = JSON.parse(fs.readFileSync(p, 'utf-8'));
-  const required = ['name', 'description', 'icon', 'color', 'grades', 'playTime'];
+  const required = ['name', 'description', 'icon', 'color', 'grades', 'playTime', 'category'];
   const missing = required.filter(k => !(k in json));
   return missing.length === 0 || `누락: ${missing.join(', ')}`;
 });
@@ -105,19 +106,20 @@ check('5. registry.json 등록', () => {
   return list.includes(folder) || `registry.json에 "${folder}" 없음`;
 });
 
-// === 6. 런처 등록 ===
-check('6. 런처 CATEGORY_MAP 등록', () => {
-  const p = path.join(ROOT, 'index.html');
-  const html = fs.readFileSync(p, 'utf-8');
-  const re = new RegExp(`['"]${folder}['"]\\s*:\\s*['"](speed|brain|math|knowledge|coop|puzzle)['"]`);
-  return re.test(html) || `CATEGORY_MAP에 "${folder}" 없음`;
+// === 6. game.json category + 런처 폴백 등록 ===
+check('6. game.json category 유효', () => {
+  const p = path.join(gameDir, 'game.json');
+  const json = JSON.parse(fs.readFileSync(p, 'utf-8'));
+  const cats = ['speed', 'brain', 'math', 'knowledge', 'coop', 'puzzle'];
+  return cats.includes(json.category) || `category "${json.category}" — ${cats.join('|')} 중 하나여야 함`;
 });
 
 check('6. 런처 FALLBACK_GAMES 등록', () => {
   const p = path.join(ROOT, 'index.html');
   const html = fs.readFileSync(p, 'utf-8');
-  const re = new RegExp(`folder\\s*:\\s*['"]${folder}['"]`);
-  return re.test(html) || `FALLBACK_GAMES에 "${folder}" 없음`;
+  // 폴백은 gen-metadata.js가 game.json에서 JSON 형태로 생성 ("folder":"...")
+  const re = new RegExp(`["']folder["']\\s*:\\s*["']${folder}["']`);
+  return re.test(html) || `FALLBACK_GAMES에 "${folder}" 없음 (npm run gen 필요)`;
 });
 
 // === 7. 디자인 일관성 (CSS 금지 패턴) ===
@@ -219,21 +221,17 @@ check('7. 3인용 가운데 패널 가림 방지 (p3도 패널 상단 이동)', 
   return true;
 });
 
-// === 8. 카테고리 매핑 일관성 (런처 ↔ engine.js) ===
-check('8. 카테고리 매핑 일관성 (launcher ↔ engine.js)', () => {
-  const launcher = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
+// === 8. 카테고리 일관성 (game.json 단일 소스 ↔ engine.js 파생맵) ===
+check('8. 카테고리 일관성 (game.json ↔ engine.js)', () => {
+  const json = JSON.parse(fs.readFileSync(path.join(gameDir, 'game.json'), 'utf-8'));
   const engine = fs.readFileSync(path.join(ROOT, 'shared', 'engine.js'), 'utf-8');
 
-  const launcherRe = new RegExp(`['"]${folder}['"]\\s*:\\s*['"](speed|brain|math|knowledge|coop|puzzle)['"]`);
   const engineRe = new RegExp(`['"]${folder}['"]\\s*:\\s*['"](speed|brain|math|knowledge|coop|puzzle)['"]`);
-
-  const launcherMatch = launcher.match(launcherRe);
   const engineMatch = engine.match(engineRe);
 
-  if (!launcherMatch) return `런처에 카테고리 없음`;
-  if (!engineMatch) return `engine.js _GAME_CATEGORY_MAP에 "${folder}" 없음 (BGM 분류 누락)`;
-  if (launcherMatch[1] !== engineMatch[1]) {
-    return `카테고리 불일치 — launcher: ${launcherMatch[1]}, engine: ${engineMatch[1]}`;
+  if (!engineMatch) return `engine.js _GAME_CATEGORY_MAP에 "${folder}" 없음 (npm run gen 필요)`;
+  if (engineMatch[1] !== json.category) {
+    return `카테고리 불일치 — game.json: ${json.category}, engine: ${engineMatch[1]} (npm run gen 필요)`;
   }
   return true;
 });

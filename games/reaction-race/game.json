@@ -4,5 +4,7 @@
   "icon": "🚦",
   "color": "#66BB6A",
   "grades": [1, 2, 3, 4, 5, 6],
-  "playTime": "1분"
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
 }

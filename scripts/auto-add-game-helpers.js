@@ -22,7 +22,6 @@ const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const REGISTRY = path.join(ROOT, 'games', 'registry.json');
-const LAUNCHER = path.join(ROOT, 'index.html');
 const FAIL_LOG = path.join(ROOT, '.claude', 'auto-failures.json');
 
 const cmd = process.argv[2];
@@ -50,13 +49,14 @@ if (cmd === 'list-existing-folders') {
 }
 
 if (cmd === 'stats') {
-  const launcher = fs.readFileSync(LAUNCHER, 'utf-8');
+  // 카테고리는 game.json 단일 소스에서 집계
   const reg = readRegistry();
   const counts = { speed: 0, brain: 0, math: 0, knowledge: 0, coop: 0, puzzle: 0 };
   reg.forEach(folder => {
-    const re = new RegExp(`['"]${folder}['"]\\s*:\\s*['"](speed|brain|math|knowledge|coop|puzzle)['"]`);
-    const m = launcher.match(re);
-    if (m) counts[m[1]]++;
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(ROOT, 'games', folder, 'game.json'), 'utf-8'));
+      if (counts[j.category] !== undefined) counts[j.category]++;
+    } catch (e) {}
   });
   console.log(JSON.stringify({ total: reg.length, byCategory: counts }, null, 2));
   process.exit(0);
@@ -81,21 +81,10 @@ if (cmd === 'discard') {
     console.log(`✓ registry.json에서 제거`);
   }
 
-  // 3. Remove from launcher CATEGORY_MAP
-  let launcher = fs.readFileSync(LAUNCHER, 'utf-8');
-  const catRe = new RegExp(`,?\\s*['"]${folder}['"]\\s*:\\s*['"](speed|brain|math|knowledge|coop|puzzle)['"]`, 'g');
-  launcher = launcher.replace(catRe, '');
-
-  // 4. Remove from launcher GAME_ICONS
-  const iconRe = new RegExp(`\\s*['"]${folder}['"]\\s*:\\s*'<svg[^']*'\\s*,?`, 'g');
-  launcher = launcher.replace(iconRe, '');
-
-  // 5. Remove from launcher FALLBACK_GAMES
-  const fbRe = new RegExp(`,?\\s*\\{\\s*folder\\s*:\\s*['"]${folder}['"][^}]*\\}`, 'g');
-  launcher = launcher.replace(fbRe, '');
-
-  fs.writeFileSync(LAUNCHER, launcher);
-  console.log(`✓ launcher index.html에서 제거`);
+  // 3. 파생 메타데이터 재생성 (런처 FALLBACK_GAMES + engine 카테고리맵)
+  //    — category/players/폴백은 game.json 단일 소스에서 gen-metadata.js가 생성
+  execSync(`node "${path.join(__dirname, 'gen-metadata.js')}"`, { stdio: 'inherit' });
+  console.log(`✓ 파생 메타데이터 재생성 (launcher/engine)`);
 
   // 6. Record failure
   const failures = readFailLog();

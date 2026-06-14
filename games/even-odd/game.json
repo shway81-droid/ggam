@@ -1,1 +1,10 @@
-{ "name": "홀짝 판단", "description": "숫자가 홀수면 홀! 짝수면 짝! 빠르게 판단해요", "icon": "🔢", "color": "#00ACC1", "grades": [1,2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "홀짝 판단",
+  "description": "숫자가 홀수면 홀! 짝수면 짝! 빠르게 판단해요",
+  "icon": "🔢",
+  "color": "#00ACC1",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
+}

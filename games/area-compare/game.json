@@ -1,1 +1,10 @@
-{ "name": "넓이 비교", "description": "네 도형 중 네모가 가장 많은(또는 적은) 것을 골라보세요!", "icon": "📐", "color": "#26A69A", "grades": [2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "넓이 비교",
+  "description": "네 도형 중 네모가 가장 많은(또는 적은) 것을 골라보세요!",
+  "icon": "📐",
+  "color": "#26A69A",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

@@ -1,1 +1,10 @@
-{ "name": "높은 음 찾기", "description": "두 음을 듣고 어느 쪽이 높은 음인지 맞혀요!", "icon": "🎵", "color": "#EC407A", "grades": [1,2,3,4,5,6], "playTime": "1분" }
+{
+  "name": "높은 음 찾기",
+  "description": "두 음을 듣고 어느 쪽이 높은 음인지 맞혀요!",
+  "icon": "🎵",
+  "color": "#EC407A",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
+}
