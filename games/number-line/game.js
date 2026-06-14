@@ -335,21 +335,7 @@ function nlUpdateSoundBtn() {
 
 function nlStartPreGameCountdown(onDone) {
   nlShowScreen(nlCountdownScreen);
-  let count = 3;
-  nlCountdownNumber.textContent = count;
-  nlCDInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(nlCDInterval);
-      nlCDInterval = null;
-      onDone();
-    } else {
-      nlCountdownNumber.textContent = count;
-      nlCountdownNumber.style.animation = 'none';
-      void nlCountdownNumber.offsetHeight;
-      nlCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  nlCDInterval = runCountdown(nlCountdownNumber, onDone);
 }
 
 // ── Intro illustration ───────────────────────────────────────

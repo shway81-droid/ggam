@@ -227,18 +227,7 @@ function iceShowScreen(s) {
 let iceCountdownInterval = null;
 function iceStartPreGameCountdown(onDone) {
   iceShowScreen(iceCountdownScreen);
-  let count = 3;
-  iceCountdownNumber.textContent = count;
-  iceCountdownInterval = setInterval(() => {
-    count--;
-    if (count <= 0) { clearInterval(iceCountdownInterval); iceCountdownInterval = null; onDone(); }
-    else {
-      iceCountdownNumber.textContent = count;
-      iceCountdownNumber.style.animation = 'none';
-      iceCountdownNumber.offsetHeight;
-      iceCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  iceCountdownInterval = runCountdown(iceCountdownNumber, onDone);
 }
 
 function iceClearTimers() {

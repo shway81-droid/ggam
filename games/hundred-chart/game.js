@@ -288,21 +288,7 @@ function hcRenderChartGrid(round) {
 var hcCountdownInterval = null;
 function hcStartPreGameCountdown(onDone) {
   hcShowScreen(hcCountdownScreen);
-  var count = 3;
-  hcCountdownNumber.textContent = count;
-  hcCountdownInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(hcCountdownInterval);
-      hcCountdownInterval = null;
-      onDone();
-    } else {
-      hcCountdownNumber.textContent = count;
-      hcCountdownNumber.style.animation = 'none';
-      hcCountdownNumber.offsetHeight;
-      hcCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  hcCountdownInterval = runCountdown(hcCountdownNumber, onDone);
 }
 
 onTap(hcSoundToggle, () => { hcSound.toggleMute(); hcUpdateSoundBtn(); });

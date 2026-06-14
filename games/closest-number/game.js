@@ -223,21 +223,7 @@ function cnUpdateNumberLine(round) {
 var cnCountdownInterval = null;
 function cnStartPreGameCountdown(onDone) {
   cnShowScreen(cnCountdownScreen);
-  var count = 3;
-  cnCountdownNumber.textContent = count;
-  cnCountdownInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(cnCountdownInterval);
-      cnCountdownInterval = null;
-      onDone();
-    } else {
-      cnCountdownNumber.textContent = count;
-      cnCountdownNumber.style.animation = 'none';
-      cnCountdownNumber.offsetHeight;
-      cnCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  cnCountdownInterval = runCountdown(cnCountdownNumber, onDone);
 }
 
 onTap(cnSoundToggle, () => { cnSound.toggleMute(); cnUpdateSoundBtn(); });

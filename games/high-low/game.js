@@ -89,21 +89,7 @@ function hlShowScreen(s) {
 var hlCountdownInterval = null;
 function hlStartPreCountdown(onDone) {
   hlShowScreen(hlCountdownScreen);
-  var count = 3;
-  hlCountdownNumber.textContent = count;
-  hlCountdownInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(hlCountdownInterval);
-      hlCountdownInterval = null;
-      onDone();
-    } else {
-      hlCountdownNumber.textContent = count;
-      hlCountdownNumber.style.animation = 'none';
-      hlCountdownNumber.offsetHeight;
-      hlCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  hlCountdownInterval = runCountdown(hlCountdownNumber, onDone);
 }
 
 function hlClearTimers() {

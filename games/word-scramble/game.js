@@ -257,21 +257,7 @@ function wsShowScreen(s) {
 var wsCountdownInterval = null;
 function wsStartPreGameCountdown(onDone) {
   wsShowScreen(wsCountdownScreen);
-  var count = 3;
-  wsCountdownNumber.textContent = count;
-  wsCountdownInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(wsCountdownInterval);
-      wsCountdownInterval = null;
-      onDone();
-    } else {
-      wsCountdownNumber.textContent = count;
-      wsCountdownNumber.style.animation = 'none';
-      wsCountdownNumber.offsetHeight; // reflow
-      wsCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  wsCountdownInterval = runCountdown(wsCountdownNumber, onDone);
 }
 
 function wsClearTimers() {

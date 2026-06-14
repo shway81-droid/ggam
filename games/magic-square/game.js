@@ -219,18 +219,7 @@ function msShowScreen(s) {
 let msCdInterval = null;
 function msStartCountdown(onDone) {
   msShowScreen(msCountdownScreen);
-  let count = 3;
-  msCountdownNumber.textContent = count;
-  msCdInterval = setInterval(() => {
-    count--;
-    if (count <= 0) { clearInterval(msCdInterval); msCdInterval = null; onDone(); }
-    else {
-      msCountdownNumber.textContent = count;
-      msCountdownNumber.style.animation = 'none';
-      msCountdownNumber.offsetHeight;
-      msCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  msCdInterval = runCountdown(msCountdownNumber, onDone);
 }
 
 function msClearTimers() {
