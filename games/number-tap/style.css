@@ -105,7 +105,7 @@ body {
 /* === 게임 화면 === */
 .screen-game {
   justify-content: flex-start;
-  background: #222;
+  background: #FFF8E1;
   padding: 0;
 }
 

@@ -4,7 +4,7 @@
 .screen-countdown {
   justify-content: center;
   align-items: center;
-  background: #1a1a2e;
+  background: #FFF8E1;
 }
 
 /* ── Shared header ────────────────────────────────────────── */
@@ -90,7 +90,7 @@
 
 /* ── Game screen ──────────────────────────────────────────── */
 .screen-game {
-  background: #1a1a2e;
+  background: #FFF8E1;
   position: relative;
 }
 
@@ -134,7 +134,7 @@
   transition: filter 0.12s ease;
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.08);
+  border: 2px solid rgba(0,0,0,0.12);
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
@@ -142,10 +142,10 @@
 .zone-label {
   font-size: 1rem;
   font-weight: 800;
-  color: rgba(255,255,255,0.85);
+  color: var(--text);
   letter-spacing: 0.05em;
   pointer-events: none;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
 }
 
 .zone-icon {
@@ -155,10 +155,10 @@
 }
 
 /* Player color themes */
-.zone.p-blue   { background: #1565C0; }
-.zone.p-red    { background: #C62828; }
-.zone.p-orange { background: #E65100; }
-.zone.p-purple { background: #6A1B9A; }
+.zone.p-blue   { background: #BBDEFB; }
+.zone.p-red    { background: #FFCDD2; }
+.zone.p-orange { background: #FFE0B2; }
+.zone.p-purple { background: #E1BEE7; }
 
 /* State: waiting (dimmed) */
 .zone.state-wait {
@@ -192,7 +192,7 @@
 .zone-ripple {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255,255,255,0.35);
+  background: rgba(0,0,0,0.15);
   transform: scale(0);
   animation: ripple 0.45s ease-out forwards;
   pointer-events: none;
@@ -255,8 +255,8 @@
   animation: bg-flash 0.35s ease-out;
 }
 @keyframes bg-flash {
-  0%   { background: #1B5E20; }
-  100% { background: #1a1a2e; }
+  0%   { background: #66BB6A; }
+  100% { background: #FFF8E1; }
 }
 
 /* ── Close button ─────────────────────────────────────────── */
@@ -265,8 +265,8 @@
   top: var(--space-md);
   right: var(--space-md);
   z-index: 30;
-  background: rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.12);
+  color: var(--text);
   box-shadow: none;
 }
 

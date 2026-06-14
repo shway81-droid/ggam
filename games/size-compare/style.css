@@ -4,7 +4,7 @@
 .screen-countdown {
   justify-content: center;
   align-items: center;
-  background: #1a1a2e;
+  background: #FFF8E1;
 }
 
 /* ── Shared header ────────────────────────────────────────── */
@@ -126,7 +126,7 @@
 
 /* ── Game screen ──────────────────────────────────────────── */
 .screen-game {
-  background: #1a1a2e;
+  background: #FFF8E1;
   position: relative;
 }
 
@@ -161,7 +161,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 2px solid rgba(255,255,255,0.1);
+  border: 2px solid rgba(0,0,0,0.12);
   position: relative;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
@@ -169,10 +169,10 @@
 }
 
 /* Zone color themes */
-.zone.p-blue   { background: #1565C0; }
-.zone.p-red    { background: #B71C1C; }
-.zone.p-orange { background: #E65100; }
-.zone.p-purple { background: #4A148C; }
+.zone.p-blue   { background: #BBDEFB; }
+.zone.p-red    { background: #FFCDD2; }
+.zone.p-orange { background: #FFE0B2; }
+.zone.p-purple { background: #E1BEE7; }
 
 /* ── Zone states ──────────────────────────────────────────── */
 .zone.state-wait   { filter: brightness(0.55) saturate(0.5); }
@@ -199,7 +199,7 @@
 .zone-label {
   font-size: 0.8rem;
   font-weight: 800;
-  color: rgba(255,255,255,0.8);
+  color: var(--text);
   letter-spacing: 0.05em;
   pointer-events: none;
 }
@@ -207,7 +207,7 @@
 .zone-score {
   font-size: 1.2rem;
   font-weight: 900;
-  color: rgba(255,255,255,0.95);
+  color: var(--text);
   pointer-events: none;
 }
 
@@ -245,7 +245,7 @@
 .zone-ripple {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.12);
   transform: scale(0);
   animation: ripple 0.4s ease-out forwards;
   pointer-events: none;
@@ -287,8 +287,8 @@
 .vs-text {
   font-size: 1.4rem;
   font-weight: 900;
-  color: rgba(255,255,255,0.85);
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  color: var(--text);
+  text-shadow: 0 1px 2px rgba(255,255,255,0.6);
   letter-spacing: 0.1em;
   min-width: 36px;
   text-align: center;
@@ -322,8 +322,8 @@
   top: var(--space-md);
   right: var(--space-md);
   z-index: 30;
-  background: rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.12);
+  color: var(--text);
   box-shadow: none;
 }
 
