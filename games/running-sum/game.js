@@ -169,21 +169,7 @@ function rsShowScreen(s) {
 var rsCountdownInterval = null;
 function rsStartPreCountdown(onDone) {
   rsShowScreen(rsCountdownScreen);
-  var count = 3;
-  rsCountdownNumber.textContent = count;
-  rsCountdownInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(rsCountdownInterval);
-      rsCountdownInterval = null;
-      onDone();
-    } else {
-      rsCountdownNumber.textContent = count;
-      rsCountdownNumber.style.animation = 'none';
-      rsCountdownNumber.offsetHeight;
-      rsCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  rsCountdownInterval = runCountdown(rsCountdownNumber, onDone);
 }
 
 function rsClearTimers() {

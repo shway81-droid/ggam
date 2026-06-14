@@ -57,21 +57,7 @@
   function startCountdown(onDone) {
     var countdownNumber = document.getElementById('countdownNumber');
     showScreen('countdown');
-    var count = 3;
-    countdownNumber.textContent = count;
-    countdownInterval = setInterval(function() {
-      count--;
-      if (count <= 0) {
-        clearInterval(countdownInterval);
-        countdownInterval = null;
-        onDone();
-      } else {
-        countdownNumber.textContent = count;
-        countdownNumber.style.animation = 'none';
-        countdownNumber.offsetHeight;
-        countdownNumber.style.animation = '';
-      }
-    }, 1000);
+    countdownInterval = runCountdown(countdownNumber, onDone);
   }
 
   // ─── 사운드 ──────────────────────────────────────────────────────────────

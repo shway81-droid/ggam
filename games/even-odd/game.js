@@ -144,21 +144,7 @@ function eoShowScreen(s) {
 var eoCountdownInterval = null;
 function eoStartPreCountdown(onDone) {
   eoShowScreen(eoCountdownScreen);
-  var count = 3;
-  eoCountdownNumber.textContent = count;
-  eoCountdownInterval = setInterval(function() {
-    count--;
-    if (count <= 0) {
-      clearInterval(eoCountdownInterval);
-      eoCountdownInterval = null;
-      onDone();
-    } else {
-      eoCountdownNumber.textContent = count;
-      eoCountdownNumber.style.animation = 'none';
-      eoCountdownNumber.offsetHeight;
-      eoCountdownNumber.style.animation = '';
-    }
-  }, 1000);
+  eoCountdownInterval = runCountdown(eoCountdownNumber, onDone);
 }
 
 function eoClearTimers() {

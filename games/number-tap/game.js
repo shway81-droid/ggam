@@ -128,23 +128,9 @@
   ============================================= */
   var countdownEl = document.getElementById('countdownNumber');
 
-  function runCountdown(onDone) {
-    var count = 3;
-    countdownEl.textContent = count;
+  function startCountdown(onDone) {
     showScreen('countdown');
-
-    var iv = setInterval(function () {
-      count--;
-      if (count <= 0) {
-        clearInterval(iv);
-        onDone();
-      } else {
-        countdownEl.textContent = count;
-        countdownEl.style.animation = 'none';
-        countdownEl.offsetHeight; // reflow
-        countdownEl.style.animation = '';
-      }
-    }, 1000);
+    runCountdown(countdownEl, onDone);
   }
 
   /* =============================================
@@ -494,7 +480,7 @@
      버튼 이벤트
   ============================================= */
   document.getElementById('playBtn').addEventListener('click', function () {
-    runCountdown(startGame);
+    startCountdown(startGame);
   });
 
   document.getElementById('backBtn').addEventListener('click', function () {
@@ -510,7 +496,7 @@
   });
 
   document.getElementById('retryBtn').addEventListener('click', function () {
-    runCountdown(startGame);
+    startCountdown(startGame);
   });
 
   document.getElementById('homeBtn').addEventListener('click', function () {

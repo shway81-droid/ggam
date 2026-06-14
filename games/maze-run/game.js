@@ -138,12 +138,7 @@ function showScreen(s) { [introScreen, countdownScreen, gameScreen, resultScreen
 let countdownInterval = null;
 function startPreGameCountdown(onDone) {
   showScreen(countdownScreen);
-  let count = 3; countdownNumber.textContent = count;
-  countdownInterval = setInterval(() => {
-    count--;
-    if (count <= 0) { clearInterval(countdownInterval); countdownInterval = null; onDone(); }
-    else { countdownNumber.textContent = count; countdownNumber.style.animation = 'none'; countdownNumber.offsetHeight; countdownNumber.style.animation = ''; }
-  }, 1000);
+  countdownInterval = runCountdown(countdownNumber, onDone);
 }
 function clearTimers() { if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; } if (timerHandle) { clearInterval(timerHandle); timerHandle = null; } if (nextHandle) { clearTimeout(nextHandle); nextHandle = null; } }
 function updateSoundBtn(btn) { btn.textContent = sound.isMuted() ? '🔇' : '🔊'; }
