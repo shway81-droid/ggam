@@ -79,6 +79,46 @@ function runCountdown(el, onDone, opts) {
 }
 
 /**
+ * 사운드 음소거 토글 버튼 공통 배선.
+ * 버튼(들)에 onTap을 걸어 toggleMute()하고 아이콘(🔇/🔊)을 갱신한다.
+ * (78게임에 복붙돼 있던 updateSoundBtn/Icon + onTap + 초기호출 3종 세트 공통화)
+ * @param {object} sound - createSoundManager() 반환 객체 (isMuted/toggleMute)
+ * @param {HTMLElement|HTMLElement[]} buttons - 토글 버튼(들)
+ * @param {HTMLElement|HTMLElement[]} [iconEls] - 아이콘 표시 별도 요소(들). 생략 시 버튼 자체에 표시.
+ * @returns {function} 아이콘 강제 갱신 함수
+ */
+function setupSoundToggle(sound, buttons, iconEls) {
+  var btns = (Array.isArray(buttons) ? buttons : [buttons]).filter(Boolean);
+  var icons = iconEls ? (Array.isArray(iconEls) ? iconEls : [iconEls]).filter(Boolean) : btns;
+  function update() {
+    var icon = sound.isMuted() ? '🔇' : '🔊';
+    icons.forEach(function (el) { el.textContent = icon; });
+  }
+  btns.forEach(function (btn) {
+    onTap(btn, function () { sound.toggleMute(); update(); });
+  });
+  update();
+  return update;
+}
+
+/**
+ * 인원수 선택(.player-btn) 공통 배선.
+ * .player-btn 버튼들에 onTap을 걸어 active 클래스를 갱신하고, 선택 인원수를 콜백으로 전달.
+ * (대다수 게임에 복붙돼 있던 동일 배선 블록 공통화)
+ * @param {function} onSelect - (count:number) => void. 보통 playerCount 변수에 대입.
+ */
+function setupPlayerSelect(onSelect) {
+  var btns = document.querySelectorAll('.player-btn');
+  btns.forEach(function (btn) {
+    onTap(btn, function () {
+      btns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      onSelect(parseInt(btn.dataset.count, 10));
+    });
+  });
+}
+
+/**
  * 점수 표시 관리
  * @param {HTMLElement} element - 점수를 표시할 DOM 요소
  * @returns {{ add(n), get(), reset() }}

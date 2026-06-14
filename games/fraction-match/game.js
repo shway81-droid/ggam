@@ -85,9 +85,6 @@ function fmClearTimers() {
   if (fmNextHandle)  { clearTimeout(fmNextHandle);   fmNextHandle  = null; }
 }
 
-function fmUpdateSoundBtn() {
-  fmSoundToggle.textContent = fmSound.isMuted() ? '🔇' : '🔊';
-}
 
 // fraction value as a decimal for comparison
 function fmFracVal(n, d) { return n / d; }
@@ -300,16 +297,9 @@ function fmStartPreGameCountdown(onDone) {
   fmCountdownInterval = runCountdown(fmCountdownNumber, onDone);
 }
 
-onTap(fmSoundToggle, () => { fmSound.toggleMute(); fmUpdateSoundBtn(); });
-fmUpdateSoundBtn();
+setupSoundToggle(fmSound, fmSoundToggle);
 
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    fmPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { fmPlayerCount = n; });
 
 onTap(fmBackBtn,  () => goHome());
 onTap(fmCloseBtn, () => { fmClearTimers(); if (fmCountdownInterval) { clearInterval(fmCountdownInterval); fmCountdownInterval = null; } goHome(); });

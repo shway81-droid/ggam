@@ -179,9 +179,6 @@ function rsClearTimers() {
   if (rsCardTimeout) { clearTimeout(rsCardTimeout);  rsCardTimeout  = null; }
 }
 
-function rsUpdateSoundBtn() {
-  rsSoundToggle.textContent = rsSound.isMuted() ? '🔇' : '🔊';
-}
 
 function rsRandInt(n) {
   return Math.floor(Math.random() * n);
@@ -245,20 +242,10 @@ function rsGenerateRound(plan) {
 })();
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(function(btn) {
-  onTap(btn, function() {
-    document.querySelectorAll('.player-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    rsPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { rsPlayerCount = n; });
 
 // ── Sound toggle ─────────────────────────────────────────────
-onTap(rsSoundToggle, function() {
-  rsSound.toggleMute();
-  rsUpdateSoundBtn();
-});
-rsUpdateSoundBtn();
+setupSoundToggle(rsSound, rsSoundToggle);
 
 // ── Navigation ───────────────────────────────────────────────
 onTap(rsBackBtn,  function() { goHome(); });

@@ -170,13 +170,7 @@ function updateSoundToggle(btn) {
 });
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Back / Home / Retry ──────────────────────────────────────
 onTap(backBtn, () => goHome());

@@ -268,9 +268,6 @@ function wsClearTimers() {
   wsLockHandles = new Array(wsPlayerCount).fill(null);
 }
 
-function wsUpdateSoundBtn(btn) {
-  btn.textContent = wsSound.isMuted() ? '🔇' : '🔊';
-}
 
 // ── Intro illustration ─────────────────────────────────────────
 (function wsRenderIntroIllust() {
@@ -290,20 +287,10 @@ function wsUpdateSoundBtn(btn) {
 })();
 
 // ── Player count selection ─────────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(function(btn) {
-  onTap(btn, function() {
-    document.querySelectorAll('.player-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    wsPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { wsPlayerCount = n; });
 
 // ── Sound toggle ───────────────────────────────────────────────
-onTap(wsSoundToggleIntro, function() {
-  wsSound.toggleMute();
-  wsUpdateSoundBtn(wsSoundToggleIntro);
-});
-wsUpdateSoundBtn(wsSoundToggleIntro);
+setupSoundToggle(wsSound, wsSoundToggleIntro);
 
 // ── Navigation ────────────────────────────────────────────────
 onTap(wsBackBtn,  function() { goHome(); });

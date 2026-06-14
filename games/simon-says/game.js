@@ -175,25 +175,12 @@ function prepDelayFor(round) {
   return Math.max(PREP_MIN_MS, Math.round(PREP_START_MS - (round - 1) * step));
 }
 
-function updateSoundToggle(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 // ── Sound Toggle ─────────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundToggle(soundToggleIntro);
-});
-updateSoundToggle(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Back / Home / Retry ──────────────────────────────────────
 onTap(backBtn, () => goHome());

@@ -329,9 +329,6 @@ function nlClearTimers() {
   if (nlNextHandle)   { clearTimeout(nlNextHandle);   nlNextHandle  = null; }
 }
 
-function nlUpdateSoundBtn() {
-  nlSoundToggle.textContent = nlSound.isMuted() ? '🔇' : '🔊';
-}
 
 function nlStartPreGameCountdown(onDone) {
   nlShowScreen(nlCountdownScreen);
@@ -346,16 +343,9 @@ function nlRenderIntroIllust() {
 nlRenderIntroIllust();
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(function(btn) {
-  onTap(btn, function() {
-    document.querySelectorAll('.player-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    nlPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { nlPlayerCount = n; });
 
-onTap(nlSoundToggle, function() { nlSound.toggleMute(); nlUpdateSoundBtn(); });
-nlUpdateSoundBtn();
+setupSoundToggle(nlSound, nlSoundToggle);
 
 onTap(nlBackBtn,  function() { goHome(); });
 onTap(nlCloseBtn, function() { nlClearTimers(); goHome(); });

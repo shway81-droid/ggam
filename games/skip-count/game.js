@@ -174,9 +174,6 @@ function clearTimers() {
   if (nextHandle)  { clearTimeout(nextHandle);   nextHandle  = null; }
 }
 
-function updateSoundBtn(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 // 보기 4개 생성: 정답 + 정답 근처의 서로 다른 오답 3개 (정답 중복 없음)
 function makeChoices(item) {
@@ -229,20 +226,10 @@ function renderIntroFlags() {
 renderIntroFlags();
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Sound toggle ─────────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundBtn(soundToggleIntro);
-});
-updateSoundBtn(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Navigation ───────────────────────────────────────────────
 onTap(backBtn,  () => goHome());

@@ -92,7 +92,6 @@ function startPreGameCountdown(onDone) {
   countdownInterval = runCountdown(countdownNumber, onDone);
 }
 function clearTimers() { if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; } if (timerHandle) { clearInterval(timerHandle); timerHandle = null; } if (nextHandle) { clearTimeout(nextHandle); nextHandle = null; } }
-function updateSoundBtn(btn) { btn.textContent = sound.isMuted() ? '🔇' : '🔊'; }
 
 function getPuzzle() { return PUZZLES[roundIdx % PUZZLES.length]; }
 
@@ -353,8 +352,8 @@ function showResult() {
   showScreen(resultScreen);
 }
 
-document.querySelectorAll('.player-btn').forEach(btn => onTap(btn, () => { document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); playerCount = parseInt(btn.dataset.count, 10); }));
-onTap(soundToggleIntro, () => { sound.toggleMute(); updateSoundBtn(soundToggleIntro); }); updateSoundBtn(soundToggleIntro);
+setupPlayerSelect(function (n) { playerCount = n; });
+setupSoundToggle(sound, soundToggleIntro);
 onTap(backBtn, () => goHome());
 onTap(closeBtn, () => { clearTimers(); goHome(); });
 onTap(homeBtn, () => goHome());

@@ -134,9 +134,6 @@ function clearTimers() {
   if (nextHandle)  { clearTimeout(nextHandle);   nextHandle  = null; }
 }
 
-function updateSoundBtn(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 // 보기 4개 만들기: 같은 무리 3개 + odd, 섞어서 반환
 function makeChoices(item) {
@@ -144,20 +141,10 @@ function makeChoices(item) {
 }
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Sound toggle ─────────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundBtn(soundToggleIntro);
-});
-updateSoundBtn(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Navigation ───────────────────────────────────────────────
 onTap(backBtn,  () => goHome());

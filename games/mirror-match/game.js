@@ -353,9 +353,6 @@ function randInt(n) { return Math.floor(Math.random() * n); }
 function isDQ(playerIdx) { return roundDQ.indexOf(playerIdx) !== -1; }
 function setDQ(playerIdx) { if (!isDQ(playerIdx)) roundDQ.push(playerIdx); }
 
-function updateSoundToggle() {
-  soundToggleIntro.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 function clearNextRoundTimer() {
   if (nextRoundTimer !== null) {
@@ -374,25 +371,13 @@ function cleanup() {
 // SOUND TOGGLE
 // ══════════════════════════════════════════════════════
 
-onTap(soundToggleIntro, function() {
-  sound.toggleMute();
-  updateSoundToggle();
-});
-updateSoundToggle();
+setupSoundToggle(sound, soundToggleIntro);
 
 // ══════════════════════════════════════════════════════
 // PLAYER COUNT SELECT
 // ══════════════════════════════════════════════════════
 
-document.querySelectorAll('.player-btn').forEach(function(btn) {
-  onTap(btn, function() {
-    document.querySelectorAll('.player-btn').forEach(function(b) {
-      b.classList.remove('active');
-    });
-    btn.classList.add('active');
-    playerCount = parseInt(btn.getAttribute('data-count'), 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ══════════════════════════════════════════════════════
 // NAV BUTTONS

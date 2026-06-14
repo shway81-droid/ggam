@@ -86,9 +86,6 @@ function cnClearTimers() {
   if (cnNextHandle)  { clearTimeout(cnNextHandle);   cnNextHandle  = null; }
 }
 
-function cnUpdateSoundBtn() {
-  cnSoundToggle.textContent = cnSound.isMuted() ? '🔇' : '🔊';
-}
 
 // ── Round generation ─────────────────────────────────────────
 // 라운드 계획 (점증 난이도 8단계):
@@ -226,16 +223,9 @@ function cnStartPreGameCountdown(onDone) {
   cnCountdownInterval = runCountdown(cnCountdownNumber, onDone);
 }
 
-onTap(cnSoundToggle, () => { cnSound.toggleMute(); cnUpdateSoundBtn(); });
-cnUpdateSoundBtn();
+setupSoundToggle(cnSound, cnSoundToggle);
 
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    cnPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { cnPlayerCount = n; });
 
 onTap(cnBackBtn,  () => goHome());
 onTap(cnCloseBtn, () => { cnClearTimers(); if (cnCountdownInterval) { clearInterval(cnCountdownInterval); cnCountdownInterval = null; } goHome(); });

@@ -228,7 +228,6 @@ function msClearTimers() {
   if (msNextHandle) { clearTimeout(msNextHandle); msNextHandle = null; }
 }
 
-function msUpdateSoundBtn(btn) { btn.textContent = msSound.isMuted() ? '🔇' : '🔊'; }
 
 // ── 합 계산 ──
 // lines: 각 라인별 합 (8개: row0,row1,row2,col0,col1,col2,diag1,diag2)
@@ -620,16 +619,9 @@ function msShowResult() {
 }
 
 // ── 이벤트 바인딩 ──
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    msPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { msPlayerCount = n; });
 
-onTap(msSoundToggleIntro, () => { msSound.toggleMute(); msUpdateSoundBtn(msSoundToggleIntro); });
-msUpdateSoundBtn(msSoundToggleIntro);
+setupSoundToggle(msSound, msSoundToggleIntro);
 onTap(msBackBtn, () => goHome());
 onTap(msCloseBtn, () => { msClearTimers(); goHome(); });
 onTap(msHomeBtn, () => goHome());

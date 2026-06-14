@@ -121,9 +121,6 @@ function startCountdown(onDone) {
   countdownInterval = runCountdown(countdownNumber, onDone);
 }
 
-function updateSoundToggle(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -227,20 +224,10 @@ function makeSvgArrowRight(fill, stroke) {
 }
 
 // ── Sound Toggle ─────────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundToggle(soundToggleIntro);
-});
-updateSoundToggle(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Intro selectors ──────────────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Nav ──────────────────────────────────────────────────────
 onTap(backBtn,  () => { clearAllTimers(); goHome(); });

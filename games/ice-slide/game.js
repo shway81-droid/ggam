@@ -236,7 +236,6 @@ function iceClearTimers() {
   if (iceNextHandle) { clearTimeout(iceNextHandle); iceNextHandle = null; }
 }
 
-function iceUpdateSoundBtn(btn) { btn.textContent = iceSound.isMuted() ? '🔇' : '🔊'; }
 
 // ─── 미끄럼 이동 계산 ─────────────────────────────────────
 function iceSlideTo(row, col, dr, dc) {
@@ -522,17 +521,10 @@ function iceShowResult() {
 }
 
 // ─── 인원 선택 ───────────────────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    icePlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { icePlayerCount = n; });
 
 // ─── 이벤트 바인딩 ───────────────────────────────────────────
-onTap(iceSoundToggleIntro, () => { iceSound.toggleMute(); iceUpdateSoundBtn(iceSoundToggleIntro); });
-iceUpdateSoundBtn(iceSoundToggleIntro);
+setupSoundToggle(iceSound, iceSoundToggleIntro);
 onTap(iceBackBtn, () => goHome());
 onTap(iceCloseBtn, () => { iceClearTimers(); goHome(); });
 onTap(iceHomeBtn, () => goHome());

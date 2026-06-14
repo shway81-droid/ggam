@@ -183,9 +183,6 @@ function clearTimers() {
   if (nextHandle)  { clearTimeout(nextHandle);   nextHandle  = null; }
 }
 
-function updateSoundBtn(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 // Build 4 answer choices: correct unfolded grid + 3 distinct wrong grids
 function makeChoices(item) {
@@ -249,20 +246,10 @@ function renderIntroFlags() {
 renderIntroFlags();
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Sound toggle ─────────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundBtn(soundToggleIntro);
-});
-updateSoundBtn(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Navigation ───────────────────────────────────────────────
 onTap(backBtn,  () => goHome());

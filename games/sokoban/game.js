@@ -153,7 +153,6 @@ function startPreGameCountdown(onDone) {
   countdownInterval = runCountdown(countdownNumber, onDone);
 }
 function clearTimers() { if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; } if (timerHandle) { clearInterval(timerHandle); timerHandle = null; } if (nextHandle) { clearTimeout(nextHandle); nextHandle = null; } }
-function updateSoundBtn(btn) { btn.textContent = sound.isMuted() ? '🔇' : '🔊'; }
 
 // ═══ 레벨 파싱 ═══
 function getLevel() { return LEVELS[roundIdx % LEVELS.length]; }
@@ -411,7 +410,7 @@ function showResult() {
   showScreen(resultScreen);
 }
 
-onTap(soundToggleIntro, () => { sound.toggleMute(); updateSoundBtn(soundToggleIntro); }); updateSoundBtn(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 onTap(backBtn, () => goHome());
 onTap(closeBtn, () => { clearTimers(); goHome(); });
 onTap(homeBtn, () => goHome());

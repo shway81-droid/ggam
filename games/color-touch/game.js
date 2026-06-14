@@ -147,25 +147,12 @@ function randItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function updateSoundToggle(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 // ── Sound toggle ──────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundToggle(soundToggleIntro);
-});
-updateSoundToggle(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Player count select ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Nav buttons ───────────────────────────────────────────
 onTap(backBtn,  () => { clearAllTimers(); goHome(); });

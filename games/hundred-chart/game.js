@@ -84,9 +84,6 @@ function hcClearTimers() {
   if (hcNextHandle)  { clearTimeout(hcNextHandle);   hcNextHandle  = null; }
 }
 
-function hcUpdateSoundBtn() {
-  hcSoundToggle.textContent = hcSound.isMuted() ? '🔇' : '🔊';
-}
 
 // ── 백판 (1~100, 가로 10, 아래 +10) ─────────────────────────
 // row: 0~9 (top=1~10, bottom=91~100)
@@ -291,16 +288,9 @@ function hcStartPreGameCountdown(onDone) {
   hcCountdownInterval = runCountdown(hcCountdownNumber, onDone);
 }
 
-onTap(hcSoundToggle, () => { hcSound.toggleMute(); hcUpdateSoundBtn(); });
-hcUpdateSoundBtn();
+setupSoundToggle(hcSound, hcSoundToggle);
 
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    hcPlayerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { hcPlayerCount = n; });
 
 onTap(hcBackBtn,  () => goHome());
 onTap(hcCloseBtn, () => { hcClearTimers(); if (hcCountdownInterval) { clearInterval(hcCountdownInterval); hcCountdownInterval = null; } goHome(); });

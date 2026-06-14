@@ -142,9 +142,6 @@ function clearTimers() {
   if (nextHandle)  { clearTimeout(nextHandle);   nextHandle  = null; }
 }
 
-function updateSoundBtn(btn) {
-  btn.textContent = sound.isMuted() ? '🔇' : '🔊';
-}
 
 // 4 보기는 항상 4개 카테고리 (셔플)
 function makeChoices() {
@@ -172,20 +169,10 @@ function renderIntroAnimals() {
 renderIntroAnimals();
 
 // ── Player count selection ───────────────────────────────────
-document.querySelectorAll('.player-btn').forEach(btn => {
-  onTap(btn, () => {
-    document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    playerCount = parseInt(btn.dataset.count, 10);
-  });
-});
+setupPlayerSelect(function (n) { playerCount = n; });
 
 // ── Sound toggle ─────────────────────────────────────────────
-onTap(soundToggleIntro, () => {
-  sound.toggleMute();
-  updateSoundBtn(soundToggleIntro);
-});
-updateSoundBtn(soundToggleIntro);
+setupSoundToggle(sound, soundToggleIntro);
 
 // ── Navigation ───────────────────────────────────────────────
 onTap(backBtn,  () => goHome());
