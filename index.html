@@ -434,13 +434,13 @@
     var currentCat = 'all';
 
     // ═══ 사운드 토글 (기본 ON) ═══
+    // 저장소는 engine.js 헬퍼(_read/_writeSoundMuted)로 통일 — localStorage 영구화 +
+    // 구버전 sessionStorage 폴백. 게임 페이지와 동일 로직을 공유한다.
     function updateSoundIcon() {
-      var muted = sessionStorage.getItem('sound-muted') === 'true';
-      soundToggle.textContent = muted ? '🔇' : '🔊';
+      soundToggle.textContent = _readSoundMuted() ? '🔇' : '🔊';
     }
     soundToggle.addEventListener('click', function() {
-      var wasMuted = sessionStorage.getItem('sound-muted') === 'true';
-      sessionStorage.setItem('sound-muted', wasMuted ? 'false' : 'true');
+      _writeSoundMuted(!_readSoundMuted());
       updateSoundIcon();
     });
     updateSoundIcon();
