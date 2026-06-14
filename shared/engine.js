@@ -44,6 +44,41 @@ function createTimer(seconds, onTick, onEnd) {
 }
 
 /**
+ * 표준 프리게임 카운트다운(3→2→1) 실행.
+ * countdownNumber 요소를 즉시 시작값으로 채우고 매초 1씩 줄여 표시하다가,
+ * 0이 되면 onDone()을 호출한다. (66여 개 게임에 복붙돼 있던 동일 블록 공통화)
+ *
+ * 화면 전환(showScreen)은 호출 측 책임으로 남긴다 — 게임마다 showScreen
+ * 시그니처(요소형/문자열형)가 달라 헬퍼가 건드리면 위험하기 때문.
+ * 반환값은 setInterval ID라서, 게임이 다른 곳에서 하던
+ * `clearInterval(countdownInterval)` / `if (countdownInterval)` 패턴과 그대로 호환된다.
+ *
+ * @param {HTMLElement} el - 숫자를 표시할 요소 (보통 #countdownNumber)
+ * @param {function} onDone - 카운트다운 종료 시 호출
+ * @param {{from?:number, interval?:number}} [opts] - from: 시작 숫자(기본 3), interval: 간격 ms(기본 1000)
+ * @returns {number} setInterval ID
+ */
+function runCountdown(el, onDone, opts) {
+  opts = opts || {};
+  var count = opts.from != null ? opts.from : 3;
+  var step = opts.interval != null ? opts.interval : 1000;
+  if (el) el.textContent = count;
+  var id = setInterval(function () {
+    count--;
+    if (count <= 0) {
+      clearInterval(id);
+      onDone();
+    } else if (el) {
+      el.textContent = count;
+      el.style.animation = 'none';
+      void el.offsetHeight; // reflow로 애니메이션 재시작
+      el.style.animation = '';
+    }
+  }, step);
+  return id;
+}
+
+/**
  * 점수 표시 관리
  * @param {HTMLElement} element - 점수를 표시할 DOM 요소
  * @returns {{ add(n), get(), reset() }}
