@@ -29,6 +29,7 @@ self.addEventListener('install', function(event) {
         './games/registry.json',
         './favicon.svg',
         './og-image.svg',
+        './og-image.png',
         './manifest.json'
       ]);
     })
