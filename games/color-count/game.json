@@ -1,0 +1,10 @@
+{
+  "name": "색 세기",
+  "description": "같은 색 원이 몇 개인지 세어보세요!",
+  "icon": "🔵",
+  "color": "#42A5F5",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

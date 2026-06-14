@@ -1,0 +1,10 @@
+{
+  "name": "점 잇기",
+  "description": "같은 색 점을 길로 연결! 모든 색을 잇고 먼저 끝낸 사람 승리!",
+  "icon": "🔵",
+  "color": "#7C4DFF",
+  "grades": [3, 4, 5, 6],
+  "playTime": "1~2분",
+  "category": "puzzle",
+  "players": "2-4명"
+}

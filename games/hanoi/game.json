@@ -1,0 +1,10 @@
+{
+  "name": "하노이탑",
+  "description": "원반을 한 개씩 옮겨 오른쪽 기둥으로! 가장 먼저 옮긴 사람 승리!",
+  "icon": "🗼",
+  "color": "#7C4DFF",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "1~2분",
+  "category": "puzzle",
+  "players": "2-4명"
+}

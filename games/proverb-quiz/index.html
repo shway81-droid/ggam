@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>속담 완성</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h1 class="game-title">속담 완성</h1>
+      <button class="sound-toggle icon-btn" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M4 8H7L11 5V17L7 14H4V8Z" fill="currentColor"/>
+          <path d="M14 8.5C15 9.5 15 12.5 14 13.5M16 6.5C18.5 8.5 18.5 13.5 16 15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <!-- Scroll illustration SVG -->
+      <svg class="intro-svg" width="130" height="100" viewBox="0 0 130 100" fill="none">
+        <rect x="10" y="12" width="110" height="76" rx="10" fill="#D7CCC8" stroke="#8D6E63" stroke-width="2"/>
+        <rect x="18" y="20" width="94" height="60" rx="7" fill="#FFF8F0"/>
+        <rect x="6" y="15" width="14" height="70" rx="7" fill="#A1887F" stroke="#795548" stroke-width="1.5"/>
+        <rect x="110" y="15" width="14" height="70" rx="7" fill="#A1887F" stroke="#795548" stroke-width="1.5"/>
+        <line x1="30" y1="36" x2="100" y2="36" stroke="#BCAAA4" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="48" x2="100" y2="48" stroke="#BCAAA4" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="60" x2="80" y2="60" stroke="#BCAAA4" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="65" cy="72" r="5" fill="#8D6E63" opacity="0.4"/>
+      </svg>
+
+      <p class="intro-text">속담의 뒷부분을<br>완성해 보세요!</p>
+      <p class="intro-subtext">정답 먼저 누르면 +1점 · 오답 시 -1점 · 10문제 승부</p>
+
+      <div class="select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+
+    <!-- 상단 속담 패널 (flag-quiz 패턴) -->
+    <div class="top-bar" id="proverbPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 10</div>
+        <div class="problem-timer" id="problemTimer">8</div>
+      </div>
+      <div class="proverb-display" id="proverbDisplay">
+        <svg id="proverbSvg" width="300" height="90" viewBox="0 0 300 90">
+          <rect x="0" y="0" width="300" height="90" rx="18" fill="rgba(0,0,0,0.82)"/>
+          <text id="proverbText" x="150" y="52" text-anchor="middle" dominant-baseline="middle"
+            fill="#FFFFFF" font-size="22" font-weight="bold" font-family="'Pretendard Variable',-apple-system,'Noto Sans KR',sans-serif">?</text>
+        </svg>
+      </div>
+      <div class="problem-status" id="problemStatus"></div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 플레이어 존 (JS 렌더링) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- 점수 칩 바 -->
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-table-wrap">
+      <table class="result-table" id="resultTable">
+        <thead id="resultTableHead"></thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

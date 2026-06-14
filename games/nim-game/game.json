@@ -1,0 +1,10 @@
+{
+  "name": "돌 가져가기",
+  "description": "마지막 돌을 가져가면 지는 전략 게임!",
+  "icon": "🪨",
+  "color": "#607D8B",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "2~3분",
+  "category": "brain",
+  "players": "2명"
+}

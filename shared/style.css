@@ -1,0 +1,1185 @@
+/* shared/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+:root {
+  /* Colors */
+  --bg: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --primary: #29B6F6;
+  --secondary: #66BB6A;
+  --danger: #EF5350;
+  --accent-orange: #FFA726;
+  --accent-yellow: #FFEE58;
+  --text: #333333;
+  --text-sub: #888888;
+
+  /* Typography */
+  --font-family: 'Pretendard Variable', -apple-system, 'Noto Sans KR', sans-serif;
+  --font-size-title: 1.5rem;
+  --font-size-body: 1rem;
+  --font-size-card: 0.9rem;
+  --font-size-small: 0.875rem;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Sizing */
+  --card-min-size: 140px;
+  --btn-min-touch: 48px;
+  --card-radius: 16px;
+  --btn-radius: 24px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.12);
+  --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+/* 터치 최적화 — 더블탭 줌 방지 */
+html {
+  touch-action: manipulation;
+}
+
+/* 공통 버튼 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--btn-min-touch);
+  min-height: var(--btn-min-touch);
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-primary {
+  background: var(--secondary);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(102,187,106,0.3);
+}
+
+.btn-primary:active {
+  box-shadow: 0 1px 4px rgba(102,187,106,0.3);
+}
+
+/* 사운드 토글 버튼 */
+.sound-toggle {
+  width: var(--btn-min-touch);
+  height: var(--btn-min-touch);
+  border-radius: 50%;
+  background: #F0F0F0;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 원형 아이콘 버튼 (닫기, 뒤로가기) */
+.icon-btn {
+  width: var(--btn-min-touch);
+  height: var(--btn-min-touch);
+  border-radius: 50%;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.9);
+  color: var(--text);
+  box-shadow: var(--shadow-card);
+}
+
+/* 프로그레스 바 */
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #E0E0E0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--secondary);
+  border-radius: 6px;
+  transition: width 1s linear;
+}
+
+/* === Glassmorphism HUD === */
+.hud-glass {
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.hud-glass .hud-score-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.08);
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+.hud-glass .hud-score-badge .score-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #FFD54F;
+}
+
+.hud-glass .hud-timer-wrap {
+  flex: 1;
+}
+
+.hud-glass .hud-timer-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hud-glass .hud-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #66BB6A, #FFEE58);
+  border-radius: 3px;
+  transition: width 1s linear;
+}
+
+.hud-glass .hud-timer-text {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* === Score Animations === */
+@keyframes scoreBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+@keyframes scoreFloatUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-24px); }
+}
+
+.score-bounce {
+  animation: scoreBounce 0.3s ease;
+}
+
+.score-float {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: 900;
+  pointer-events: none;
+  animation: scoreFloatUp 0.8s ease-out forwards;
+}
+
+.score-float.plus { color: #66BB6A; }
+.score-float.minus { color: #EF5350; }
+
+/* === Result Screen (new design) === */
+.result-modern {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-modern .result-score-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  padding: 12px 28px;
+  backdrop-filter: blur(4px);
+  text-align: center;
+}
+
+.result-modern .result-score-label {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  color: #fff;
+}
+
+.result-modern .result-score-value {
+  font-size: 2.2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #FFD54F, #FF8F00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Confetti pieces */
+@keyframes confettiFall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  opacity: 0.7;
+  animation: confettiFall 2.5s ease-in infinite;
+}
+
+/* === SVG Icon Buttons === */
+.btn-icon-svg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-icon-svg svg {
+  flex-shrink: 0;
+}
+
+/* Glass back button */
+.btn-glass-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+/* === Screen state machine (shared) === */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.screen.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Countdown (shared) === */
+.screen-countdown {
+  justify-content: center;
+  align-items: center;
+  background: #333;
+}
+.countdown-number {
+  font-size: 8rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  animation: countPop 0.5s ease;
+}
+@keyframes countPop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* === Intro screen (shared) === */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-md);
+}
+.game-title {
+  font-size: var(--font-size-title);
+  font-weight: 700;
+}
+.intro-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  flex: 1;
+  justify-content: center;
+  padding: var(--space-md);
+}
+.intro-desc {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+.intro-sub {
+  font-size: var(--font-size-small);
+  color: var(--text-sub);
+  text-align: center;
+}
+.player-select-label {
+  font-size: var(--font-size-small);
+  color: var(--text-sub);
+  font-weight: 600;
+  margin-top: var(--space-sm);
+}
+.player-select {
+  display: flex;
+  gap: var(--space-sm);
+}
+.player-btn {
+  min-width: 64px;
+  min-height: var(--btn-min-touch);
+  padding: 0 var(--space-md);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: 2px solid #ddd;
+  border-radius: var(--btn-radius);
+  background: #f5f5f5;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-family);
+}
+.player-btn.active {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: #fff;
+}
+.btn-play {
+  width: 80%;
+  max-width: 300px;
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1.3rem;
+  margin-bottom: var(--space-xl);
+}
+
+/* === Result screen common (shared) === */
+.result-title {
+  font-size: 2rem;
+  font-weight: 900;
+}
+.result-actions {
+  display: flex;
+  gap: var(--space-md);
+}
+.btn-secondary {
+  background: #E0E0E0;
+  color: var(--text);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LEVEL 3 DESIGN — 전체 게임 공통 적용 (코믹/스티커 풍)
+   특징: 두꺼운 검정 테두리, 오프셋 그림자, 굵은 타이포
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 인트로 화면 ── */
+.screen-intro {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,193,7,0.12) 0, transparent 35%),
+    radial-gradient(circle at 82% 88%, rgba(124,77,255,0.12) 0, transparent 40%),
+    #FFF8F0 !important;
+  position: relative;
+}
+.screen-intro::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(0,0,0,0.05) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+.screen-intro > * { position: relative; z-index: 1; }
+
+.game-header {
+  background: #fff !important;
+  border-bottom: 3px solid #2C2C2C !important;
+  box-shadow: 0 4px 0 #2C2C2C !important;
+  padding: var(--space-md) !important;
+}
+.game-title {
+  font-size: 1.5rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  color: #2C2C2C !important;
+  background: none !important;
+  -webkit-text-fill-color: #2C2C2C !important;
+}
+.icon-btn,
+.sound-toggle {
+  border: 3px solid #2C2C2C !important;
+  background: #fff !important;
+  box-shadow: 3px 3px 0 #2C2C2C !important;
+  font-size: 1.3rem !important;
+  color: #2C2C2C !important;
+}
+.icon-btn:active,
+.sound-toggle:active {
+  transform: translate(2px,2px) !important;
+  box-shadow: 1px 1px 0 #2C2C2C !important;
+}
+
+.intro-text,
+.intro-title-text {
+  font-size: 1.55rem !important;
+  font-weight: 900 !important;
+  color: #2C2C2C !important;
+  letter-spacing: -0.02em !important;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.06) !important;
+}
+.intro-subtext,
+.intro-desc-text {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #555 !important;
+}
+
+.player-select-label,
+.select-label {
+  font-size: 1rem !important;
+  font-weight: 900 !important;
+  color: #2C2C2C !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  margin-top: 24px !important;
+}
+
+.player-btn {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  border: 3px solid #2C2C2C !important;
+  background: #fff !important;
+  font-size: 1.2rem !important;
+  font-weight: 900 !important;
+  color: #2C2C2C !important;
+  box-shadow: 4px 4px 0 #2C2C2C !important;
+  transition: all 0.1s ease !important;
+}
+.player-btn:active {
+  transform: translate(2px,2px) !important;
+  box-shadow: 2px 2px 0 #2C2C2C !important;
+}
+.player-btn.active {
+  background: #7C4DFF !important;
+  color: #fff !important;
+  border-color: #2C2C2C !important;
+  box-shadow: 4px 4px 0 #2C2C2C !important;
+  transform: scale(1.05) !important;
+}
+
+.btn-play {
+  background: #FFD54F !important;
+  color: #2C2C2C !important;
+  font-size: 1.4rem !important;
+  font-weight: 900 !important;
+  padding: 20px 60px !important;
+  border: 3px solid #2C2C2C !important;
+  border-radius: 999px !important;
+  box-shadow: 6px 6px 0 #2C2C2C !important;
+  letter-spacing: 0.02em !important;
+  -webkit-text-fill-color: #2C2C2C !important;
+  background-image: none !important;
+}
+.btn-play:active {
+  transform: translate(3px,3px) !important;
+  box-shadow: 3px 3px 0 #2C2C2C !important;
+}
+
+.intro-rules {
+  background: #fff !important;
+  border: 3px solid #2C2C2C !important;
+  border-radius: 16px !important;
+  box-shadow: 4px 4px 0 #2C2C2C !important;
+  padding: 14px 22px !important;
+}
+.intro-rules li {
+  font-weight: 700 !important;
+  color: #2C2C2C !important;
+}
+
+.badge-2p {
+  background: #7C4DFF !important;
+  color: #fff !important;
+  border: 3px solid #2C2C2C !important;
+  box-shadow: 3px 3px 0 #2C2C2C !important;
+  font-weight: 900 !important;
+}
+
+/* ── 카운트다운 화면 ── */
+.screen-countdown {
+  background: #FFD54F !important;
+}
+.countdown-number {
+  color: #2C2C2C !important;
+  text-shadow: 6px 6px 0 #fff, 12px 12px 0 rgba(0,0,0,0.15) !important;
+  font-weight: 900 !important;
+  background: none !important;
+  -webkit-text-fill-color: #2C2C2C !important;
+}
+
+/* ── 게임 화면 (top-bar + score-bar) ── */
+.top-bar {
+  background: #2C2C2C !important;
+  border-bottom: 3px solid #2C2C2C !important;
+}
+.top-bar .question-counter {
+  background: #fff !important;
+  color: #2C2C2C !important;
+  font-weight: 900 !important;
+  border: 2px solid #2C2C2C !important;
+}
+.top-bar .problem-timer {
+  background: #FFD54F !important;
+  color: #2C2C2C !important;
+  font-weight: 900 !important;
+  border: 3px solid #2C2C2C !important;
+}
+.top-bar .problem-status {
+  font-weight: 900 !important;
+  border: 2px solid #fff !important;
+}
+.top-bar .close-btn {
+  background: #EF5350 !important;
+  border: 3px solid #fff !important;
+  color: #fff !important;
+}
+
+.score-bar {
+  background: #2C2C2C !important;
+  border-top: 3px solid #2C2C2C !important;
+}
+.score-chip {
+  background: #fff !important;
+  border: 2px solid #2C2C2C !important;
+  color: #2C2C2C !important;
+  font-weight: 900 !important;
+  border-radius: 999px !important;
+}
+
+/* 플레이어 존 (게임 화면) */
+.zone {
+  border: 3px solid #2C2C2C !important;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.4);
+}
+.zone-label {
+  font-weight: 900 !important;
+  color: #2C2C2C !important;
+}
+.zone-score-chip {
+  background: #2C2C2C !important;
+  color: #fff !important;
+  border: 2px solid #2C2C2C !important;
+  font-weight: 900 !important;
+}
+
+/* 답변 버튼 (퀴즈 계열) */
+.answer-btn,
+.answer-btn-wrap {
+  border-radius: 16px !important;
+  box-shadow: 0 5px 0 rgba(0,0,0,0.35) !important;
+  transition: all 0.1s ease !important;
+}
+.answer-btn:active,
+.answer-btn-wrap:active {
+  transform: translateY(3px) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
+}
+
+/* ── 결과 화면 ── */
+.screen-result {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,213,79,0.25) 0, transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(124,77,255,0.18) 0, transparent 40%),
+    #FFF8F0 !important;
+}
+.result-title,
+.result-headline {
+  font-weight: 900 !important;
+  color: #2C2C2C !important;
+  text-shadow: 0 6px 0 rgba(0,0,0,0.08) !important;
+  letter-spacing: -0.02em !important;
+}
+.result-winner {
+  border: 3px solid #2C2C2C !important;
+  border-radius: 22px !important;
+  box-shadow: 6px 6px 0 #2C2C2C !important;
+  background: #fff !important;
+}
+
+.btn,
+.btn-primary,
+.btn-retry,
+.btn-home,
+.btn-home-res {
+  border: 3px solid #2C2C2C !important;
+  font-weight: 900 !important;
+  border-radius: 999px !important;
+  box-shadow: 5px 5px 0 #2C2C2C !important;
+  padding: 14px 32px !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.02em !important;
+}
+.btn-primary,
+.btn-retry {
+  background: #FFD54F !important;
+  color: #2C2C2C !important;
+}
+.btn-home,
+.btn-home-res {
+  background: #fff !important;
+  color: #2C2C2C !important;
+}
+.btn:active,
+.btn-primary:active,
+.btn-retry:active,
+.btn-home:active,
+.btn-home-res:active {
+  transform: translate(3px,3px) !important;
+  box-shadow: 2px 2px 0 #2C2C2C !important;
+}
+
+.result-emoji-big {
+  filter: drop-shadow(0 6px 0 rgba(0,0,0,0.12));
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   LEVEL 3 — 게임 진행 화면 공통 (HUD, 타이머, 존 테두리)
+   다크/라이트 테마 무관하게 적용
+   배경색은 각 게임 CSS에 위임 (테마 보존)
+   ═══════════════════════════════════════════════════════════ */
+
+/* HUD 바 (top-bar 외 패턴 사용 게임용) */
+.game-hud {
+  background: #2C2C2C !important;
+  border-bottom: 3px solid #2C2C2C !important;
+}
+
+/* 타이머 바 (게이지) */
+.hud-timer-bar,
+.hud-timer-track {
+  border: 2px solid #2C2C2C !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.3) !important;
+}
+.hud-timer-fill {
+  background: linear-gradient(90deg, #FFD54F, #FF9800) !important;
+  border-radius: 999px !important;
+}
+.hud-timer-fill.danger {
+  background: linear-gradient(90deg, #FF7043, #EF5350) !important;
+}
+.hud-timer-text {
+  color: #fff !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.4) !important;
+}
+
+/* 점수 칩 (HUD 영역) */
+.hud-score-chip,
+.zone-score-chip {
+  border: 2px solid #2C2C2C !important;
+  font-weight: 900 !important;
+  border-radius: 999px !important;
+  box-shadow: 2px 2px 0 #2C2C2C !important;
+}
+
+/* 닫기 버튼 (다크 HUD 위) */
+.hud-close {
+  background: #EF5350 !important;
+  color: #fff !important;
+  border: 3px solid #fff !important;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4) !important;
+}
+
+/* 플레이어 존 — 두꺼운 검정 테두리 (배경은 게임 CSS 유지) */
+.player-zone {
+  border: 3px solid #2C2C2C !important;
+}
+.player-zone .zone-label {
+  border: 2px solid #2C2C2C !important;
+  font-weight: 900 !important;
+  border-radius: 999px !important;
+  box-shadow: 2px 2px 0 #2C2C2C !important;
+}
+.player-zone .zone-score {
+  font-weight: 900 !important;
+}
+
+/* 게임 화면 하단/상단 일반 점수 표시 영역 */
+.score-row,
+.scoreboard {
+  background: #2C2C2C !important;
+  color: #fff !important;
+}
+
+
+/* ── Level 3 별칭: 게임별 다른 클래스명 통합 ── */
+.hud-time {
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 1.2rem !important;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.4) !important;
+}
+.progress-bar {
+  border: 2px solid #2C2C2C !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.3) !important;
+  background: rgba(255,255,255,0.18) !important;
+}
+.progress-bar-fill {
+  background: linear-gradient(90deg, #FFD54F, #FF9800) !important;
+  border-radius: 999px !important;
+}
+.close-btn,
+.close-btn-hud {
+  background: #EF5350 !important;
+  color: #fff !important;
+  border: 3px solid #fff !important;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4) !important;
+}
+
+
+/* ── Level 3: 결과 화면 텍스트 색상 보정 (크림 배경에 맞게) ── */
+.screen-result .result-sub {
+  color: #555 !important;
+  font-weight: 700 !important;
+}
+.screen-result .stat-label {
+  color: #888 !important;
+  font-weight: 700 !important;
+}
+.screen-result .stat-val {
+  color: #2C2C2C !important;
+  font-weight: 900 !important;
+}
+.screen-result .result-stats {
+  background: rgba(255,255,255,0.85) !important;
+  border: 3px solid #2C2C2C !important;
+  border-radius: 18px !important;
+  box-shadow: 5px 5px 0 #2C2C2C !important;
+}
+.screen-result .stat-row {
+  font-weight: 700 !important;
+}
+
+
+/* ── Level 3: 난이도/옵션 선택 버튼 (diff-btn, option-btn) ── */
+.diff-btn,
+.option-btn {
+  border: 3px solid #2C2C2C !important;
+  background: #fff !important;
+  color: #2C2C2C !important;
+  font-weight: 900 !important;
+  border-radius: 999px !important;
+  box-shadow: 4px 4px 0 #2C2C2C !important;
+  padding: 12px 24px !important;
+  transition: all 0.1s ease !important;
+}
+.diff-btn:active,
+.option-btn:active {
+  transform: translate(2px,2px) !important;
+  box-shadow: 2px 2px 0 #2C2C2C !important;
+}
+.diff-btn.active,
+.option-btn.active,
+.diff-btn.selected,
+.option-btn.selected {
+  background: #7C4DFF !important;
+  color: #fff !important;
+  box-shadow: 4px 4px 0 #2C2C2C !important;
+  transform: scale(1.05) !important;
+}
+.diff-btn .diff-sub,
+.option-btn .option-sub {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  display: block;
+  opacity: 0.85;
+}
+
+
+/* ── Level 3: 결과 화면 버튼 너비 정리 (래핑 방지) ── */
+.screen-result .result-actions {
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+.screen-result .btn,
+.screen-result .btn-primary,
+.screen-result .btn-retry,
+.screen-result .btn-home,
+.screen-result .btn-home-res,
+.screen-result .btn-secondary {
+  padding: 14px 24px !important;
+  font-size: 1rem !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  white-space: nowrap;
+}
+
+
+/* ── Level 3: zone-header가 우상단 X 닫기 버튼과 겹치는 문제 해결 ── */
+/* X 닫기 버튼은 absolute 우상단(top:16, right:16)에 위치
+   가장 오른쪽 존의 zone-score-chip도 그 위치라 겹침
+   해결: 마지막 존의 zone-header 우측에 패딩, 첫 존의 좌측에 패딩 추가 */
+.zones-wrap .player-zone:last-child .zone-header,
+.zones-wrap .zone:last-child .zone-header {
+  padding-right: 56px !important;
+}
+.zones-wrap .player-zone:first-child .zone-header,
+.zones-wrap .zone:first-child .zone-header {
+  padding-left: 8px !important;
+}
+
+
+/* ── Level 3: 4P/3P 모드에서 중앙 패널이 zone 상단을 가리지 않도록 좁게 ── */
+.screen-game:has(.zones-wrap.p4) .problem-panel,
+.screen-game:has(.zones-wrap.p3) .problem-panel,
+.screen-game:has(.zones-wrap.p4) .target-panel,
+.screen-game:has(.zones-wrap.p3) .target-panel,
+.screen-game:has(.zones-wrap.p4) .center-panel,
+.screen-game:has(.zones-wrap.p3) .center-panel,
+.screen-game:has(.zones-wrap.p4) .stroop-panel,
+.screen-game:has(.zones-wrap.p3) .stroop-panel,
+.screen-game:has(.zones-wrap.p4) .clock-panel,
+.screen-game:has(.zones-wrap.p3) .clock-panel,
+.screen-game:has(.zones-wrap.p4) .status-panel,
+.screen-game:has(.zones-wrap.p3) .status-panel {
+  max-width: 45% !important;
+  width: max-content !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LEVEL 3: 게임 진행 화면 존 배경색 통일 (OX/국기 퀴즈 패스텔 톤)
+   - P1: 연한 하늘색
+   - P2: 연한 분홍
+   - P3: 연한 초록
+   - P4: 연한 주황
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pattern 1: .zone.p-blue/p-red/p-orange/p-purple (color-themed) */
+.zone.p-blue   { background: #B3E5FC !important; color: #2C2C2C !important; }
+.zone.p-red    { background: #FFCDD2 !important; color: #2C2C2C !important; }
+.zone.p-orange { background: #FFE0B2 !important; color: #2C2C2C !important; }
+.zone.p-purple { background: #C8E6C9 !important; color: #2C2C2C !important; }
+
+/* Pattern 2: nth-child for games using .zone (shape-match, color-touch, etc.) */
+.zones-wrap.p2 .zone:nth-child(1),
+.zones-wrap.p3 .zone:nth-child(1),
+.zones-wrap.p4 .zone:nth-child(1) {
+  background: #B3E5FC !important;
+}
+.zones-wrap.p2 .zone:nth-child(2),
+.zones-wrap.p3 .zone:nth-child(2),
+.zones-wrap.p4 .zone:nth-child(2) {
+  background: #FFCDD2 !important;
+}
+.zones-wrap.p3 .zone:nth-child(3),
+.zones-wrap.p4 .zone:nth-child(3) {
+  background: #C8E6C9 !important;
+}
+.zones-wrap.p4 .zone:nth-child(4) {
+  background: #FFE0B2 !important;
+}
+
+/* Pattern 3: .player-zone[data-player="X"] (bomb-dodge) */
+.player-zone[data-player="1"] { background: #B3E5FC !important; }
+.player-zone[data-player="2"] { background: #FFCDD2 !important; }
+.player-zone[data-player="3"] { background: #C8E6C9 !important; }
+.player-zone[data-player="4"] { background: #FFE0B2 !important; }
+
+/* Zone label: 다크 테마에서는 흰색이었던 것을 대비를 위해 어둡게 */
+.zone-label {
+  color: #2C2C2C !important;
+}
+
+/* Zone에 글자/아이콘이 흐릿하게 보이지 않도록 텍스트 색 보정 */
+.zone .zone-icon,
+.zone-score {
+  color: #2C2C2C !important;
+}
+
+/* Screen-game 자체 배경을 밝게 (다크 테마 게임에서) */
+.screen-game {
+  background: #FFF8F0 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LEVEL 4 — BOARD GAME TABLE THEME (보드게임 테이블)
+   인기 보드게임 앱(Ludo King / Monopoly Go) 스타일 포크:
+   펠트 그린 테이블 + 우드 프레임 + 크림 보드 + 골드 청키 버튼
+   + Ludo 4색 플레이어 토큰. Level 3 위에 덮는 오버라이드 레이어.
+   전자칠판(65~86" 터치스크린) 가로 화면 + 원거리 가시성 최적화.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --felt: #1E7A46;
+  --felt-dark: #145932;
+  --wood: #6D4423;
+  --wood-light: #8D5A2B;
+  --board-cream: #FFF8E1;
+  --gold: #FFC83D;
+  --gold-dark: #E8A50C;
+  --ink: #2C2C2C;
+  --tok-blue: #1E88E5;
+  --tok-red: #E53935;
+  --tok-green: #43A047;
+  --tok-yellow: #FDD835;
+  --font-family: 'Jua', 'Pretendard Variable', -apple-system, 'Noto Sans KR', sans-serif;
+}
+
+/* ── 인트로: 펠트 그린 테이블 ── */
+.screen-intro {
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(255,255,255,0.14) 0, transparent 55%),
+    radial-gradient(ellipse at 50% 120%, rgba(0,0,0,0.28) 0, transparent 60%),
+    var(--felt) !important;
+}
+.screen-intro::before {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 18px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 18px);
+  background-size: auto;
+}
+
+/* 우드 헤더 바 */
+.game-header {
+  background: linear-gradient(180deg, var(--wood-light), var(--wood)) !important;
+  border-bottom: 4px solid #4E2E12 !important;
+  box-shadow: 0 5px 0 rgba(0,0,0,0.35) !important;
+}
+.game-title {
+  color: var(--board-cream) !important;
+  -webkit-text-fill-color: var(--board-cream) !important;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.35) !important;
+}
+.icon-btn, .sound-toggle {
+  border: 3px solid var(--ink) !important;
+  background: var(--board-cream) !important;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.4) !important;
+}
+.icon-btn:active, .sound-toggle:active {
+  transform: translateY(3px) !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.4) !important;
+}
+
+/* 인트로 텍스트: 펠트 위 크림색 */
+.intro-text, .intro-title-text {
+  color: #FFFFFF !important;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.35) !important;
+}
+.intro-subtext, .intro-desc-text {
+  color: rgba(255,255,255,0.85) !important;
+}
+.player-select-label, .select-label {
+  color: var(--gold) !important;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.4) !important;
+}
+
+/* 인원 버튼 = 보드게임 말(토큰) — Ludo 4색 */
+.player-btn {
+  background: var(--board-cream) !important;
+  border: 4px solid var(--ink) !important;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.45) !important;
+  color: var(--ink) !important;
+}
+.player-btn:active {
+  transform: translateY(4px) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.45) !important;
+}
+.player-btn.active {
+  background: var(--gold) !important;
+  color: var(--ink) !important;
+  box-shadow: 0 6px 0 var(--gold-dark), 0 0 0 6px rgba(255,200,61,0.35) !important;
+  transform: scale(1.08) !important;
+}
+
+/* PLAY 버튼: 골드 주사위 굴림 버튼 */
+.btn-play {
+  background: linear-gradient(180deg, #FFD968, var(--gold)) !important;
+  border: 4px solid var(--ink) !important;
+  box-shadow: 0 8px 0 var(--gold-dark), 0 12px 18px rgba(0,0,0,0.35) !important;
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink) !important;
+}
+.btn-play:active {
+  transform: translateY(6px) !important;
+  box-shadow: 0 2px 0 var(--gold-dark) !important;
+}
+
+/* 규칙 카드: 크림 보드 카드 */
+.intro-rules {
+  background: var(--board-cream) !important;
+  border: 3px solid var(--ink) !important;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.4) !important;
+}
+.badge-2p {
+  background: var(--tok-red) !important;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.4) !important;
+}
+
+/* ── 카운트다운: 펠트 + 골드 넘버 ── */
+.screen-countdown {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.1) 0, transparent 60%),
+    var(--felt) !important;
+}
+.countdown-number {
+  color: var(--gold) !important;
+  -webkit-text-fill-color: var(--gold) !important;
+  text-shadow: 0 8px 0 var(--gold-dark), 0 14px 24px rgba(0,0,0,0.45) !important;
+}
+
+/* ── 게임 화면: 밝은 보드 (가독성 유지) ── */
+.screen-game {
+  background: var(--board-cream) !important;
+}
+.top-bar, .game-hud, .score-bar, .score-row, .scoreboard {
+  background: linear-gradient(180deg, var(--wood-light), var(--wood)) !important;
+  border-color: #4E2E12 !important;
+}
+.top-bar .problem-timer {
+  background: var(--gold) !important;
+  border: 3px solid var(--ink) !important;
+}
+.hud-timer-fill, .progress-bar-fill {
+  background: linear-gradient(90deg, var(--gold), #FF9800) !important;
+}
+
+/* ── 결과: 펠트 위 시상식 ── */
+.screen-result {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(255,200,61,0.25) 0, transparent 50%),
+    radial-gradient(ellipse at 50% 110%, rgba(0,0,0,0.3) 0, transparent 60%),
+    var(--felt) !important;
+}
+.result-title, .result-headline {
+  color: #FFFFFF !important;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.4) !important;
+}
+.screen-result .result-sub { color: rgba(255,255,255,0.85) !important; }
+.result-winner {
+  background: var(--board-cream) !important;
+  border: 4px solid var(--ink) !important;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.4) !important;
+}
+.btn-primary, .btn-retry {
+  background: linear-gradient(180deg, #FFD968, var(--gold)) !important;
+  box-shadow: 0 6px 0 var(--gold-dark) !important;
+  border: 3px solid var(--ink) !important;
+}
+.btn-home, .btn-home-res, .btn-secondary {
+  background: var(--board-cream) !important;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.4) !important;
+  border: 3px solid var(--ink) !important;
+}
+.btn:active, .btn-primary:active, .btn-retry:active,
+.btn-home:active, .btn-home-res:active {
+  transform: translateY(4px) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.4) !important;
+}
+.screen-result .result-stats {
+  background: var(--board-cream) !important;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.4) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   전자칠판 스케일링 — 원거리 가시성
+   65~86인치 1920px+ 화면: 교실 뒤에서도 읽히도록 핵심 요소 확대
+   ═══════════════════════════════════════════════════════════════ */
+@media (min-width: 1280px) {
+  html { font-size: 19px; }
+  .intro-text, .intro-title-text { font-size: 2.2rem !important; }
+  .intro-subtext, .intro-desc-text { font-size: 1.25rem !important; }
+  .btn-play { font-size: 1.8rem !important; padding: 26px 90px !important; }
+  .player-btn { width: 104px !important; height: 104px !important; font-size: 1.5rem !important; }
+  .game-title { font-size: 2rem !important; }
+  .countdown-number { font-size: 14rem !important; }
+  .result-title, .result-headline { font-size: 2.6rem !important; }
+}
+@media (min-width: 1900px) {
+  html { font-size: 22px; }
+  .intro-text, .intro-title-text { font-size: 2.8rem !important; }
+  .btn-play { font-size: 2.2rem !important; padding: 32px 110px !important; }
+  .player-btn { width: 124px !important; height: 124px !important; font-size: 1.8rem !important; }
+  .countdown-number { font-size: 18rem !important; }
+}
+
+/* 터치 영역 하단 배치 보강: 인트로 PLAY 버튼은 항상 화면 하단 고정 영역 */
+.btn-play { margin-top: auto !important; }
+
+/* ── 닫기(X) 버튼 가시성 복원 ──
+   Level 4의 .icon-btn 크림 배경이 .close-btn의 빨간 배경을 덮어
+   흰 X가 크림 위에 떠서 안 보이던 문제. 닫기 버튼은 항상 빨강+흰 X. */
+.close-btn,
+.icon-btn.close-btn,
+.close-btn-hud,
+.hud-close {
+  background: #E53935 !important;
+  color: #FFFFFF !important;
+  border: 3px solid #FFF8E1 !important;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.4) !important;
+}
+.close-btn:active,
+.icon-btn.close-btn:active,
+.close-btn-hud:active,
+.hud-close:active {
+  transform: translateY(3px) !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.4) !important;
+}

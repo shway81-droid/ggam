@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>기억 이어가기</title>
+<link rel="stylesheet" href="../../shared/style.css?v=5">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+<section class="screen screen-intro active" id="introScreen">
+  <header class="game-header">
+    <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+    <h1 class="game-title">기억 이어가기</h1>
+    <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+  </header>
+
+  <div class="intro-body">
+    <div class="intro-illustration" aria-hidden="true">
+      <svg viewBox="0 0 120 92" width="180" height="138">
+        <!-- 2x2 색 패드 -->
+        <rect x="20" y="10" width="34" height="34" rx="8" fill="#EF5350" stroke="#2C2C2C" stroke-width="3"/>
+        <rect x="58" y="10" width="34" height="34" rx="8" fill="#42A5F5" stroke="#2C2C2C" stroke-width="3"/>
+        <rect x="20" y="48" width="34" height="34" rx="8" fill="#66BB6A" stroke="#2C2C2C" stroke-width="3"/>
+        <rect x="58" y="48" width="34" height="34" rx="8" fill="#FFEE58" stroke="#2C2C2C" stroke-width="3"/>
+        <!-- 순서 화살표 1→2→3 -->
+        <text x="37" y="33" text-anchor="middle" font-size="16" font-weight="900" fill="#fff">1</text>
+        <text x="75" y="33" text-anchor="middle" font-size="16" font-weight="900" fill="#fff">2</text>
+        <text x="37" y="71" text-anchor="middle" font-size="16" font-weight="900" fill="#2C2C2C">3</text>
+        <path d="M100 26 q12 0 12 20 q0 20 -14 20" fill="none" stroke="#7C4DFF" stroke-width="3" stroke-linecap="round" stroke-dasharray="3,4"/>
+        <text x="106" y="88" text-anchor="middle" font-size="9" font-weight="900" fill="#7C4DFF">+1</text>
+      </svg>
+    </div>
+
+    <p class="intro-text">색 순서를 함께 외워요!</p>
+    <p class="intro-subtext">차례대로 순서를 따라 누르고<br><b>새 색 1개를 더 추가</b>하세요. 함께 길게 이어가요!</p>
+
+    <ul class="intro-rules">
+      <li>패드가 색 순서대로 반짝여요</li>
+      <li>본 순서대로 똑같이 누르기</li>
+      <li>마지막에 새 색 1개 더 추가</li>
+      <li>다음 사람에게 차례가 넘어가요</li>
+      <li>6칸 이상 이어가면 성공!</li>
+    </ul>
+
+    <div class="player-select-label">인원 선택</div>
+    <div class="player-select">
+      <button class="player-btn active" data-count="2">2명</button>
+      <button class="player-btn" data-count="3">3명</button>
+      <button class="player-btn" data-count="4">4명</button>
+    </div>
+  </div>
+  <button class="btn btn-play" id="playBtn">🧠 PLAY</button>
+</section>
+
+<section class="screen screen-countdown" id="countdownScreen">
+  <div class="countdown-number" id="countdownNumber">3</div>
+</section>
+
+<section class="screen screen-game" id="gameScreen">
+  <div class="game-hud">
+    <button class="hud-close" id="closeBtn" aria-label="홈으로">✕</button>
+    <span class="hud-turn" id="hudTurn">P1 차례</span>
+    <div class="hud-timer-track"><div class="hud-timer-fill" id="hudTimerFill" style="width:100%"></div></div>
+    <span class="hud-len" id="hudLen">0칸</span>
+    <button class="hud-sound" id="soundToggleGame" aria-label="사운드 토글">🔇</button>
+  </div>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="play-area">
+    <div class="seq-progress" id="seqProgress"></div>
+    <div class="pad-grid" id="padGrid"></div>
+  </div>
+</section>
+
+<section class="screen screen-result" id="resultScreen">
+  <div class="result-emoji-big" id="resultEmoji">🎉</div>
+  <h2 class="result-headline" id="resultHeadline">성공!</h2>
+  <p class="result-sub" id="resultSub">함께 길게 이어갔어요!</p>
+  <div class="result-stats">
+    <div class="stat-row"><span class="stat-label">이어간 길이</span><span class="stat-val" id="statLen">0칸</span></div>
+    <div class="stat-row"><span class="stat-label">목표</span><span class="stat-val">6칸</span></div>
+  </div>
+  <div class="result-actions">
+    <button class="btn btn-retry" id="retryBtn">다시하기</button>
+    <button class="btn btn-home-res" id="homeBtn">홈으로</button>
+  </div>
+</section>
+
+<script src="../../shared/engine.js?v=12"></script>
+<script src="game.js"></script>
+</body>
+</html>

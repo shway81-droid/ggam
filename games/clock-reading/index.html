@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>시계 읽기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 / 인원 선택 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h1 class="game-title">시계 읽기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <!-- Decorative clock preview -->
+      <div class="intro-clock-wrap">
+        <svg viewBox="0 0 120 120" width="130" height="130" class="intro-clock-svg">
+          <circle cx="60" cy="60" r="54" fill="#FFFFFF" stroke="#546E7A" stroke-width="3"/>
+          <!-- Hour tick marks -->
+          <line x1="60" y1="10" x2="60" y2="18" stroke="#90A4AE" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="102" x2="60" y2="110" stroke="#90A4AE" stroke-width="2" stroke-linecap="round"/>
+          <line x1="10" y1="60" x2="18" y2="60" stroke="#90A4AE" stroke-width="2" stroke-linecap="round"/>
+          <line x1="102" y1="60" x2="110" y2="60" stroke="#90A4AE" stroke-width="2" stroke-linecap="round"/>
+          <!-- Diagonal ticks -->
+          <line x1="24.4" y1="24.4" x2="30.1" y2="30.1" stroke="#CFD8DC" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="89.9" y1="24.4" x2="95.6" y2="30.1" stroke="#CFD8DC" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24.4" y1="95.6" x2="30.1" y2="89.9" stroke="#CFD8DC" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="89.9" y1="95.6" x2="95.6" y2="89.9" stroke="#CFD8DC" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Numbers -->
+          <text x="60" y="22" text-anchor="middle" font-size="11" font-weight="bold" fill="#37474F" font-family="sans-serif">12</text>
+          <text x="101" y="65" text-anchor="middle" font-size="11" font-weight="bold" fill="#37474F" font-family="sans-serif">3</text>
+          <text x="60" y="107" text-anchor="middle" font-size="11" font-weight="bold" fill="#37474F" font-family="sans-serif">6</text>
+          <text x="19" y="65" text-anchor="middle" font-size="11" font-weight="bold" fill="#37474F" font-family="sans-serif">9</text>
+          <!-- Hour hand at 10 -->
+          <line x1="60" y1="60" x2="38.5" y2="34.5" stroke="#37474F" stroke-width="5" stroke-linecap="round"/>
+          <!-- Minute hand at 2 (pointing to 10 min) -->
+          <line x1="60" y1="60" x2="83" y2="34" stroke="#EF5350" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="60" cy="60" r="4.5" fill="#37474F"/>
+        </svg>
+      </div>
+
+      <p class="intro-text">시계를 보고<br>맞는 시간을 터치!</p>
+      <p class="intro-subtext">먼저 맞히면 +1점 · 틀리면 라운드 실격 -1점 감점!</p>
+      <p class="intro-subtext">10라운드 승부</p>
+
+      <div class="player-select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <!-- 플레이어 구역 (JS로 동적 렌더링) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- 중앙 시계 패널 -->
+    <div class="clock-panel" id="clockPanel">
+      <div class="round-badge" id="roundBadge">1 / 10</div>
+      <div class="clock-face-wrap" id="clockFaceWrap">
+        <!-- SVG clock injected by JS -->
+      </div>
+      <div class="clock-feedback" id="clockFeedback"></div>
+    </div>
+
+    <!-- 홈 버튼 -->
+    <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-table-wrap">
+      <table class="result-table" id="resultTable">
+        <thead id="resultTableHead"></thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

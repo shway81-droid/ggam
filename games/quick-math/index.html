@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>빠른 계산</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 / 설정 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">🧮 빠른 계산</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <p class="intro-text">수식을 보고<br>정답을 가장 먼저 터치!</p>
+      <p class="intro-subtext">오답 터치 시 해당 라운드 실격 -1점 감점! · 10문제 승부</p>
+
+      <div class="select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+
+      <div class="select-label" style="margin-top: var(--space-lg);">난이도</div>
+      <div class="diff-select-row">
+        <button class="diff-btn active" data-diff="easy">쉬움<span class="diff-sub">저학년</span></button>
+        <button class="diff-btn" data-diff="normal">보통<span class="diff-sub">고학년</span></button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <!-- 플레이어 존 (JS 렌더링) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- 중앙 문제 패널 -->
+    <div class="problem-panel" id="problemPanel">
+      <div class="question-counter" id="questionCounter">1 / 10</div>
+      <div class="problem-expr" id="problemExpr">?</div>
+      <div class="problem-status" id="problemStatus"></div>
+    </div>
+
+    <!-- 닫기 버튼 -->
+    <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+
+    <!-- 점수 칩 바 -->
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">🏆 게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-table-wrap">
+      <table class="result-table" id="resultTable">
+        <thead id="resultTableHead"></thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

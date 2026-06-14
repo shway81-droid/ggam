@@ -1,0 +1,10 @@
+{
+  "name": "타이밍 스톱",
+  "description": "마커가 골드 존에 올 때 멈춰!",
+  "icon": "⏱️",
+  "color": "#00ACC1",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
+}

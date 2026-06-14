@@ -1,0 +1,10 @@
+{
+  "name": "색깔 터치",
+  "description": "글자의 뜻에 맞는 색을 터치!",
+  "icon": "🟡",
+  "color": "#9C27B0",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "brain",
+  "players": "2-4명"
+}

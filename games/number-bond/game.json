@@ -1,0 +1,10 @@
+{
+  "name": "수 가르기",
+  "description": "빈칸에 들어갈 수를 찾아 식을 완성해요! 가르기와 모으기",
+  "icon": "➕",
+  "color": "#00897B",
+  "grades": [1, 2, 3],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

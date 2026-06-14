@@ -1,0 +1,10 @@
+{
+  "name": "다음 무늬",
+  "description": "반복되는 무늬를 보고 다음에 올 무늬를 찾으세요!",
+  "icon": "🔷",
+  "color": "#7E57C2",
+  "grades": [1, 2, 3, 4],
+  "playTime": "1분",
+  "category": "brain",
+  "players": "2-4명"
+}

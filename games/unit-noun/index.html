@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>단위 세기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">단위 세기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 160 80" width="160" height="80">
+          <!-- 물건 카드: 강아지 -->
+          <rect x="8" y="14" width="62" height="52" rx="10" fill="#B2DFDB" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="39" y="40" text-anchor="middle" font-size="22" font-family="sans-serif">🐶</text>
+          <text x="39" y="58" text-anchor="middle" font-size="11" font-weight="900" fill="#2C2C2C" font-family="sans-serif">강아지</text>
+          <!-- 화살표 -->
+          <text x="80" y="46" text-anchor="middle" font-size="20" font-weight="900" fill="#26A69A" font-family="sans-serif">→</text>
+          <!-- 단위 카드: 한 마리 -->
+          <rect x="92" y="14" width="62" height="52" rx="10" fill="#FFE0B2" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="123" y="40" text-anchor="middle" font-size="14" font-weight="900" fill="#2C2C2C" font-family="sans-serif">한</text>
+          <text x="123" y="58" text-anchor="middle" font-size="16" font-weight="900" fill="#E65100" font-family="sans-serif">마리</text>
+        </svg>
+      </div>
+      <p class="intro-text">물건을 세는<br>알맞은 단위를 찾아요!</p>
+      <p class="intro-subtext">오답 시 -1점 감점! · 10라운드 승부</p>
+
+      <div class="select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+
+    <!-- 상단 문제 패널 -->
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 10</div>
+        <div class="problem-timer" id="problemTimer">8</div>
+      </div>
+      <div class="word-display" id="wordDisplay"></div>
+      <div class="problem-status" id="problemStatus"></div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+
+    <div class="zones-wrap" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-table-wrap">
+      <table class="result-table" id="resultTable">
+        <thead id="resultTableHead"></thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

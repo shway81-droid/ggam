@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>슬라이딩 퍼즐</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">슬라이딩 퍼즐</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <!-- 3x3 grid demo -->
+          <rect x="4"  y="4"  width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="22" y="29" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">1</text>
+          <rect x="42" y="4"  width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="60" y="29" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">2</text>
+          <rect x="80" y="4"  width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="98" y="29" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">3</text>
+
+          <rect x="4"  y="42" width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="22" y="67" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">4</text>
+          <rect x="42" y="42" width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="60" y="67" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">5</text>
+          <rect x="80" y="42" width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="98" y="67" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">6</text>
+
+          <rect x="4"  y="80" width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="22" y="105" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">7</text>
+          <rect x="42" y="80" width="36" height="36" rx="8" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <text x="60" y="105" text-anchor="middle" font-size="20" font-weight="900" fill="#2C2C2C">8</text>
+          <!-- empty cell -->
+          <rect x="80" y="80" width="36" height="36" rx="8" fill="#B3E5FC" stroke="#2C2C2C" stroke-width="3" stroke-dasharray="5,3"/>
+        </svg>
+      </div>
+      <p class="intro-text">조각을 밀어서<br>1-2-3-4-5-6-7-8 순서대로!</p>
+      <p class="intro-subtext">먼저 완성한 사람 승! · 3라운드 승부</p>
+
+      <div class="select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 3</div>
+        <div class="problem-timer" id="problemTimer">60</div>
+      </div>
+      <div class="problem-status" id="problemStatus">조각을 밀어 1-8 순서대로 맞추세요!</div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+
+    <div class="zones-wrap" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

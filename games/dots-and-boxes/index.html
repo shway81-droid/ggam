@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>도트 앤 박스</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">도트 앤 박스</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <!-- 미니 프리뷰 -->
+      <div class="intro-preview" aria-hidden="true">
+        <svg viewBox="0 0 160 160" width="160" height="160">
+          <!-- Dots -->
+          <circle cx="20" cy="20" r="6" fill="#333"/>
+          <circle cx="80" cy="20" r="6" fill="#333"/>
+          <circle cx="140" cy="20" r="6" fill="#333"/>
+          <circle cx="20" cy="80" r="6" fill="#333"/>
+          <circle cx="80" cy="80" r="6" fill="#333"/>
+          <circle cx="140" cy="80" r="6" fill="#333"/>
+          <circle cx="20" cy="140" r="6" fill="#333"/>
+          <circle cx="80" cy="140" r="6" fill="#333"/>
+          <circle cx="140" cy="140" r="6" fill="#333"/>
+          <!-- P1 completed box (top-left) -->
+          <rect x="20" y="20" width="60" height="60" fill="#29B6F6" opacity="0.25" rx="3"/>
+          <line x1="20" y1="20" x2="80" y2="20" stroke="#29B6F6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="20" y1="80" x2="80" y2="80" stroke="#29B6F6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="20" y1="20" x2="20" y2="80" stroke="#29B6F6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="80" y1="20" x2="80" y2="80" stroke="#29B6F6" stroke-width="4" stroke-linecap="round"/>
+          <!-- P2 completed box (bottom-right) -->
+          <rect x="80" y="80" width="60" height="60" fill="#EF5350" opacity="0.25" rx="3"/>
+          <line x1="80" y1="80" x2="140" y2="80" stroke="#EF5350" stroke-width="4" stroke-linecap="round"/>
+          <line x1="80" y1="140" x2="140" y2="140" stroke="#EF5350" stroke-width="4" stroke-linecap="round"/>
+          <line x1="80" y1="80" x2="80" y2="140" stroke="#EF5350" stroke-width="4" stroke-linecap="round"/>
+          <line x1="140" y1="80" x2="140" y2="140" stroke="#EF5350" stroke-width="4" stroke-linecap="round"/>
+          <!-- Partial lines (undrawn style) -->
+          <line x1="80" y1="20" x2="140" y2="20" stroke="#CCCCCC" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/>
+          <line x1="140" y1="20" x2="140" y2="80" stroke="#CCCCCC" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/>
+          <line x1="20" y1="80" x2="20" y2="140" stroke="#CCCCCC" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/>
+          <line x1="20" y1="140" x2="80" y2="140" stroke="#CCCCCC" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/>
+          <!-- P1 label -->
+          <text x="50" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#29B6F6">P1</text>
+          <!-- P2 label -->
+          <text x="110" y="116" text-anchor="middle" font-size="14" font-weight="bold" fill="#EF5350">P2</text>
+        </svg>
+      </div>
+
+      <p class="intro-text">선을 그어 사각형을 완성하세요!</p>
+      <p class="intro-subtext">두 점 사이를 탭해 선을 긋고, 4번째 선으로<br>사각형을 완성하면 점수를 얻어요.</p>
+
+      <!-- 플레이어 수 선택 -->
+      <div class="player-select">
+        <p class="player-select-label">플레이어 수</p>
+        <div class="player-btns">
+          <button class="player-count-btn active" data-count="2">2명</button>
+          <button class="player-count-btn" data-count="3">3명</button>
+          <button class="player-count-btn" data-count="4">4명</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="closeBtn" aria-label="홈으로">←</button>
+      <div class="turn-indicator" id="turnIndicator">
+        <span class="turn-dot" id="turnDot"></span>
+        <span class="turn-text" id="turnText">P1의 차례</span>
+      </div>
+      <button class="sound-toggle" id="soundToggleGame" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <!-- 점수판 -->
+    <div class="scoreboard" id="scoreboard">
+      <!-- JS로 동적 생성 -->
+    </div>
+
+    <!-- 게임 그리드 (캔버스 방식 대신 SVG 오버레이 방식) -->
+    <div class="board-wrapper">
+      <div class="board-container" id="boardContainer">
+        <!-- JS로 동적 생성: SVG + 클릭 가능한 선 영역들 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="game-header result-header">
+      <div></div>
+      <h2 class="result-header-title">게임 종료!</h2>
+      <div></div>
+    </header>
+
+    <div class="result-body">
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h2 class="result-title" id="resultTitle">P1 승리!</h2>
+      <p class="result-sub" id="resultSub">가장 많은 사각형을 완성했어요!</p>
+    </div>
+
+    <!-- 최종 점수 목록 -->
+    <div class="result-scores" id="resultScores">
+      <!-- JS로 동적 생성 -->
+    </div>
+
+    <!-- 결과 보드 미니 프리뷰 -->
+    <div class="result-board-preview" id="resultBoardPreview">
+      <!-- JS로 동적 생성 -->
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>

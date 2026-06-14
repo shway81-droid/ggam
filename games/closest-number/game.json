@@ -1,0 +1,10 @@
+{
+  "name": "가까운 수",
+  "description": "목표 수에 가장 가까운 수를 골라요!",
+  "icon": "🎯",
+  "color": "#1E88E5",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "기억 이어가기",
+  "description": "색 순서를 함께 외워 한 칸씩 이어가는 협력 게임!",
+  "icon": "🧠",
+  "color": "#7C4DFF",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "2~3분",
+  "category": "coop",
+  "players": "2-4명"
+}

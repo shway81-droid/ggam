@@ -1,0 +1,10 @@
+{
+  "name": "점프하는 표적",
+  "description": "이리저리 점프하는 표적을 빠르게 따라가서 터치하세요!",
+  "icon": "🎯",
+  "color": "#00ACC1",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "30초",
+  "category": "speed",
+  "players": "2-4명"
+}

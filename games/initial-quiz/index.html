@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>초성 퀴즈</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">초성 퀴즈</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-demo" aria-hidden="true">
+        <!-- Demo: show 초성 → correct picture -->
+        <div class="demo-choseong-box">
+          <svg viewBox="0 0 120 60" width="120" height="60" xmlns="http://www.w3.org/2000/svg">
+            <rect width="120" height="60" rx="14" fill="#4E342E"/>
+            <text x="60" y="44" text-anchor="middle" font-size="36" font-weight="900"
+              font-family="'Noto Sans KR', sans-serif" fill="#FFCC80" letter-spacing="6">ㅅㄱ</text>
+          </svg>
+        </div>
+        <div class="demo-arrow">→</div>
+        <div class="demo-grid">
+          <div class="demo-item demo-item-wrong">
+            <!-- banana snippet -->
+            <svg viewBox="0 0 60 60" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 48 Q8 28 18 16 Q26 6 44 8 Q50 8 52 12 Q50 14 44 12 Q28 10 22 20 Q14 32 18 48Z"
+                fill="#FFEE58" stroke="#F9A825" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="demo-item demo-item-correct">
+            <!-- apple snippet -->
+            <svg viewBox="0 0 60 60" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 8 Q38 2 42 10 Q36 12 30 8Z" fill="#66BB6A" stroke="#388E3C" stroke-width="1"/>
+              <line x1="30" y1="8" x2="30" y2="14" stroke="#6D4C41" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M30 14 Q10 12 8 30 Q8 48 30 52 Q52 48 52 30 Q50 12 30 14Z"
+                fill="#EF5350" stroke="#C62828" stroke-width="1.5"/>
+              <ellipse cx="20" cy="24" rx="6" ry="4" fill="rgba(255,255,255,0.3)" transform="rotate(-20,20,24)"/>
+            </svg>
+          </div>
+          <div class="demo-item demo-item-wrong">
+            <!-- star snippet -->
+            <svg viewBox="0 0 60 60" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="30,4 36,21 55,21 40,32 46,50 30,39 14,50 20,32 5,21 24,21"
+                fill="#FFD600" stroke="#F9A825" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <p class="intro-text">초성을 보고 맞는 그림을 터치하세요!</p>
+      <p class="intro-subtext">그림만 보고 맞혀요 · 10라운드 · 먼저 정답을 터치하면 +1점 · 오답은 실격 · 오답 시 -1점 감점!</p>
+
+      <div class="player-select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <!-- 플레이어 구역 (JS로 동적 렌더링) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- 중앙 초성 패널 -->
+    <div class="target-panel" id="targetPanel">
+      <div class="round-badge" id="roundBadge">1 / 10</div>
+      <div class="target-wrap" id="targetWrap">
+        <div class="target-choseong-box" id="targetChoseongBox">
+          <!-- JS로 채움 -->
+        </div>
+        <div class="target-label">이 초성은?</div>
+      </div>
+      <div class="round-status" id="roundStatus"></div>
+    </div>
+
+    <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-scores-wrap" id="resultScoresWrap"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

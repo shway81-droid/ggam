@@ -1,0 +1,21 @@
+name: CI
+
+# PR·푸시 시 전 게임 정적 검증을 실행하는 게이트.
+# (배포 워크플로우 pages.yml과 분리 — 검증 실패한 변경이 배포되지 않도록 PR 단계에서 차단)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 전 게임 정적 검증
+        run: npm test

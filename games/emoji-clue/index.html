@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>이모지 힌트</title>
+<link rel="stylesheet" href="../../shared/style.css?v=5">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="screen screen-intro active" id="introScreen">
+  <header class="game-header">
+    <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+    <h1 class="game-title">이모지 힌트</h1>
+    <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+  </header>
+
+  <div class="intro-body">
+    <div class="intro-demo" aria-hidden="true">
+      <!-- Left: P1 picks emoji hints -->
+      <svg viewBox="0 0 80 80" width="78" height="78">
+        <rect x="6" y="6" width="68" height="68" rx="8" fill="#fff" stroke="#F9A825" stroke-width="2"/>
+        <text x="40" y="26" text-anchor="middle" font-size="13" font-weight="900" fill="#E65100">소방관</text>
+        <text x="22" y="56" text-anchor="middle" font-size="16">🔥</text>
+        <text x="40" y="56" text-anchor="middle" font-size="16">🚒</text>
+        <text x="58" y="56" text-anchor="middle" font-size="16">💧</text>
+        <circle cx="68" cy="12" r="5" fill="#F9A825"/>
+        <text x="68" y="15" text-anchor="middle" font-size="7" font-weight="900" fill="#fff">1</text>
+      </svg>
+      <!-- Middle: no talking! -->
+      <svg viewBox="0 0 50 40" width="40" height="32">
+        <path d="M6 20 L38 20 M32 14 L38 20 L32 26" stroke="#F57F17" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="22" y="13" text-anchor="middle" font-size="11">🤫</text>
+      </svg>
+      <!-- Right: P2 guesses the word -->
+      <svg viewBox="0 0 80 80" width="78" height="78">
+        <rect x="6" y="6" width="68" height="68" rx="8" fill="#E65100"/>
+        <text x="40" y="28" text-anchor="middle" font-size="14">🔥🚒💧</text>
+        <rect x="13" y="38" width="54" height="13" rx="4" fill="#FFD54F"/>
+        <text x="40" y="48" text-anchor="middle" font-size="8" font-weight="900" fill="#5D4037">소방관</text>
+        <rect x="13" y="55" width="54" height="13" rx="4" fill="rgba(255,255,255,0.25)"/>
+        <text x="40" y="65" text-anchor="middle" font-size="8" font-weight="800" fill="#fff">의사</text>
+        <circle cx="68" cy="12" r="5" fill="#FFD54F"/>
+        <text x="68" y="15" text-anchor="middle" font-size="7" font-weight="900" fill="#5D4037">2</text>
+      </svg>
+    </div>
+
+    <p class="intro-text">이모지 3개로 단어를 설명!</p>
+    <div class="badge-2p">👥 2인 전용</div>
+    <p class="intro-subtext">P1이 고른 이모지 3개만 보고<br>P2가 비밀 단어를 맞혀요!</p>
+
+    <ul class="intro-rules">
+      <li><b>🤫 말하기 금지! 이모지로만 설명해요</b></li>
+      <li>P1: 비밀 단어를 보고 이모지 3개 선택</li>
+      <li>P2: 이모지 힌트를 보고 단어 맞히기</li>
+      <li>5라운드, 3번 이상 성공하면 협력 성공!</li>
+    </ul>
+  </div>
+  <button class="btn btn-play" id="playBtn">💡 PLAY</button>
+</section>
+
+<section class="screen screen-countdown" id="countdownScreen">
+  <div class="countdown-number" id="countdownNumber">3</div>
+</section>
+
+<section class="screen screen-game" id="gameScreen">
+  <div class="game-hud">
+    <button class="hud-close" id="closeBtn" aria-label="홈으로">✕</button>
+    <span class="hud-round" id="hudRound">1/5</span>
+    <span class="hud-rule">🤫 말하기 금지!</span>
+    <span class="hud-score" id="hudScore">0점</span>
+    <button class="hud-sound" id="soundToggleGame" aria-label="사운드 토글">🔇</button>
+  </div>
+
+  <div class="banner" id="banner"></div>
+
+  <!-- Phase 1: P1 makes the hint -->
+  <div class="phase phase-p1" id="phaseP1">
+    <div class="secret-card">
+      <div class="secret-label">👁 P1만 보세요 · 비밀 단어</div>
+      <div class="secret-word" id="secretWord">소방관</div>
+      <div class="secret-warn">🤫 P2는 보지 마세요!</div>
+    </div>
+    <div class="picked-slots" id="pickedSlots"></div>
+    <div class="palette-wrap">
+      <div class="palette-hint">이모지 3개를 골라 힌트를 만들어요 (다시 누르면 취소)</div>
+      <div class="palette-grid" id="paletteGrid"></div>
+      <button class="btn btn-done" id="doneBtn" disabled>힌트 완성!</button>
+    </div>
+  </div>
+
+  <!-- Phase 2: P2 guesses -->
+  <div class="phase phase-p2" id="phaseP2">
+    <div class="hint-card">
+      <div class="hint-label">🎮 P2 차례 · P1의 이모지 힌트</div>
+      <div class="hint-emojis" id="hintEmojis"></div>
+    </div>
+    <div class="guess-wrap">
+      <div class="guess-question">이 단어는 무엇일까요?</div>
+      <div class="choice-grid" id="choiceGrid"></div>
+    </div>
+  </div>
+
+  <!-- Handoff gate between phases -->
+  <div class="gate" id="gate">
+    <div class="gate-emoji" id="gateEmoji">👁</div>
+    <div class="gate-title" id="gateTitle">P1만 보세요!</div>
+    <div class="gate-sub" id="gateSub">P2는 눈을 감아요</div>
+    <div class="gate-tap">👆 터치해서 시작</div>
+  </div>
+</section>
+
+<section class="screen screen-result" id="resultScreen">
+  <div class="result-emoji-big" id="resultEmoji">🎉</div>
+  <h2 class="result-headline" id="resultHeadline">성공!</h2>
+  <p class="result-sub" id="resultSub">마음이 통했어요!</p>
+  <div class="result-stats">
+    <div class="stat-row"><span class="stat-label">점수</span><span class="stat-val" id="statScore">0/5</span></div>
+    <div class="stat-row"><span class="stat-label">최고 연속 성공</span><span class="stat-val" id="statStreak">0회</span></div>
+  </div>
+  <div class="result-actions">
+    <button class="btn btn-retry" id="retryBtn">다시하기</button>
+    <button class="btn btn-home-res" id="homeBtn">홈으로</button>
+  </div>
+</section>
+
+<script src="../../shared/engine.js?v=12"></script>
+<script src="game.js"></script>
+</body>
+</html>

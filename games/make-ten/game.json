@@ -1,0 +1,10 @@
+{
+  "name": "10 만들기",
+  "description": "더해서 10이 되는 두 수를 찾아 터치!",
+  "icon": "🔟",
+  "color": "#43A047",
+  "grades": [1, 2, 3, 4],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

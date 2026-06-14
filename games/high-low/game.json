@@ -1,0 +1,10 @@
+{
+  "name": "오르락내리락",
+  "description": "새로 나온 수가 앞의 수보다 크면 ⬆ 작으면 ⬇! 빠른 비교 판단",
+  "icon": "📈",
+  "color": "#43A047",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "가라사대",
+  "description": "\"가라사대\"가 붙을 때만 재빨리 동작 버튼을 눌러요!",
+  "icon": "👑",
+  "color": "#FF8F00",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
+}

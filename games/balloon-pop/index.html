@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>풍선 터트리기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">풍선 터트리기</h1>
+      <button class="icon-btn sound-btn" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 120 140" width="120" height="140">
+          <!-- Left balloon (blue) -->
+          <ellipse cx="30" cy="52" rx="22" ry="26" fill="#29B6F6"/>
+          <ellipse cx="22" cy="42" rx="7" ry="9" fill="rgba(255,255,255,0.35)"/>
+          <polygon points="24,78 30,84 36,78" fill="#29B6F6" opacity="0.8"/>
+          <path d="M30 84 Q27 92 30 100" fill="none" stroke="#aaa" stroke-width="1.5"/>
+          <!-- Right balloon (pink) -->
+          <ellipse cx="90" cy="48" rx="22" ry="26" fill="#E91E63"/>
+          <ellipse cx="82" cy="38" rx="7" ry="9" fill="rgba(255,255,255,0.35)"/>
+          <polygon points="84,74 90,80 96,74" fill="#E91E63" opacity="0.8"/>
+          <path d="M90 80 Q87 88 90 96" fill="none" stroke="#aaa" stroke-width="1.5"/>
+          <!-- Center balloon (yellow) -->
+          <ellipse cx="60" cy="38" rx="24" ry="28" fill="#FFEE58"/>
+          <ellipse cx="51" cy="27" rx="8" ry="10" fill="rgba(255,255,255,0.35)"/>
+          <polygon points="54,66 60,72 66,66" fill="#FFEE58" opacity="0.8"/>
+          <path d="M60 72 Q57 82 60 92" fill="none" stroke="#aaa" stroke-width="1.5"/>
+          <!-- Pop stars -->
+          <circle cx="100" cy="20" r="3" fill="#FFA726"/>
+          <line x1="100" y1="14" x2="100" y2="11" stroke="#FFA726" stroke-width="2"/>
+          <line x1="100" y1="26" x2="100" y2="29" stroke="#FFA726" stroke-width="2"/>
+          <line x1="94" y1="20" x2="91" y2="20" stroke="#FFA726" stroke-width="2"/>
+          <line x1="106" y1="20" x2="109" y2="20" stroke="#FFA726" stroke-width="2"/>
+          <line x1="96" y1="16" x2="94" y2="14" stroke="#FFA726" stroke-width="2"/>
+          <line x1="104" y1="24" x2="106" y2="26" stroke="#FFA726" stroke-width="2"/>
+          <line x1="96" y1="24" x2="94" y2="26" stroke="#FFA726" stroke-width="2"/>
+          <line x1="104" y1="16" x2="106" y2="14" stroke="#FFA726" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <p class="intro-desc">내 영역에서 풍선을 터트리세요!</p>
+      <p class="intro-sub">30초 동안 가장 많이 터트린 플레이어가 승리!</p>
+
+      <div class="player-select-wrap">
+        <p class="player-select-label">인원 선택</p>
+        <div class="player-select" id="playerSelect">
+          <button class="player-btn active" data-count="2">2명</button>
+          <button class="player-btn" data-count="3">3명</button>
+          <button class="player-btn" data-count="4">4명</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 2: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 3: 게임 -->
+  <section class="screen screen-game" id="gameScreen">
+    <div class="game-hud" id="gameHud">
+      <div class="hud-timer-wrap">
+        <div class="hud-timer-bar">
+          <div class="hud-timer-fill" id="timerFill"></div>
+        </div>
+        <span class="hud-timer-text" id="timerText">30</span>
+      </div>
+      <div class="hud-scores" id="hudScores"></div>
+      <button class="icon-btn hud-close" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+
+    <div class="game-zones" id="gameZones"></div>
+  </section>
+
+  <!-- 화면 4: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <div class="result-body">
+      <div class="result-crown">
+        <svg viewBox="0 0 80 60" width="80" height="60">
+          <polygon points="10,50 20,20 40,35 60,20 70,50" fill="#FFD700" stroke="#FFA000" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="10" cy="50" r="5" fill="#FFD700" stroke="#FFA000" stroke-width="2"/>
+          <circle cx="70" cy="50" r="5" fill="#FFD700" stroke="#FFA000" stroke-width="2"/>
+          <circle cx="40" cy="16" r="5" fill="#FFD700" stroke="#FFA000" stroke-width="2"/>
+          <rect x="8" y="50" width="64" height="8" rx="4" fill="#FFD700" stroke="#FFA000" stroke-width="2"/>
+        </svg>
+      </div>
+      <h2 class="result-winner-label" id="resultWinnerLabel">승자</h2>
+      <div class="result-winner-name" id="resultWinnerName">P1</div>
+      <div class="result-scores" id="resultScores"></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

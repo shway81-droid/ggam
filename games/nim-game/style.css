@@ -1,0 +1,450 @@
+/* games/nim-game/style.css */
+
+/* ── Countdown screen ─────────────────────────────────────── */
+.screen-countdown {
+  justify-content: center;
+  align-items: center;
+  background: #ECEFF1;
+}
+/* Override: countdown-number color is #607D8B (not white) */
+.countdown-number {
+  color: #607D8B;
+}
+
+body {
+  background: #ECEFF1;
+  overflow: hidden;
+}
+
+/* === 공통 헤더 === */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  flex-shrink: 0;
+}
+
+/* === 인트로 화면 === */
+.screen-intro {
+  justify-content: space-between;
+  background: var(--bg);
+}
+
+.intro-body {
+  gap: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.intro-preview {
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.18));
+}
+
+.intro-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+}
+
+.intro-rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 320px;
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: #F5F7F8;
+  border-radius: var(--card-radius);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  min-height: 48px;
+}
+
+.rule-item svg {
+  flex-shrink: 0;
+}
+
+.btn-play {
+  width: 80%;
+  max-width: 300px;
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1.3rem;
+  margin-bottom: var(--space-xl);
+  background: #607D8B;
+  box-shadow: 0 4px 16px rgba(96,125,139,0.4);
+}
+
+.btn-play:active {
+  box-shadow: 0 2px 8px rgba(96,125,139,0.4);
+}
+
+/* === 사운드 버튼 === */
+.sound-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === 게임 화면 === */
+.screen-game {
+  background: #ECEFF1;
+  justify-content: flex-start;
+  gap: 0;
+  /* 방안 B: 게임 화면 전체 두꺼운 컬러 테두리 (현재 플레이어 색) */
+  border: 8px solid transparent;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.screen-game.turn-p1 {
+  border-color: #29B6F6;
+  box-shadow: inset 0 0 0 3px rgba(41,182,246,0.15);
+}
+.screen-game.turn-p2 {
+  border-color: #EF5350;
+  box-shadow: inset 0 0 0 3px rgba(239,83,80,0.15);
+}
+
+/* 방안 A: 풀스크린 턴 변경 오버레이 */
+.turn-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.turn-overlay.show {
+  opacity: 1;
+  animation: turnOverlayPop 0.6s ease-out forwards;
+}
+.turn-overlay.p1 {
+  background: rgba(41,182,246,0.85);
+}
+.turn-overlay.p2 {
+  background: rgba(239,83,80,0.85);
+}
+.turn-overlay-text {
+  font-family: 'Pretendard Variable', -apple-system, sans-serif;
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 4px 4px 0 #2C2C2C;
+  letter-spacing: -0.02em;
+  transform: scale(0.7);
+  animation: turnTextPop 0.6s ease-out forwards;
+}
+@keyframes turnOverlayPop {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes turnTextPop {
+  0%   { transform: scale(0.6); }
+  30%  { transform: scale(1.15); }
+  60%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/* 턴 배너 */
+.turn-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgba(255,255,255,0.92);
+  border-radius: var(--btn-radius);
+  padding: 6px var(--space-md);
+  box-shadow: var(--shadow-card);
+  transition: background 0.25s ease, border-color 0.25s ease;
+  border: 2px solid transparent;
+}
+
+.turn-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #29B6F6;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.turn-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+/* 턴 배너 색상 */
+.turn-banner.p1 {
+  border-color: #29B6F6;
+  background: rgba(41,182,246,0.08);
+}
+
+.turn-banner.p2 {
+  border-color: #EF5350;
+  background: rgba(239,83,80,0.08);
+}
+
+/* 돌 카운터 */
+.stone-counter {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-lg) var(--space-sm);
+  width: 100%;
+}
+
+.counter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-sub);
+}
+
+.counter-num {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #455A64;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: inline-block;
+}
+
+.counter-num.bump {
+  animation: counterBump 0.25s ease;
+}
+
+@keyframes counterBump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); color: #EF5350; }
+  100% { transform: scale(1); }
+}
+
+/* 경고 색상: 남은 돌 적을 때 */
+.counter-num.danger {
+  color: #EF5350;
+}
+
+/* === 돌 그리드 영역 === */
+.stones-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  width: 100%;
+}
+
+.stones-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* 개별 돌 래퍼 */
+.stone-wrap {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.stone-wrap.taken {
+  animation: stoneTaken 0.35s ease forwards;
+}
+
+@keyframes stoneTaken {
+  0%   { transform: scale(1); opacity: 1; }
+  30%  { transform: scale(1.15); opacity: 0.9; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* 가져갈 돌 하이라이트 (hover/preview) */
+.stone-wrap.preview {
+  animation: stonePreview 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes stonePreview {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); filter: brightness(1.15); }
+}
+
+/* === 가져가기 버튼들 === */
+.take-buttons {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md) var(--space-lg);
+  width: 100%;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.take-btn {
+  flex: 1;
+  max-width: 120px;
+  min-height: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  background: #FFFFFF;
+  border: 3px solid #CFD8DC;
+  border-radius: var(--card-radius);
+  cursor: pointer;
+  padding: var(--space-sm);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-family);
+}
+
+.take-btn:active:not(:disabled) {
+  transform: scale(0.93);
+  box-shadow: none;
+}
+
+.take-btn:disabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+  border-color: #E0E0E0;
+}
+
+.take-btn-icon {
+  flex-shrink: 0;
+  display: block;
+}
+
+.take-btn-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* P1 활성화 버튼 스타일 */
+.take-buttons.p1 .take-btn:not(:disabled) {
+  border-color: #29B6F6;
+  background: rgba(41,182,246,0.06);
+  box-shadow: 0 2px 12px rgba(41,182,246,0.22);
+}
+
+/* P2 활성화 버튼 스타일 */
+.take-buttons.p2 .take-btn:not(:disabled) {
+  border-color: #EF5350;
+  background: rgba(239,83,80,0.06);
+  box-shadow: 0 2px 12px rgba(239,83,80,0.22);
+}
+
+/* 버튼 내 SVG 돌 색상 변경 (player 색 틴트) */
+/* 메인 돌 원은 stroke 속성으로 식별, 하이라이트 원(작은 흰색)은 제외 */
+.take-buttons.p1 .take-btn:not(:disabled) .take-btn-icon circle[stroke] {
+  fill: #5BBEF7;
+  stroke: #29B6F6;
+}
+.take-buttons.p2 .take-btn:not(:disabled) .take-btn-icon circle[stroke] {
+  fill: #EF7370;
+  stroke: #EF5350;
+}
+
+/* 긴장감: 3개 이하 남았을 때 */
+.stones-area.tension .stone-wrap:not(.taken) svg circle:first-child {
+  animation: stonePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes stonePulse {
+  0%   { fill: #78909C; }
+  50%  { fill: #EF5350; }
+  100% { fill: #78909C; }
+}
+
+/* === 결과 화면 === */
+.screen-result {
+  justify-content: flex-start;
+  align-items: center;
+  background: var(--bg);
+}
+
+.result-header {
+  flex-shrink: 0;
+}
+
+.result-header-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.result-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  flex: 1;
+  justify-content: center;
+}
+
+.result-icon-wrap {
+  animation: resultBounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes resultBounce {
+  0%   { transform: scale(0.2); opacity: 0; }
+  70%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.result-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text);
+  animation: fadeSlideUp 0.4s ease 0.15s both;
+}
+
+.result-sub {
+  font-size: 1rem;
+  color: var(--text-sub);
+  animation: fadeSlideUp 0.4s ease 0.25s both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-actions {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg) var(--space-xl);
+  flex-shrink: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-secondary {
+  box-shadow: none;
+}
+
+/* 게임 잠금 상태 */
+.take-buttons.locked .take-btn {
+  pointer-events: none;
+  opacity: 0.4;
+}

@@ -1,0 +1,446 @@
+/* games/stop-bar/style.css */
+
+/* ── Intro screen ─────────────────────────────────────────── */
+.screen-intro {
+  justify-content: space-between;
+}
+.intro-body {
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+}
+.intro-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.55;
+}
+.intro-subtext {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+}
+
+/* Intro gauge demo (static illustration) */
+.intro-gauge-demo {
+  width: 100%;
+  max-width: 360px;
+  margin-top: var(--space-md);
+}
+.demo-track {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 #2C2C2C;
+}
+.demo-yellow {
+  position: absolute;
+  left: 37.5%;
+  width: 25%;
+  top: 0;
+  bottom: 0;
+  background: #FFF176;
+}
+.demo-gold {
+  position: absolute;
+  left: 44%;
+  width: 12%;
+  top: 0;
+  bottom: 0;
+  background: #FFC107;
+}
+.demo-marker {
+  position: absolute;
+  top: -22px;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  margin-left: -15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  animation: demo-sweep 2.4s ease-in-out infinite alternate;
+}
+@keyframes demo-sweep {
+  from { left: 6%; }
+  to   { left: 94%; }
+}
+
+/* Player select */
+.player-select-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-top: var(--space-lg);
+  letter-spacing: 0.04em;
+}
+.player-select-row {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+  justify-content: center;
+}
+
+.btn-play {
+  margin: var(--space-xl) auto;
+  font-size: 1.2rem;
+  padding: 16px 56px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Game screen ──────────────────────────────────────────── */
+.screen-game {
+  position: relative;
+}
+
+/* Round / speed panel (top center overlay) */
+.round-panel {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.round-badge {
+  background: #2C2C2C;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 6px 16px;
+  border-radius: 99px;
+  border: 2px solid #2C2C2C;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.speed-badge {
+  background: #FFD54F;
+  color: #2C2C2C;
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 2px solid #2C2C2C;
+  white-space: nowrap;
+}
+
+/* Zone wrapper fills the full viewport */
+.zones-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
+
+/* ─ 2-player: left / right halves ─ */
+.zones-wrap.p2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* ─ 3-player: 3 equal columns (공정성 — 2+1 금지) ─ */
+.zones-wrap.p3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* ─ 4-player: 4 equal columns ─ */
+.zones-wrap.p4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* Individual zone */
+.zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Zone header (top) */
+.zone-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 38px; /* round-panel 겹침 방지 */
+}
+.zone-label {
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+.zone-score-chip {
+  font-size: 1.05rem;
+  font-weight: 900;
+  padding: 4px 14px;
+  border-radius: 99px;
+  pointer-events: none;
+}
+
+/* Gauge area (center of zone) */
+.gauge-area {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  position: relative;
+  min-height: 0;
+}
+.gauge-track {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 52px;
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+}
+.gz-yellow {
+  position: absolute;
+  left: 37.5%;
+  width: 25%;
+  top: 0;
+  bottom: 0;
+  background: #FFF176;
+}
+.gz-gold {
+  position: absolute;
+  left: 44%;
+  width: 12%;
+  top: 0;
+  bottom: 0;
+  background: #FFC107;
+  border-left: 2px solid #2C2C2C;
+  border-right: 2px solid #2C2C2C;
+}
+
+/* Marker (▼ + 세로 막대) — JS가 transform: translateX(px) 로 이동 */
+.gauge-marker {
+  position: absolute;
+  top: -26px;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  margin-left: -16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  will-change: transform;
+}
+.marker-arrow {
+  font-size: 1.35rem;
+  line-height: 1;
+  color: #D32F2F;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+.marker-line {
+  width: 6px;
+  flex: 1;
+  background: #D32F2F;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.7);
+}
+.gauge-marker.hit-gold .marker-arrow { color: #F57F17; }
+.gauge-marker.hit-gold .marker-line  { background: #F57F17; }
+
+/* Feedback message under the track */
+.gauge-msg {
+  min-height: 1.6em;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-align: center;
+  pointer-events: none;
+}
+.gauge-msg.tier-gold   { color: #E65100; }
+.gauge-msg.tier-yellow { color: #F9A825; }
+.gauge-msg.tier-miss   { color: #757575; }
+
+@keyframes msg-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.25); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.gauge-msg.pop { animation: msg-pop 0.3s ease-out; }
+
+/* Stop button (bottom of zone) */
+.stop-btn {
+  margin-top: auto;
+  width: 100%;
+  max-width: 420px;
+  min-height: 96px;
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: #EF5350;
+  border: 3px solid #2C2C2C;
+  border-radius: 22px;
+  box-shadow: 0 7px 0 #B71C1C;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.stop-btn:active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 #B71C1C;
+}
+.stop-btn.done {
+  filter: grayscale(0.7) brightness(0.85);
+  cursor: default;
+  transform: none;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.3);
+}
+
+/* Score float (gauge 위로 떠오르는 점수) */
+.gauge-area .score-float {
+  top: -4px;
+  font-size: 1.6rem;
+  z-index: 5;
+}
+
+/* ── Close button ─────────────────────────────────────────── */
+.close-btn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 30;
+}
+
+/* ── Result screen ────────────────────────────────────────── */
+.screen-result {
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: var(--space-lg) var(--space-md);
+  gap: var(--space-md);
+}
+
+.result-header { text-align: center; width: 100%; }
+.result-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.result-winner {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.4;
+  padding: 12px 28px;
+}
+
+/* Table */
+.result-table-wrap {
+  width: 100%;
+  max-width: 560px;
+  overflow-x: auto;
+}
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: #fff;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  border: 3px solid #2C2C2C;
+  box-shadow: 4px 4px 0 #2C2C2C;
+}
+.result-table th,
+.result-table td {
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid #F0F0F0;
+  font-weight: 700;
+}
+.result-table thead th {
+  font-weight: 900;
+  background: #F5F5F5;
+  color: var(--text-sub);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+.result-table tbody tr:last-child td { border-bottom: none; }
+
+/* Color dots in table header */
+.player-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* Cell tiers */
+.cell-gold   { font-weight: 900; color: #E65100; }
+.cell-yellow { font-weight: 800; color: #F9A825; }
+.cell-miss   { color: #BDBDBD; }
+
+/* Total row */
+.total-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding: var(--space-sm) 0;
+}
+.total-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 3px solid #2C2C2C;
+  border-radius: 99px;
+  padding: 8px 18px;
+  box-shadow: 3px 3px 0 #2C2C2C;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.total-chip.champ {
+  background: #FFD54F;
+}
+.total-chip .chip-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+.total-chip .chip-score {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+/* ── 전자칠판(대형 화면) 확대 ─────────────────────────────── */
+@media (min-width: 1280px) {
+  .gauge-track   { height: 68px; max-width: 560px; }
+  .marker-arrow  { font-size: 1.8rem; }
+  .stop-btn      { min-height: 120px; font-size: 2.6rem; max-width: 560px; }
+  .zone-label    { font-size: 1.4rem; }
+  .zone-score-chip { font-size: 1.3rem; }
+  .gauge-msg     { font-size: 1.6rem; }
+  .round-badge,
+  .speed-badge   { font-size: 1.2rem; }
+}

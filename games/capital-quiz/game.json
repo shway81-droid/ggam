@@ -1,0 +1,10 @@
+{
+  "name": "수도 맞히기",
+  "description": "나라의 수도를 맞혀보세요!",
+  "icon": "🌍",
+  "color": "#26A69A",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

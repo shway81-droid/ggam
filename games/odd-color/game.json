@@ -1,0 +1,10 @@
+{
+  "name": "다른 색 찾기",
+  "description": "보기 중 색이 다른 동그라미를 빠르게 찾아요!",
+  "icon": "🎨",
+  "color": "#FF7043",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "speed",
+  "players": "2-4명"
+}

@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>많다 적다</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 / 인원 선택 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">많다 적다</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-icon-wrap">
+        <svg viewBox="0 0 120 80" width="180" height="120" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left group of dots -->
+          <circle cx="15" cy="20" r="7" fill="#EF5350"/>
+          <circle cx="32" cy="12" r="7" fill="#FFA726"/>
+          <circle cx="48" cy="22" r="7" fill="#66BB6A"/>
+          <circle cx="20" cy="38" r="7" fill="#29B6F6"/>
+          <circle cx="38" cy="35" r="7" fill="#AB47BC"/>
+          <circle cx="52" cy="45" r="7" fill="#EF5350"/>
+          <circle cx="12" cy="55" r="7" fill="#FFA726"/>
+          <circle cx="30" cy="58" r="7" fill="#66BB6A"/>
+          <circle cx="48" cy="62" r="7" fill="#29B6F6"/>
+          <!-- VS text -->
+          <text x="60" y="44" text-anchor="middle" dominant-baseline="middle"
+                font-size="14" font-weight="900" fill="#555"
+                font-family="-apple-system,sans-serif">VS</text>
+          <!-- Right group of dots -->
+          <circle cx="72" cy="18" r="7" fill="#66BB6A"/>
+          <circle cx="88" cy="10" r="7" fill="#EF5350"/>
+          <circle cx="105" cy="20" r="7" fill="#29B6F6"/>
+          <circle cx="75" cy="38" r="7" fill="#FFA726"/>
+          <circle cx="92" cy="32" r="7" fill="#AB47BC"/>
+          <circle cx="108" cy="42" r="7" fill="#66BB6A"/>
+          <circle cx="78" cy="58" r="7" fill="#EF5350"/>
+        </svg>
+      </div>
+      <p class="intro-text">더 많은 쪽 화살표를<br>먼저 눌러라!</p>
+      <p class="intro-subtext">15라운드 · 먼저 맞히면 +1점 · 오답 시 -1점 감점!</p>
+
+      <div class="select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <!-- 플레이어 구역들 (JS 동적 렌더링) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- 중앙 패널: 도트 두 그룹 + VS -->
+    <div class="center-panel" id="centerPanel">
+      <div class="round-badge" id="roundBadge">1 / 15</div>
+      <div class="dots-row">
+        <div class="dot-box" id="dotBoxLeft"></div>
+        <div class="vs-text">VS</div>
+        <div class="dot-box" id="dotBoxRight"></div>
+      </div>
+      <div class="round-msg" id="roundMsg"></div>
+    </div>
+
+    <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-table-wrap">
+      <table class="result-table" id="resultTable">
+        <thead id="resultTableHead"></thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>카드 뒤집기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">카드 뒤집기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <div class="intro-body">
+      <div class="intro-preview" aria-hidden="true">
+        <div class="preview-cards">
+          <div class="preview-card preview-matched">🐶</div>
+          <div class="preview-card preview-back">?</div>
+          <div class="preview-card preview-back">?</div>
+          <div class="preview-card preview-matched">🐱</div>
+        </div>
+      </div>
+
+      <p class="intro-text">같은 그림 카드 짝을 찾으세요!</p>
+      <p class="intro-subtext">카드 2장을 뒤집어서 같은 그림이면 점수를 얻어요.<br>짝을 많이 찾은 플레이어가 이겨요!</p>
+
+      <div class="player-select-area">
+        <p class="player-select-label">플레이어 수 선택</p>
+        <div class="player-btns">
+          <button class="player-btn active" data-count="2">2명</button>
+          <button class="player-btn" data-count="3">3명</button>
+          <button class="player-btn" data-count="4">4명</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="closeBtn" aria-label="홈으로">←</button>
+      <div class="turn-indicator" id="turnIndicator">
+        <span class="turn-dot" id="turnDot"></span>
+        <span class="turn-text" id="turnText">플레이어 1의 차례</span>
+      </div>
+      <button class="sound-toggle" id="soundToggleGame" aria-label="사운드 토글">🔇</button>
+    </header>
+
+    <!-- 점수판 -->
+    <div class="scoreboard" id="scoreboard">
+      <!-- JS로 동적 생성 -->
+    </div>
+
+    <!-- 카드 그리드 -->
+    <div class="board-wrapper">
+      <div class="card-grid" id="cardGrid">
+        <!-- 16장의 카드 — JS로 생성 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <div class="result-body">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+      <h2 class="result-title" id="resultTitle">플레이어 1 승리!</h2>
+      <div class="result-scores" id="resultScores">
+        <!-- JS로 생성 -->
+      </div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>

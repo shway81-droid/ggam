@@ -1,0 +1,10 @@
+{
+  "name": "시계 읽기",
+  "description": "시계를 보고 맞는 시간을 터치!",
+  "icon": "🕐",
+  "color": "#78909C",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "math",
+  "players": "2-4명"
+}

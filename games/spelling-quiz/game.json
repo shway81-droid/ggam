@@ -1,0 +1,10 @@
+{
+  "name": "맞춤법 퀴즈",
+  "description": "헷갈리는 맞춤법, 바른 표기를 먼저 찾아요!",
+  "icon": "✏️",
+  "color": "#00897B",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "한글 자모",
+  "description": "한글 자음과 모음을 보고 이름을 맞혀보세요!",
+  "icon": "🔠",
+  "color": "#5E35B1",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "knowledge",
+  "players": "2-4명"
+}

@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>색 세기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 화면 1: 인트로 / 인원 선택 -->
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h1 class="game-title">색 세기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">
+        <svg id="soundIconIntro" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" fill="#666"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#666" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="intro-body">
+      <!-- Demo: cluster of colored circles -->
+      <div class="intro-demo">
+        <svg viewBox="0 0 220 90" width="220" height="90" aria-hidden="true">
+          <rect x="0" y="0" width="220" height="90" rx="14" fill="#E3F2FD"/>
+          <!-- Sample circles -->
+          <circle cx="30"  cy="45" r="14" fill="#EF5350" stroke="#B71C1C" stroke-width="1.5"/>
+          <circle cx="60"  cy="28" r="12" fill="#29B6F6" stroke="#0277BD" stroke-width="1.5"/>
+          <circle cx="60"  cy="62" r="13" fill="#66BB6A" stroke="#2E7D32" stroke-width="1.5"/>
+          <circle cx="90"  cy="42" r="15" fill="#EF5350" stroke="#B71C1C" stroke-width="1.5"/>
+          <circle cx="118" cy="25" r="13" fill="#FFEE58" stroke="#F57F17" stroke-width="1.5"/>
+          <circle cx="118" cy="60" r="12" fill="#29B6F6" stroke="#0277BD" stroke-width="1.5"/>
+          <circle cx="148" cy="44" r="14" fill="#EF5350" stroke="#B71C1C" stroke-width="1.5"/>
+          <circle cx="175" cy="30" r="12" fill="#66BB6A" stroke="#2E7D32" stroke-width="1.5"/>
+          <circle cx="175" cy="62" r="13" fill="#FFEE58" stroke="#F57F17" stroke-width="1.5"/>
+          <!-- Question overlay -->
+          <rect x="60" y="75" width="100" height="0" rx="8" fill="none"/>
+        </svg>
+        <p class="intro-hint">빨간 원은 몇 개? — 각 구역에서 정답 번호를 터치!</p>
+      </div>
+
+      <p class="intro-text">화면 속 <strong>원의 개수</strong>를 세어 정답을 터치하세요</p>
+      <p class="intro-subtext">10라운드 · 먼저 정답 터치 +1점 · 오답은 실격 · 오답 시 -1점 감점!</p>
+
+      <div class="player-select-label">인원 선택</div>
+      <div class="player-select-row">
+        <button class="player-btn active" data-count="2">2명</button>
+        <button class="player-btn" data-count="3">3명</button>
+        <button class="player-btn" data-count="4">4명</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <!-- 화면 1-5: 카운트다운 -->
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <!-- 화면 2: 게임 플레이 -->
+  <section class="screen screen-game" id="gameScreen">
+    <!-- Player zones (JS renders) -->
+    <div class="zones-wrap" id="zonesWrap"></div>
+
+    <!-- Center panel: circles + question -->
+    <div class="center-panel" id="centerPanel">
+      <div class="round-badge" id="roundBadge">1 / 10</div>
+      <div class="circles-frame" id="circlesFrame">
+        <svg id="circlesSvg" width="260" height="200" viewBox="0 0 260 200" aria-label="색깔 원들"></svg>
+      </div>
+      <div class="question-box" id="questionBox">
+        <span class="question-text" id="questionText">준비...</span>
+      </div>
+      <div class="round-status" id="roundStatus"></div>
+    </div>
+
+    <!-- Home button -->
+    <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </section>
+
+  <!-- 화면 3: 결과 -->
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+
+    <div class="result-table-wrap">
+      <table class="result-table" id="resultTable">
+        <thead id="resultTableHead"></thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="total-row" id="totalRow"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

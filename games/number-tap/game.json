@@ -1,0 +1,10 @@
+{
+  "name": "숫자 순서대로",
+  "description": "1부터 순서대로 빠르게 터치하세요!",
+  "icon": "🔢",
+  "color": "#FFA726",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1~2분",
+  "category": "math",
+  "players": "2-4명"
+}

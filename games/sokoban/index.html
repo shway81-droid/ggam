@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>상자 밀기</title>
+  <link rel="stylesheet" href="../../shared/style.css?v=5">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="screen screen-intro active" id="introScreen">
+    <header class="game-header">
+      <button class="icon-btn" id="backBtn" aria-label="뒤로가기">←</button>
+      <h1 class="game-title">상자 밀기</h1>
+      <button class="sound-toggle" id="soundToggleIntro" aria-label="사운드 토글">🔊</button>
+    </header>
+    <div class="intro-body">
+      <div class="intro-illustration" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="120" height="120">
+          <rect x="4" y="4" width="112" height="112" rx="10" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/>
+          <rect x="16" y="16" width="28" height="28" rx="4" fill="#2C2C2C"/>
+          <rect x="76" y="76" width="28" height="28" rx="4" fill="#2C2C2C"/>
+          <text x="36" y="72" font-size="26" text-anchor="middle">🙂</text>
+          <text x="62" y="72" font-size="26" text-anchor="middle">📦</text>
+          <text x="90" y="46" font-size="26" text-anchor="middle">⭐</text>
+          <path d="M70 76 L86 60" stroke="#8D6E63" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M86 60 l-8 1 M86 60 l-1 8" stroke="#8D6E63" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="intro-text">상자📦를 밀어서<br>별⭐ 위에 올려놓아요!</p>
+      <p class="intro-subtext">화살표 버튼으로 이동 · 먼저 완성하면 승리 · 3라운드 (2명 전용)</p>
+    </div>
+    <button class="btn btn-primary btn-play" id="playBtn">PLAY</button>
+  </section>
+
+  <section class="screen screen-countdown" id="countdownScreen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+  </section>
+
+  <section class="screen screen-game" id="gameScreen">
+    <div class="top-bar" id="problemPanel">
+      <div class="top-bar-meta">
+        <div class="question-counter" id="questionCounter">1 / 3</div>
+        <div class="problem-timer" id="problemTimer">90</div>
+      </div>
+      <div class="problem-status" id="problemStatus">상자📦를 별⭐ 위로 밀어요!</div>
+      <button class="icon-btn close-btn" id="closeBtn" aria-label="홈으로">✕</button>
+    </div>
+    <div class="zones-wrap p2" id="zonesWrap"></div>
+    <div class="score-bar" id="scoreBar"></div>
+  </section>
+
+  <section class="screen screen-result" id="resultScreen">
+    <header class="result-header">
+      <h2 class="result-title" id="resultTitle">게임 종료!</h2>
+    </header>
+    <div class="result-winner" id="resultWinner"></div>
+    <div class="total-row" id="totalRow"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="retryBtn">다시하기</button>
+      <button class="btn btn-secondary" id="homeBtn">홈으로</button>
+    </div>
+  </section>
+
+  <script src="../../shared/engine.js?v=12"></script>
+  <script src="game.js"></script>
+</body>
+</html>

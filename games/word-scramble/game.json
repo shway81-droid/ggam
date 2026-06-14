@@ -1,0 +1,10 @@
+{
+  "name": "섞인 글자",
+  "description": "뒤죽박죽 글자를 바른 순서로 터치해 단어를 만들어요!",
+  "icon": "🔀",
+  "color": "#D81B60",
+  "grades": [1, 2, 3, 4, 5, 6],
+  "playTime": "1분",
+  "category": "brain",
+  "players": "2-4명"
+}

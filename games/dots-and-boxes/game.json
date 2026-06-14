@@ -1,0 +1,10 @@
+{
+  "name": "도트 앤 박스",
+  "description": "선을 그어 사각형을 완성하세요!",
+  "icon": "🔲",
+  "color": "#78909C",
+  "grades": [2, 3, 4, 5, 6],
+  "playTime": "2~3분",
+  "category": "brain",
+  "players": "2-4명"
+}

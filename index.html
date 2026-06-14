@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="교실 전자칠판에서 바로 시작하는 초등 미니게임 78개. 룰렛 버튼 하나로 게임을 골라줍니다. 설치·로그인 없음, 오프라인 동작.">
+  <meta name="keywords" content="짬짬이 교실, 초등학교, 미니게임, 전자칠판 게임, 자투리 시간, 보드게임, 무료 게임">
+  <meta name="author" content="짬짬이 교실">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="짬짬이 교실 — 자투리 시간 미니게임 테이블">
+  <meta property="og:description" content="룰렛 버튼 하나면 게임이 정해집니다. 전자칠판 최적화 초등 미니게임 78개.">
+  <meta property="og:url" content="https://shway81-droid.github.io/jjam/">
+  <meta property="og:image" content="https://shway81-droid.github.io/jjam/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="짬짬이 교실 — 자투리 시간 초등 미니게임">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="짬짬이 교실 — 자투리 시간 미니게임 테이블">
+  <meta name="twitter:description" content="룰렛 버튼 하나면 게임이 정해집니다. 전자칠판 최적화 초등 미니게임 78개.">
+  <meta name="twitter:image" content="https://shway81-droid.github.io/jjam/og-image.png">
+  <title>짬짬이 교실 — 자투리 시간 미니게임</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1E7A46">
+  <link rel="stylesheet" href="shared/style.css?v=5">
+  <style>
+    /* ═══ 교실 놀이판 런처 — 보드게임 테이블 ═══ */
+    body {
+      background:
+        radial-gradient(ellipse at 50% -20%, rgba(255,255,255,0.12) 0, transparent 55%),
+        radial-gradient(ellipse at 50% 120%, rgba(0,0,0,0.3) 0, transparent 60%),
+        var(--felt, #1E7A46);
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 18px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 18px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .wrap { position: relative; z-index: 1; max-width: 1500px; margin: 0 auto; padding: 0 20px 60px; }
+
+    /* ── 우드 헤더 ── */
+    .top-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(180deg, #8D5A2B, #6D4423);
+      border: 0; border-bottom: 4px solid #4E2E12;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.35);
+      border-radius: 0 0 22px 22px;
+      padding: 14px 24px;
+      margin: 0 -20px 26px;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-mark {
+      width: 52px; height: 52px;
+      display: flex; align-items: center; justify-content: center;
+      filter: drop-shadow(0 4px 0 rgba(0,0,0,0.4));
+    }
+    .logo-mark svg { border-radius: 12px; }
+    .logo h1 {
+      font-size: 1.7rem; font-weight: 900; color: #FFF8E1;
+      text-shadow: 0 3px 0 rgba(0,0,0,0.35);
+      letter-spacing: -0.01em;
+    }
+    .logo .sub { font-size: 0.85rem; color: rgba(255,248,225,0.75); font-weight: 700; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+
+    /* ── 룰렛 CTA 버튼 ── */
+    .roulette-cta-row { display: flex; justify-content: center; margin-bottom: 26px; }
+    .roulette-cta {
+      font-family: inherit;
+      font-size: 1.6rem; font-weight: 900; color: #2C2C2C;
+      background: linear-gradient(180deg, #FFE082, #FFC83D);
+      border: 4px solid #2C2C2C;
+      border-radius: 999px;
+      box-shadow: 0 8px 0 #E8A50C, 0 12px 18px rgba(0,0,0,0.3);
+      padding: 20px 64px;
+      cursor: pointer;
+      transition: transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .roulette-cta:active { transform: translateY(6px); box-shadow: 0 2px 0 #E8A50C; }
+
+    /* ── 카테고리 필터 ── */
+    .cat-filter {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .cat-btn {
+      padding: 12px 26px;
+      border-radius: 999px;
+      border: 3px solid #2C2C2C;
+      background: #FFF8E1; color: #2C2C2C;
+      font-family: inherit; font-size: 1.02rem; font-weight: 900;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.4);
+      cursor: pointer; transition: transform 0.1s;
+    }
+    .cat-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+    .cat-btn.active { background: #FFC83D; box-shadow: 0 5px 0 #E8A50C; }
+
+    /* ── 게임 타일 그리드 ── */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 22px;
+    }
+    .game-card {
+      display: flex; flex-direction: column;
+      background: #FFF8E1;
+      border: 3px solid #2C2C2C;
+      border-radius: 20px;
+      box-shadow: 0 7px 0 rgba(0,0,0,0.4);
+      overflow: hidden;
+      text-decoration: none;
+      color: #2C2C2C;
+      transition: transform 0.12s;
+    }
+    .game-card:active { transform: translateY(5px); box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
+    .game-card.hidden { display: none; }
+    .game-card-thumb {
+      position: relative;
+      background: var(--thumb-color, #E8F5E9);
+      border-bottom: 3px solid #2C2C2C;
+      display: flex; align-items: center; justify-content: center;
+      height: 120px;
+    }
+    .card-icon { font-size: 3.4rem; filter: drop-shadow(0 4px 0 rgba(0,0,0,0.15)); }
+    .player-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: #2C2C2C; color: #FFF8E1;
+      font-size: 0.75rem; font-weight: 900;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .game-card-info { padding: 12px 14px 14px; }
+    .game-card-name { font-size: 1.15rem; font-weight: 900; }
+    .game-card-meta { display: flex; gap: 8px; margin-top: 6px; }
+    .meta-chip {
+      font-size: 0.78rem; font-weight: 700;
+      background: rgba(44,44,44,0.08);
+      border-radius: 999px; padding: 3px 9px; color: #5d4f37;
+    }
+
+    /* ── 룰렛 오버레이 ── */
+    .roulette-overlay {
+      position: fixed; inset: 0; z-index: 5000;
+      background: rgba(10,40,24,0.88);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 28px;
+    }
+    .roulette-overlay.active { display: flex; }
+    .roulette-frame {
+      width: min(620px, 92vw);
+      background: linear-gradient(180deg, #8D5A2B, #6D4423);
+      border: 5px solid #2C2C2C;
+      border-radius: 30px;
+      box-shadow: 0 14px 0 rgba(0,0,0,0.5);
+      padding: 22px;
+    }
+    .roulette-title {
+      text-align: center; color: #FFF8E1; font-weight: 900; font-size: 1.4rem;
+      text-shadow: 0 3px 0 rgba(0,0,0,0.4); margin-bottom: 16px;
+    }
+    .roulette-window {
+      background: #FFF8E1;
+      border: 4px solid #2C2C2C;
+      border-radius: 20px;
+      height: 210px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .roulette-window::before, .roulette-window::after {
+      content: ''; position: absolute; left: 0; right: 0; height: 36px; z-index: 2;
+      pointer-events: none;
+    }
+    .roulette-window::before { top: 0; background: linear-gradient(180deg, rgba(0,0,0,0.14), transparent); }
+    .roulette-window::after { bottom: 0; background: linear-gradient(0deg, rgba(0,0,0,0.14), transparent); }
+    .roulette-icon { font-size: 4.6rem; line-height: 1; }
+    .roulette-name { font-size: 1.9rem; font-weight: 900; color: #2C2C2C; }
+    .roulette-time { font-size: 1rem; font-weight: 700; color: #7a6a4f; }
+    .roulette-window.spinning .roulette-icon,
+    .roulette-window.spinning .roulette-name { filter: blur(0.5px); }
+    .roulette-window.landed { animation: landBounce 0.45s ease; }
+    @keyframes landBounce {
+      0% { transform: scale(0.92); } 55% { transform: scale(1.05); } 100% { transform: scale(1); }
+    }
+    .roulette-actions { display: flex; gap: 16px; justify-content: center; margin-top: 20px; }
+    .r-btn {
+      font-family: inherit; font-weight: 900; font-size: 1.25rem;
+      border: 4px solid #2C2C2C; border-radius: 999px;
+      padding: 16px 42px; cursor: pointer; color: #2C2C2C;
+      transition: transform 0.1s;
+    }
+    .r-btn:active { transform: translateY(5px); box-shadow: 0 1px 0 rgba(0,0,0,0.4) !important; }
+    .r-btn-start { background: linear-gradient(180deg, #FFD968, #FFC83D); box-shadow: 0 7px 0 #E8A50C; }
+    .r-btn-again { background: #FFF8E1; box-shadow: 0 7px 0 rgba(0,0,0,0.4); }
+    .r-btn[disabled] { opacity: 0.4; pointer-events: none; }
+    .roulette-close {
+      position: absolute; top: 22px; right: 26px;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #EF5350; color: #fff; font-size: 1.5rem; font-weight: 900;
+      border: 4px solid #fff; box-shadow: 0 4px 0 rgba(0,0,0,0.4); cursor: pointer;
+    }
+
+    /* 푸터 */
+    .footer { text-align: center; margin-top: 44px; color: rgba(255,248,225,0.6); font-size: 0.85rem; font-weight: 700; }
+    .footer a { color: rgba(255,248,225,0.85); }
+
+    /* ── 전자칠판 대화면 ── */
+    @media (min-width: 1280px) {
+      .roulette-cta { font-size: 2rem; padding: 24px 80px; }
+      .game-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+      .game-card-name { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <header class="top-header">
+      <div class="logo">
+        <div class="logo-mark"><svg viewBox="0 0 100 100" width="52" height="52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="lgFg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#27945A"/><stop offset="100%" stop-color="#145932"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#lgFg)" stroke="#2C2C2C" stroke-width="5"/><path d="M28 6 L72 6 Q94 6 94 28 L94 34 Q50 52 6 34 L6 28 Q6 6 28 6 Z" fill="#fff" opacity="0.10"/><circle cx="50" cy="52" r="28" fill="#FFF8E1" stroke="#2C2C2C" stroke-width="3"/><path d="M43 38 L43 66 L66 52 Z" fill="#1E7A46"/><circle cx="50" cy="26" r="2.8" fill="#1E7A46"/><circle cx="80" cy="20" r="6.5" fill="#FFC83D" stroke="#2C2C2C" stroke-width="2"/><circle cx="80" cy="20" r="3" fill="#fff"/></svg></div>
+        <div>
+          <h1>짬짬이 교실</h1>
+          <div class="sub">전자칠판으로 즐기는 자투리 시간 미니게임</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="sound-toggle" id="soundToggle" aria-label="사운드 토글">🔊</button>
+      </div>
+    </header>
+
+    <!-- 룰렛으로 게임 고르기 -->
+    <div class="roulette-cta-row">
+      <button class="roulette-cta" id="rouletteCta">🎲 룰렛으로 게임 고르기!</button>
+    </div>
+
+    <!-- 카테고리 필터 -->
+    <nav class="cat-filter" id="catFilter" aria-label="카테고리 필터">
+      <button class="cat-btn active" data-cat="all">전체</button>
+      <button class="cat-btn" data-cat="speed">⚡ 반응속도</button>
+      <button class="cat-btn" data-cat="brain">🧠 두뇌</button>
+      <button class="cat-btn" data-cat="math">📐 수학</button>
+      <button class="cat-btn" data-cat="knowledge">📚 지식</button>
+      <button class="cat-btn" data-cat="coop">🤝 협력</button>
+      <button class="cat-btn" data-cat="puzzle">🧩 퍼즐</button>
+    </nav>
+
+    <!-- 게임 그리드 -->
+    <main class="game-grid" id="gameGrid" aria-label="게임 목록"></main>
+
+    <footer class="footer">
+      설치·로그인 없이 바로 시작 · 오프라인 동작 ·
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScS9f7DlU51yHIYVn1GjjjO0AvH_wq4w4s2rotZEFINJN2anA/viewform" target="_blank" rel="noopener">의견 보내기</a>
+    </footer>
+  </div>
+
+  <!-- 룰렛 오버레이 -->
+  <div class="roulette-overlay" id="rouletteOverlay" role="dialog" aria-label="게임 룰렛">
+    <button class="roulette-close" id="rouletteClose" aria-label="닫기">✕</button>
+    <div class="roulette-frame">
+      <div class="roulette-title" id="rouletteTitle">🎲 게임 룰렛 돌리는 중...</div>
+      <div class="roulette-window" id="rouletteWindow">
+        <div class="roulette-icon" id="rouletteIcon">🎲</div>
+        <div class="roulette-name" id="rouletteName">두구두구...</div>
+        <div class="roulette-time" id="rouletteTime"></div>
+      </div>
+      <div class="roulette-actions">
+        <button class="r-btn r-btn-again" id="rouletteAgain" disabled>🔄 다시 돌리기</button>
+        <button class="r-btn r-btn-start" id="rouletteStart" disabled>▶ 시작!</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared/engine.js?v=10"></script>
+  <script>
+    // ═══ 게임 메타데이터 — category·players·폴백 모두 game.json 단일 소스에서 파생 ═══
+    /* @generated:fallback — scripts/gen-metadata.js가 game.json에서 생성. registry fetch 실패 시 오프라인 폴백. 직접 수정 금지 (npm run gen) */
+    var FALLBACK_GAMES = [
+      {"folder":"reaction-race","name":"신호 반응","description":"초록색이 되면 재빨리 터치!","icon":"🚦","color":"#66BB6A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"balloon-pop","name":"풍선 터트리기","description":"떠오르는 풍선을 빠르게 터치!","icon":"🎈","color":"#E91E63","grades":[1,2,3,4,5,6],"playTime":"30초","category":"speed","players":"2-4명"},
+      {"folder":"rps-react","name":"가위바위보 반사","description":"상대 손을 보고 이기는 손을 가장 먼저 골라요! 순발력 게임","icon":"✊","color":"#7B1FA2","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"speed","players":"2-4명"},
+      {"folder":"chase-tap","name":"점프하는 표적","description":"이리저리 점프하는 표적을 빠르게 따라가서 터치하세요!","icon":"🎯","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"30초","category":"speed","players":"2-4명"},
+      {"folder":"odd-color","name":"다른 색 찾기","description":"보기 중 색이 다른 동그라미를 빠르게 찾아요!","icon":"🎨","color":"#FF7043","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"simon-says","name":"가라사대","description":"\"가라사대\"가 붙을 때만 재빨리 동작 버튼을 눌러요!","icon":"👑","color":"#FF8F00","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"stop-bar","name":"타이밍 스톱","description":"마커가 골드 존에 올 때 멈춰!","icon":"⏱️","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"arrow-tap","name":"방향 화살표","description":"화살표를 보고 같은 방향을 빠르게 터치!","icon":"🧭","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"high-low","name":"오르락내리락","description":"새로 나온 수가 앞의 수보다 크면 ⬆ 작으면 ⬇! 빠른 비교 판단","icon":"📈","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"feature-hunt","name":"특징 찾기","description":"색과 모양 조건에 맞는 것을 가장 먼저 찾아 터치!","icon":"🔎","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"even-odd","name":"홀짝 판단","description":"숫자가 홀수면 홀! 짝수면 짝! 빠르게 판단해요","icon":"🔢","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"pitch-compare","name":"높은 음 찾기","description":"두 음을 듣고 어느 쪽이 높은 음인지 맞혀요!","icon":"🎵","color":"#EC407A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"beep-count","name":"소리 세기","description":"삑 소리가 몇 번 울렸는지 세서 맞혀요!","icon":"👂","color":"#F4511E","grades":[1,2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"running-sum","name":"달리는 덧셈","description":"기차가 싣고 가는 수를 계속 더해요! 지금까지 합은?","icon":"🚂","color":"#6D4C41","grades":[2,3,4,5,6],"playTime":"1분","category":"speed","players":"2-4명"},
+      {"folder":"color-touch","name":"색깔 터치","description":"글자의 뜻에 맞는 색을 터치!","icon":"🟡","color":"#9C27B0","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"shadow-match","name":"그림자 맞히기","description":"그림자를 보고 원래 그림을 찾으세요!","icon":"🌑","color":"#546E7A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"dots-and-boxes","name":"도트 앤 박스","description":"선을 그어 사각형을 완성하세요!","icon":"🔲","color":"#78909C","grades":[2,3,4,5,6],"playTime":"2~3분","category":"brain","players":"2-4명"},
+      {"folder":"memory-match","name":"카드 뒤집기","description":"같은 그림 카드 짝을 찾으세요!","icon":"🃏","color":"#AB47BC","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"brain","players":"2-4명"},
+      {"folder":"nim-game","name":"돌 가져가기","description":"마지막 돌을 가져가면 지는 전략 게임!","icon":"🪨","color":"#607D8B","grades":[1,2,3,4,5,6],"playTime":"2~3분","category":"brain","players":"2명"},
+      {"folder":"odd-one-out","name":"다른 낱말 찾기","description":"끼리끼리 모인 낱말 중 어울리지 않는 하나를 찾아요!","icon":"🔍","color":"#7E57C2","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"pattern-next","name":"다음 무늬","description":"반복되는 무늬를 보고 다음에 올 무늬를 찾으세요!","icon":"🔷","color":"#7E57C2","grades":[1,2,3,4],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"relation-match","name":"짝 찾기","description":"서로 어울리는 짝을 찾아보세요!","icon":"🧩","color":"#7E57C2","grades":[1,2,3,4],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"find-diff","name":"다른 곳 찾기","description":"두 그림을 비교해서 다른 한 칸을 가장 먼저 찾아요!","icon":"🔍","color":"#5C6BC0","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"missing-piece","name":"빠진 조각","description":"패턴을 보고 빠진 조각을 찾으세요!","icon":"🧩","color":"#7E57C2","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"mirror-match","name":"거울 대칭","description":"거울에 비친 모습을 찾으세요!","icon":"🪞","color":"#26C6DA","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"word-scramble","name":"섞인 글자","description":"뒤죽박죽 글자를 바른 순서로 터치해 단어를 만들어요!","icon":"🔀","color":"#D81B60","grades":[1,2,3,4,5,6],"playTime":"1분","category":"brain","players":"2-4명"},
+      {"folder":"quick-math","name":"빠른 계산","description":"정답을 가장 먼저 터치하세요!","icon":"🧮","color":"#26A69A","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"math","players":"2-4명"},
+      {"folder":"size-compare","name":"크기 비교","description":"더 큰 숫자를 먼저 터치!","icon":"📐","color":"#FF9800","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"color-count","name":"색 세기","description":"같은 색 원이 몇 개인지 세어보세요!","icon":"🔵","color":"#42A5F5","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"number-tap","name":"숫자 순서대로","description":"1부터 순서대로 빠르게 터치하세요!","icon":"🔢","color":"#FFA726","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"math","players":"2-4명"},
+      {"folder":"clock-reading","name":"시계 읽기","description":"시계를 보고 맞는 시간을 터치!","icon":"🕐","color":"#78909C","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"math-sign","name":"부호 맞히기","description":"빈칸에 들어갈 사칙연산 부호(+-×÷)를 찾으세요!","icon":"➕","color":"#FB8C00","grades":[2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"area-compare","name":"넓이 비교","description":"네 도형 중 네모가 가장 많은(또는 적은) 것을 골라보세요!","icon":"📐","color":"#26A69A","grades":[2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"dice-sum","name":"주사위 합","description":"주사위 두 개의 눈을 더하면?","icon":"🎲","color":"#F9A825","grades":[1,2,3,4],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"skip-count","name":"뛰어 세기","description":"빈칸에 들어갈 수를 빠르게 찾아보세요!","icon":"🔢","color":"#00897B","grades":[1,2,3],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"more-or-less","name":"많다 적다","description":"어느 쪽이 더 많은지 빠르게 판단!","icon":"⚖️","color":"#8D6E63","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"number-bond","name":"수 가르기","description":"빈칸에 들어갈 수를 찾아 식을 완성해요! 가르기와 모으기","icon":"➕","color":"#00897B","grades":[1,2,3],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"coin-count","name":"동전 세기","description":"동전을 모두 더하면 얼마일까요?","icon":"🪙","color":"#F9A825","grades":[1,2,3,4],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"closest-number","name":"가까운 수","description":"목표 수에 가장 가까운 수를 골라요!","icon":"🎯","color":"#1E88E5","grades":[2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"fraction-match","name":"분수 맞히기","description":"그림이 나타내는 분수를 찾아요!","icon":"🍕","color":"#E53935","grades":[3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"number-line","name":"수직선","description":"수직선 위 화살표가 가리키는 수는?","icon":"📏","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"make-ten","name":"10 만들기","description":"더해서 10이 되는 두 수를 찾아 터치!","icon":"🔟","color":"#43A047","grades":[1,2,3,4],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"hundred-chart","name":"백판 빈칸","description":"수 배열표의 빈칸에 들어갈 수를 맞혀요!","icon":"💯","color":"#5C6BC0","grades":[1,2,3],"playTime":"1분","category":"math","players":"2-4명"},
+      {"folder":"ox-quiz","name":"OX 퀴즈","description":"O일까 X일까? 빠르게 맞혀보세요!","icon":"❓","color":"#EC407A","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"knowledge","players":"2-4명"},
+      {"folder":"initial-quiz","name":"초성 퀴즈","description":"초성을 보고 맞는 그림을 터치!","icon":"🔤","color":"#8D6E63","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"flag-quiz","name":"국기 맞히기","description":"국기를 보고 나라를 맞혀보세요!","icon":"🏁","color":"#1565C0","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"proverb-quiz","name":"속담 완성","description":"속담의 뒷부분을 맞혀보세요!","icon":"📜","color":"#795548","grades":[2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"english-word","name":"영어 단어","description":"영어 단어를 보고 뜻을 맞혀보세요!","icon":"🔤","color":"#4CAF50","grades":[3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"animal-sort","name":"동물 분류","description":"동물을 보고 어느 무리에 속하는지 맞혀보세요! 포유류·조류·어류·곤충","icon":"🦁","color":"#8D6E63","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"hangul-jamo","name":"한글 자모","description":"한글 자음과 모음을 보고 이름을 맞혀보세요!","icon":"🔠","color":"#5E35B1","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"opposite-word","name":"반대말 맞히기","description":"주어진 단어의 반대말을 찾으세요!","icon":"↔️","color":"#F06292","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"spelling-quiz","name":"맞춤법 퀴즈","description":"헷갈리는 맞춤법, 바른 표기를 먼저 찾아요!","icon":"✏️","color":"#00897B","grades":[2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"job-tool","name":"직업과 도구","description":"도구를 보고 알맞은 직업을 맞혀보세요!","icon":"🧰","color":"#5C6BC0","grades":[1,2,3,4],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"unit-noun","name":"단위 세기","description":"물건을 세는 알맞은 단위(세는 말)를 찾으세요!","icon":"🔢","color":"#26A69A","grades":[1,2,3,4],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"synonym-quiz","name":"비슷한 말","description":"주어진 단어와 비슷한 말을 찾으세요!","icon":"💬","color":"#5C6BC0","grades":[2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"capital-quiz","name":"수도 맞히기","description":"나라의 수도를 맞혀보세요!","icon":"🌍","color":"#26A69A","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"word-reveal","name":"한 글자씩","description":"글자가 하나씩 나타나요! 먼저 알아채고 정답을 골라요!","icon":"💡","color":"#FB8C00","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"season-match","name":"계절 찾기","description":"그림을 보고 어울리는 계절을 골라요!","icon":"🍂","color":"#7CB342","grades":[1,2,3],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"trash-sort","name":"분리수거","description":"쓰레기를 알맞은 분리수거함에 넣어요!","icon":"♻️","color":"#2E7D32","grades":[1,2,3,4,5,6],"playTime":"1분","category":"knowledge","players":"2-4명"},
+      {"folder":"sum-relay","name":"숫자 합 만들기","description":"P1과 P2가 카드 한 장씩 골라 목표 합을 맞춰요! 협력 덧셈 게임","icon":"➕","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"jamo-merge","name":"자음+모음 합치기","description":"P1은 자음, P2는 모음을 골라 목표 글자를 만들어요! 한글 협력 게임","icon":"🔤","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"memory-relay","name":"기억 이어가기","description":"색 순서를 함께 외워 한 칸씩 이어가는 협력 게임!","icon":"🧠","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"2~3분","category":"coop","players":"2-4명"},
+      {"folder":"half-match","name":"반쪽 맞추기","description":"P1이 본 그림 조합을 말로 설명해 P2가 찾아요!","icon":"🧩","color":"#43A047","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"telepathy","name":"텔레파시","description":"P1과 P2가 몰래 같은 답을 고르면 텔레파시 성공! 협력 마음 맞추기 게임","icon":"💫","color":"#7B1FA2","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"emoji-clue","name":"이모지 힌트","description":"P1이 이모지 3개로 힌트! P2가 단어를 맞혀요!","icon":"💡","color":"#F9A825","grades":[2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"direction-relay","name":"방향 따라하기","description":"P1이 본 화살표 순서를 P2에게 말로 알려주세요!","icon":"🧭","color":"#26A69A","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"color-mix","name":"색 섞기","description":"P1·P2가 색을 하나씩 골라 목표 색을 만들어요! 협력 색 합성 게임","icon":"🎨","color":"#FF7043","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"chain-calc","name":"이어 계산","description":"P1의 답이 P2 문제로 이어져요! 둘이 함께 계산 완성!","icon":"🔗","color":"#00897B","grades":[2,3,4,5,6],"playTime":"1~2분","category":"coop","players":"2명"},
+      {"folder":"slide-puzzle","name":"슬라이딩 퍼즐","description":"3×3 조각을 밀어서 그림을 완성! 가장 먼저 맞춘 사람 승리!","icon":"🧩","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"maze-run","name":"미로 찾기","description":"시작에서 끝까지 길을 따라가세요! 먼저 도착한 사람 승리!","icon":"🌀","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"pipe-connect","name":"파이프 잇기","description":"파이프를 회전해서 입구와 출구를 연결! 먼저 잇는 사람 승리!","icon":"🔧","color":"#7C4DFF","grades":[2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"dot-connect","name":"점 잇기","description":"같은 색 점을 길로 연결! 모든 색을 잇고 먼저 끝낸 사람 승리!","icon":"🔵","color":"#7C4DFF","grades":[3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"fold-guess","name":"종이접기","description":"접은 종이를 펼치면 어떤 모양일까요?","icon":"📄","color":"#7C4DFF","grades":[2,3,4,5,6],"playTime":"1분","category":"puzzle","players":"2-4명"},
+      {"folder":"hanoi","name":"하노이탑","description":"원반을 한 개씩 옮겨 오른쪽 기둥으로! 가장 먼저 옮긴 사람 승리!","icon":"🗼","color":"#7C4DFF","grades":[2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"sokoban","name":"상자 밀기","description":"상자를 밀어 별 위에 올려놓으세요! 먼저 완성하면 승리!","icon":"📦","color":"#8D6E63","grades":[2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2명"},
+      {"folder":"arrow-rotate","name":"화살표 돌리기","description":"3×3 화살표를 돌려서 모두 ↑ 위로! 가장 먼저 맞춘 사람 승리!","icon":"🧭","color":"#7C4DFF","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"ice-slide","name":"펭귄 빙판길","description":"펭귄은 벽에 부딪힐 때까지 미끄러져요! 물고기 위에 정확히 멈추기!","icon":"🐧","color":"#00ACC1","grades":[1,2,3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+      {"folder":"magic-square","name":"마방진","description":"가로·세로·대각선 합이 모두 같게 수를 채워요!","icon":"✨","color":"#F9A825","grades":[3,4,5,6],"playTime":"1~2분","category":"puzzle","players":"2-4명"},
+    ];
+    /* @end:fallback */
+
+    // ═══ DOM ═══
+    var grid = document.getElementById('gameGrid');
+    var catBtns = document.querySelectorAll('#catFilter .cat-btn');
+    var soundToggle = document.getElementById('soundToggle');
+    var allGames = [];
+    var currentCat = 'all';
+
+    // ═══ 사운드 토글 (기본 ON) ═══
+    // 저장소는 engine.js 헬퍼(_read/_writeSoundMuted)로 통일 — localStorage 영구화 +
+    // 구버전 sessionStorage 폴백. 게임 페이지와 동일 로직을 공유한다.
+    function updateSoundIcon() {
+      soundToggle.textContent = _readSoundMuted() ? '🔇' : '🔊';
+    }
+    soundToggle.addEventListener('click', function() {
+      _writeSoundMuted(!_readSoundMuted());
+      updateSoundIcon();
+    });
+    updateSoundIcon();
+
+    // ═══ 카드 렌더링 ═══
+    function pastelColor(hex) {
+      var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+      r = Math.round(r + (255 - r) * 0.62);
+      g = Math.round(g + (255 - g) * 0.62);
+      b = Math.round(b + (255 - b) * 0.62);
+      return '#' + [r,g,b].map(function(v){ return v.toString(16).padStart(2,'0'); }).join('');
+    }
+
+    function renderCards(games) {
+      grid.innerHTML = '';
+      allGames = games;
+      games.forEach(function(game) {
+        var a = document.createElement('a');
+        a.className = 'game-card';
+        a.href = 'games/' + game.folder + '/index.html';
+        a.setAttribute('aria-label', game.name + ' 게임 시작');
+        a.dataset.grades = JSON.stringify(game.grades);
+        a.dataset.cat = game.category || 'brain';
+        var players = game.players || '2-4명';
+        a.innerHTML =
+          '<div class="game-card-thumb" style="--thumb-color:' + pastelColor(game.color) + '">' +
+            '<span class="player-badge">' + players + '</span>' +
+            '<span class="card-icon">' + game.icon + '</span>' +
+          '</div>' +
+          '<div class="game-card-info">' +
+            '<div class="game-card-name">' + game.name + '</div>' +
+            '<div class="game-card-meta">' +
+              '<span class="meta-chip">⏱ ' + game.playTime + '</span>' +
+              '<span class="meta-chip">' + game.grades[0] + '~' + game.grades[game.grades.length-1] + '학년</span>' +
+            '</div>' +
+          '</div>';
+        grid.appendChild(a);
+      });
+      applyFilters();
+    }
+
+    // ═══ 필터 (카테고리) ═══
+    function applyFilters() {
+      var cards = grid.querySelectorAll('.game-card');
+      cards.forEach(function(card) {
+        var catOk = (currentCat === 'all') || (card.dataset.cat === currentCat);
+        card.classList.toggle('hidden', !catOk);
+      });
+    }
+    catBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        catBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentCat = btn.dataset.cat;
+        applyFilters();
+      });
+    });
+
+    // ═══ 퀵스타트 룰렛 ═══
+    var overlay = document.getElementById('rouletteOverlay');
+    var rWindow = document.getElementById('rouletteWindow');
+    var rIcon = document.getElementById('rouletteIcon');
+    var rName = document.getElementById('rouletteName');
+    var rTime = document.getElementById('rouletteTime');
+    var rTitle = document.getElementById('rouletteTitle');
+    var rStart = document.getElementById('rouletteStart');
+    var rAgain = document.getElementById('rouletteAgain');
+    var rClose = document.getElementById('rouletteClose');
+    var spinTimer = null;
+    var pickedGame = null;
+    var lastPool = [];
+    var lastPickFolder = null;
+
+    // 룰렛 풀: 현재 선택된 카테고리의 게임 (전체면 50개 전부)
+    function buildPool() {
+      return allGames.filter(function(g) {
+        var cat = g.category || 'brain';
+        return currentCat === 'all' || cat === currentCat;
+      });
+    }
+
+    // 룰렛 효과음 (Web Audio — engine의 createSoundManager 활용)
+    var rouletteSound = createSoundManager({
+      tick: function(ctx) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'square'; o.frequency.value = 660;
+        g.gain.setValueAtTime(0.08, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+        o.start(); o.stop(ctx.currentTime + 0.06);
+      },
+      ding: function(ctx) {
+        [523, 659, 784].forEach(function(f, i) {
+          var o = ctx.createOscillator(), g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.type = 'sine';
+          var t = ctx.currentTime + i * 0.1;
+          o.frequency.setValueAtTime(f, t);
+          g.gain.setValueAtTime(0.3, t);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+          o.start(t); o.stop(t + 0.35);
+        });
+      }
+    });
+
+    function spin(pool) {
+      if (pool.length === 0) {
+        rIcon.textContent = '😅';
+        rName.textContent = '고를 게임이 없어요';
+        rTime.textContent = '잠시 후 다시 시도해 주세요';
+        rStart.disabled = true; rAgain.disabled = false;
+        return;
+      }
+      lastPool = pool;
+      pickedGame = null;
+      rStart.disabled = true;
+      rAgain.disabled = true;
+      rTitle.textContent = '🎲 게임 룰렛 돌리는 중...';
+      if (typeof playDrumroll === 'function') playDrumroll(2.3);
+      rWindow.classList.add('spinning');
+      rWindow.classList.remove('landed');
+
+      // 최종 당첨 게임 (직전 당첨과 다른 게임 우선)
+      var candidates = pool.length > 1 && lastPickFolder
+        ? pool.filter(function(g) { return g.folder !== lastPickFolder; })
+        : pool;
+      var winner = candidates[Math.floor(Math.random() * candidates.length)];
+
+      var elapsed = 0;
+      var interval = 70;          // 시작 속도
+      var totalMs = 2300;         // 총 스핀 시간
+
+      function step() {
+        var g = pool[Math.floor(Math.random() * pool.length)];
+        // 마지막 표시는 반드시 당첨 게임
+        if (elapsed + interval >= totalMs) g = winner;
+        rIcon.textContent = g.icon;
+        rName.textContent = g.name;
+        rTime.textContent = '⏱ ' + g.playTime + ' · ' + (g.players || '2-4명');
+        rouletteSound.play('tick');
+
+        elapsed += interval;
+        if (elapsed >= totalMs) {
+          land(winner);
+          return;
+        }
+        interval = Math.min(interval * 1.18, 300); // 점점 감속
+        spinTimer = setTimeout(step, interval);
+      }
+      step();
+    }
+
+    function land(g) {
+      pickedGame = g;
+      lastPickFolder = g.folder;
+      rWindow.classList.remove('spinning');
+      rWindow.classList.add('landed');
+      rTitle.textContent = '✨ 오늘의 게임은...';
+      rouletteSound.play('ding');
+      if (typeof playCymbal === 'function') { playCymbal(); playApplause(1.2); }
+      rStart.disabled = false;
+      rAgain.disabled = false;
+    }
+
+    function openRoulette() {
+      overlay.classList.add('active');
+      spin(buildPool());
+    }
+    function closeRoulette() {
+      overlay.classList.remove('active');
+      if (spinTimer) { clearTimeout(spinTimer); spinTimer = null; }
+    }
+
+    document.getElementById('rouletteCta').addEventListener('click', openRoulette);
+    rStart.addEventListener('click', function() {
+      if (pickedGame) window.location.href = 'games/' + pickedGame.folder + '/index.html';
+    });
+    rAgain.addEventListener('click', function() { spin(lastPool); });
+    rClose.addEventListener('click', closeRoulette);
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeRoulette();
+    });
+
+    // ═══ 게임 목록 로딩 ═══
+    async function loadGames() {
+      try {
+        // cache:'no-cache' — 게임 추가/삭제가 HTTP 캐시에 가려지지 않게 항상 재검증
+        var res = await fetch('games/registry.json', { cache: 'no-cache' });
+        var folders = await res.json();
+        var games = await Promise.all(folders.map(function(folder) {
+          return fetch('games/' + folder + '/game.json', { cache: 'no-cache' })
+            .then(function(r) { if (!r.ok) throw new Error(folder); return r.json(); })
+            .then(function(meta) { meta.folder = folder; return meta; })
+            .catch(function() { console.warn('Failed to load:', folder); return null; });
+        }));
+        var validGames = games.filter(function(g) { return g !== null; });
+        renderCards(validGames.length ? validGames : FALLBACK_GAMES);
+      } catch (e) {
+        renderCards(FALLBACK_GAMES);
+      }
+    }
+
+    // 엔진 로드 확인
+    if (typeof createTimer !== 'function' || typeof onTap !== 'function') {
+      document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h1>오류</h1><p>게임 엔진을 불러오지 못했습니다.<br>새로고침해주세요.</p><button onclick="location.reload()" style="padding:12px 24px;background:#1E7A46;color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer;">새로고침</button></div>';
+    } else {
+      loadGames();
+    }
+
+    // 오프라인 지원
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(function(err) {
+          console.warn('SW registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

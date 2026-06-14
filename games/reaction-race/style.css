@@ -1,0 +1,388 @@
+/* games/reaction-race/style.css */
+
+/* ── Countdown screen ─────────────────────────────────────── */
+.screen-countdown {
+  justify-content: center;
+  align-items: center;
+  background: #FFF8E1;
+}
+
+/* ── Shared header ────────────────────────────────────────── */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  background: rgba(255,255,255,0.92);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+  flex-shrink: 0;
+}
+.game-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ── Intro screen ─────────────────────────────────────────── */
+.screen-intro {
+  background: linear-gradient(160deg, #E8F5E9 0%, #F1F8E9 100%);
+  justify-content: space-between;
+}
+.intro-body {
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+}
+.intro-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.55;
+}
+.intro-subtext {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+  margin-top: -var(--space-xs);
+}
+
+/* Player select */
+.player-select-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-top: var(--space-lg);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.player-select-row {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+.player-btn {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 3px solid #C8E6C9;
+  background: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.player-btn.active {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(102,187,106,0.4);
+  transform: scale(1.08);
+}
+.player-btn:active { transform: scale(0.95); }
+
+.btn-play {
+  margin: var(--space-xl) auto;
+  font-size: 1.2rem;
+  padding: 16px 56px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Game screen ──────────────────────────────────────────── */
+.screen-game {
+  background: #FFF8E1;
+  position: relative;
+}
+
+/* Zone wrapper fills the full viewport */
+.zones-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
+
+/* ─ 2-player: left / right halves ─ */
+.zones-wrap.p2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* ─ 3-player: top-left / top-right / bottom-center ─ */
+.zones-wrap.p3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+/* ─ 4-player: quadrants ─ */
+.zones-wrap.p4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* Individual zone */
+.zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: filter 0.12s ease;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(0,0,0,0.12);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.zone-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+
+.zone-icon {
+  font-size: 2.8rem;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* Player color themes */
+.zone.p-blue   { background: #BBDEFB; }
+.zone.p-red    { background: #FFCDD2; }
+.zone.p-orange { background: #FFE0B2; }
+.zone.p-purple { background: #E1BEE7; }
+
+/* State: waiting (dimmed) */
+.zone.state-wait {
+  filter: brightness(0.65) saturate(0.6);
+}
+/* State: ready — zone fully lit */
+.zone.state-ready {
+  filter: brightness(1) saturate(1);
+  animation: pulse-zone 0.5s ease-out;
+}
+/* State: disqualified */
+.zone.state-dq {
+  filter: brightness(0.35) saturate(0);
+}
+/* State: winner flash */
+.zone.state-win {
+  animation: flash-win 0.5s ease-out forwards;
+}
+
+@keyframes pulse-zone {
+  0%   { filter: brightness(1.6) saturate(1.2); }
+  100% { filter: brightness(1)   saturate(1); }
+}
+@keyframes flash-win {
+  0%   { filter: brightness(2) saturate(1.5); }
+  60%  { filter: brightness(1.2) saturate(1.2); }
+  100% { filter: brightness(1)   saturate(1); }
+}
+
+/* Ripple tap effect */
+.zone-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.15);
+  transform: scale(0);
+  animation: ripple 0.45s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ── Status panel (center overlay) ───────────────────────── */
+.status-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.round-badge {
+  background: rgba(0,0,0,0.55);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.status-text {
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 900;
+  padding: 14px 28px;
+  border-radius: 20px;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+/* Green GO signal */
+.status-text.go {
+  background: #2E7D32;
+  transform: scale(1.12);
+  animation: pop-go 0.25s ease-out;
+}
+@keyframes pop-go {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.18); }
+  100% { transform: scale(1.12); }
+}
+
+/* ── Background green flash on GO ─────────────────────────── */
+.screen-game.flash-green {
+  animation: bg-flash 0.35s ease-out;
+}
+@keyframes bg-flash {
+  0%   { background: #66BB6A; }
+  100% { background: #FFF8E1; }
+}
+
+/* ── Close button ─────────────────────────────────────────── */
+.close-btn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 30;
+  background: rgba(0,0,0,0.12);
+  color: var(--text);
+  box-shadow: none;
+}
+
+/* ── Result screen ────────────────────────────────────────── */
+.screen-result {
+  background: linear-gradient(160deg, #E8F5E9 0%, #F1F8E9 100%);
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: var(--space-lg) var(--space-md);
+  gap: var(--space-md);
+}
+
+.result-header { text-align: center; width: 100%; }
+.result-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.result-winner {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--secondary);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Table */
+.result-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: #fff;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.result-table th,
+.result-table td {
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid #F0F0F0;
+}
+.result-table thead th {
+  font-weight: 800;
+  background: #F5F5F5;
+  color: var(--text-sub);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.result-table tbody tr:last-child td { border-bottom: none; }
+
+/* Color dots in table header */
+.player-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* Win / DQ / — cell styling */
+.cell-win  { font-weight: 800; color: #2E7D32; }
+.cell-dq   { color: #B71C1C; font-weight: 700; }
+.cell-none { color: #BDBDBD; }
+
+/* Total row */
+.total-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding: var(--space-sm) 0;
+}
+.total-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border-radius: 99px;
+  padding: 8px 18px;
+  box-shadow: var(--shadow-card);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.total-chip .chip-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+.total-chip .chip-score {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+/* Actions */
+.result-actions {
+  margin-top: var(--space-sm);
+}
+.btn-secondary {
+  background: #ECEFF1;
+  box-shadow: var(--shadow-card);
+}
+
+
+/* ── 3·4-player mode: move center panel to top so middle players aren't blocked ── */
+.screen-game:has(.zones-wrap.p4) .status-panel,
+.screen-game:has(.zones-wrap.p3) .status-panel {
+  top: 8px !important;
+  transform: translateX(-50%) !important;
+  max-width: 90%;
+}
