@@ -160,11 +160,13 @@ check('7. 터치 접근성: style.css에 다크 배경 색 없음', () => {
   const p = path.join(gameDir, 'style.css');
   if (!fs.existsSync(p)) return 'style.css 없음';
   const css = fs.readFileSync(p, 'utf-8');
-  // 흔한 다크 배경 색상 체크
+  // 흔한 다크 배경 색상 체크 (GAME_ANTIPATTERNS.md C절 명시 색 포함)
   const darkColors = [
     /background[^;]*#000(?:000)?(?:[^0-9a-f]|$)/i,
     /background[^;]*#0D1B2A/i,
     /background[^;]*#1A1A1A/i,
+    /background[^;]*#1a1a2e/i,
+    /background[^;]*#222(?:[^0-9a-f]|$)/i,
     /background[^;]*#0a0a0a/i,
   ];
   for (const re of darkColors) {
