@@ -86,3 +86,16 @@ skip-count·job-tool은 선별 당시 원작에 없던 신규 게임. 나머지 
 - puzzle: car-escape(러시아워 차 빼기), river-cross(강 건너기), word-search(낱말 찾기), mini-sudoku(미니 스도쿠), frog-swap(개구리 자리 교환), logic-grid(노노그램), code-break(마스터마인드)
 
 → 현재 81개. 분포: speed 15 / brain 13 / math 17 / knowledge 16 / coop 10 / puzzle 10
+
+## 🚫 사용자 삭제 3차 (재추가 금지)
+
+81종 이후 추가로 3종 삭제 — 폴더명이든 다른 이름이든 같은 메커니즘 재추가 금지:
+
+- speed: emoji-zoom(점점 커져요 — 점점 커지는 이모지 관련 반응)
+- brain: hidden-shapes(숨은 도형 세기 — 겹친 도형 개수 세기)
+- coop: clock-pass(시계 맞추기 — 시각 정보 전달·맞히기)
+
+→ 현재 78개. 분포: speed 14 / brain 12 / math 17 / knowledge 16 / coop 9 / puzzle 10
+
+> ⚠️ 자동 추가 루틴(`docs/AUTO_MODE.md`)은 이 문서의 1·2·3차 삭제 목록 + `GAME_ANTIPATTERNS.md` 0절을
+> 후보 제외(avoid) 기준으로 읽는다. 게임을 삭제하면 여기에 반드시 기록할 것 — 누락 시 루틴이 재생성한다.
